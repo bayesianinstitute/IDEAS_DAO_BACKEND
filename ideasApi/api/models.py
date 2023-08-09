@@ -59,3 +59,14 @@ class Proposal(models.Model):
         return self.title
     class Meta:
         verbose_name_plural="Proposal"
+
+class Otp(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    expiry_time = models.DateTimeField()
+    otp_value = models.IntegerField()
+
+    def __str__(self):
+        return str(self.otp_value)
+
+    class Meta:
+        verbose_name_plural = "Otp"

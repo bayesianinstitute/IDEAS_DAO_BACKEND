@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'ideasApi',
+    'user_app',
     'rest_framework',
     'rest_framework.authtoken',
 ]
@@ -124,6 +125,13 @@ USE_I18N = True
 
 USE_TZ = True
 
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'  # Your SMTP server's host
+EMAIL_PORT = 587  # SMTP port (usually 587 for TLS)
+EMAIL_USE_TLS = True  # Use TLS for secure connection
+EMAIL_USE_SSL = False  # Set to True if using SSL instead of TLS
+EMAIL_HOST_USER = 'bayesdev2@gmail.com'  # Your email username
+EMAIL_HOST_PASSWORD = 'kmpamzetlyzniaeo'  # Your email password
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
