@@ -1,6 +1,9 @@
 from django.contrib.auth.models import User
 from rest_framework import serializers
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+from ideasApi.api.models import (
+       Profile
+)
 
 class RegistrationSerializer(serializers.ModelSerializer):
     password2 = serializers.CharField(style={"input_type": "password"}, write_only=True)
@@ -10,24 +13,32 @@ class RegistrationSerializer(serializers.ModelSerializer):
         fields = ["username", "email", "password", "password2"]
         extra_kwargs = {"password": {"write_only": True}}
 
-    def save(self):
+    def validate_email(self, value):
+        """
+        Custom validation for email uniqueness.
+        """
+        if User.objects.filter(email=value).exists():
+            raise serializers.ValidationError("This email address is already registered.")
+        return value
+
+    def save(self, **kwargs):
         password = self.validated_data["password"]
         password2 = self.validated_data["password2"]
 
         if password != password2:
-            raise serializers.ValidationError({"error": "P1 and P2 should be same!"})
+            raise serializers.ValidationError({"error": "P1 and P2 should be the same!"})
 
-        if User.objects.filter(email=self.validated_data["email"]).exists():
-            raise serializers.ValidationError({"error": "Email already exists!"})
+        email = self.validated_data["email"]
+        username = self.validated_data["username"]
 
-        account = User(
-            email=self.validated_data["email"], username=self.validated_data["username"]
-        )
-        account.set_password(password)
-        account.save()
+        account = User.objects.create_user(username=username, email=email, password=password)
 
         return account
 
+class ProfileSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Profile
+        fields = ['is_valid']
 
 class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
     def validate(self, attrs):

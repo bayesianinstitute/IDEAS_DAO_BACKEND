@@ -1,4 +1,4 @@
-from user_app.api.serializers import CustomTokenObtainPairSerializer, RegistrationSerializer, OtpSerializer
+from user_app.api.serializers import CustomTokenObtainPairSerializer, RegistrationSerializer, OtpSerializer,ProfileSerializer
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from rest_framework.authtoken.models import Token
@@ -17,8 +17,10 @@ from datetime import datetime, timedelta
 from django.conf import settings
 from django.utils import timezone
 from ideasApi.api.models import (
-       Otp
+       Otp,
+       Profile
 )
+
 
     
 @api_view(['POST'])
@@ -26,22 +28,34 @@ def registration_view(request):
     if request.method == 'POST':
         serializer = RegistrationSerializer(data=request.data)
         if serializer.is_valid():
-            # Check if all required fields are present in the request
-            required_fields = ['username', 'password', 'email']
-            if all(key in request.data for key in required_fields):
-                account = serializer.save()
-                data = {
-                    'response': 'Registration Successful!',
-                    'username': account.username,
-                    'email': account.email,
-                }
-                return Response(data, status=status.HTTP_201_CREATED)
-            else:
-                data = {'error': 'All required fields are not present in the request'}
-                return Response(data, status=status.HTTP_400_BAD_REQUEST)
+            user_data = serializer.validated_data
+            user = User.objects.create_user(
+                username=user_data['username'],
+                password=user_data['password'],
+                email=user_data['email']
+            )
+
+            # Create a corresponding Profile instance with is_valid set to False
+            profile = Profile.objects.create(
+                name=user.username,  # You can customize how you want to set the name
+                Django_user=user,
+                is_valid=False
+            )
+
+            profile_serializer = ProfileSerializer(profile)  # Assuming you have a serializer for the Profile model
+            data = {
+                'response': 'Registration Successful!',
+                'user': {
+                    'username': user.username,
+                    'email': user.email,
+                    'is_valid': profile.is_valid
+                },
+                
+            }
+            return Response(data, status=status.HTTP_201_CREATED)
         else:
             data = serializer.errors
-        return Response(data, status=status.HTTP_400_BAD_REQUEST)
+            return Response(data, status=status.HTTP_400_BAD_REQUEST)
 
 
 
@@ -64,23 +78,19 @@ class Forgotpassword(APIView):
         if serializer.is_valid():
             email = serializer.validated_data['email']
             
-            # Check if an OTP entry already exists for the user
+            # Check if the user exists in the database
             user = User.objects.filter(email=email).first()
-            if user:
-                otp_instance = Otp.objects.filter(user=user).first()
-                if otp_instance:
-                    # Update the existing OTP instance
-                    otp_instance.otp_value = random.randint(1000, 9999)
-                    otp_instance.expiry_time = datetime.now() + timedelta(minutes=15)
-                    otp_instance.save()
-                else:
-                    # Create a new OTP instance
-                    otp = random.randint(1000, 9999)
-                    expiry_time = datetime.now() + timedelta(minutes=15)
-                    otp_instance = Otp.objects.create(user=user, expiry_time=expiry_time, otp_value=otp)
+            if not user:
+                return Response({'message': 'User not registered with this email'}, status=status.HTTP_400_BAD_REQUEST)
+            
+            otp_instance = Otp.objects.filter(user=user).first()
+            if otp_instance:
+                # Update the existing OTP instance
+                otp_instance.otp_value = random.randint(1000, 9999)
+                otp_instance.expiry_time = datetime.now() + timedelta(minutes=15)
+                otp_instance.save()
             else:
-                # Create a new user and OTP instance
-                user = User.objects.create(email=email)
+                # Create a new OTP instance
                 otp = random.randint(1000, 9999)
                 expiry_time = datetime.now() + timedelta(minutes=15)
                 otp_instance = Otp.objects.create(user=user, expiry_time=expiry_time, otp_value=otp)
@@ -96,3 +106,53 @@ class Forgotpassword(APIView):
             
             return Response({'message': 'OTP sent successfully'}, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    
+@api_view(["POST"])
+@permission_classes([IsAuthenticated])
+def verify_otp_view(request):
+    if request.method == "POST":
+        email = request.data.get("email")
+        otp_value = request.data.get("otp_value")
+        data = {}
+        
+        try:
+            user = User.objects.get(email=email)
+        except User.DoesNotExist:
+            data["error"] = "User not found"
+            return Response(data, status=status.HTTP_404_NOT_FOUND)
+        
+        try:
+            otp_obj = Otp.objects.get(user=user)
+        except Otp.DoesNotExist:
+            data["error"] = "OTP not generated for this user"
+            return Response(data, status=status.HTTP_400_BAD_REQUEST)
+        
+        if otp_obj.expiry_time <= timezone.now():
+            # OTP has expired
+            data["error"] = "OTP has expired"
+            return Response(data, status=status.HTTP_400_BAD_REQUEST)
+
+        if otp_obj.otp_value == otp_value:
+            # OTP is valid
+            # otp_obj.delete()
+            try:
+                profile = Profile.objects.get(Django_user=user)
+                if profile.is_valid:
+                    data["response"] = "OTP verification was done previously"
+                    return Response(data, status=status.HTTP_200_OK)
+                profile.is_valid = True  # Set is_valid flag to True
+                profile.save()  # Save the changes
+                data["response"] = "OTP verification successful"
+                return Response(data, status=status.HTTP_200_OK)
+            except Profile.DoesNotExist:
+                data["error"] = "Profile not found"
+                return Response(data, status=status.HTTP_400_BAD_REQUEST)
+        else:
+            # OTP is invalid
+            data["error"] = "Invalid OTP"
+            return Response(data, status=status.HTTP_400_BAD_REQUEST)
+    
+
+    
+    

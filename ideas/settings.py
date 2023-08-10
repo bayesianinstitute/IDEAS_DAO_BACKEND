@@ -13,6 +13,10 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 from pathlib import Path
 import os
 from datetime import timedelta
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -130,13 +134,15 @@ EMAIL_HOST = 'smtp.gmail.com'  # Your SMTP server's host
 EMAIL_PORT = 587  # SMTP port (usually 587 for TLS)
 EMAIL_USE_TLS = True  # Use TLS for secure connection
 EMAIL_USE_SSL = False  # Set to True if using SSL instead of TLS
-EMAIL_HOST_USER = 'bayesdev2@gmail.com'  # Your email username
-EMAIL_HOST_PASSWORD = 'kmpamzetlyzniaeo'  # Your email password
+EMAIL_HOST_USER = os.getenv("EMAIL") # Your email username
+EMAIL_HOST_PASSWORD = os.getenv("EMAILPASSWORD")  # Your email password
+
+
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = "static/"
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 MEDIA_URL = "/media/"
 
@@ -144,6 +150,7 @@ MEDIA_URL = "/media/"
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
 
 # Permissions
 REST_FRAMEWORK = {

@@ -8,28 +8,54 @@ from rest_framework.exceptions import ValidationError
 
 
 class Profile(models.Model):
-    name = models.CharField(max_length=200)
-    Django_user= models.ForeignKey(User, on_delete=models.CASCADE)
+    name = models.CharField(max_length=200, editable=False)  # Set editable to False
+    Django_user= models.ForeignKey(User, on_delete=models.CASCADE, editable=False)
     is_valid = models.BooleanField(default=False) 
 
     def __str__(self):
         return str(self.name)
     class Meta:
         verbose_name_plural="Profile"
+
+class Technology(models.Model):
+    technology_id =models.CharField(max_length=50,unique=True)
+    technology_name= models.CharField(max_length=200)
+
+    def __str__(self):
+        return str(self.technology_name)
+    class Meta:
+        verbose_name_plural="Technology"        
         
 class News(models.Model):
-    timing = models.DateTimeField(auto_now=True)
+    def nameFile(instance, filename):
+        return "/".join(["images", str(instance.news_id), filename])
+
+    news_id =models.CharField(max_length=50,unique=True)
     title= models.CharField(max_length=200)
+    brief= models.CharField(max_length=200)
     description = models.TextField()
+    timestamp = models.DateTimeField(auto_now=True)
+    news_image = models.FileField(null=True, blank=True)
+    technologies = models.ForeignKey(
+        Technology, on_delete=models.CASCADE, related_name="technologies_news"
+    )
+        
     def __str__(self):
         return self.title
     class Meta:
         verbose_name_plural="News"
         
 class Investment(models.Model):
-    timing = models.DateTimeField(auto_now=True)
+    def nameFile(instance, filename):
+        return "/".join(["images", str(instance.investment_id), filename])
+    investment_id =models.CharField(max_length=50,unique=True)
     title= models.CharField(max_length=200)
     description = models.TextField()
+    timestamp = models.DateTimeField(auto_now=True)
+    Investment_image = models.FileField(null=True, blank=True)
+    technologies = models.ForeignKey(
+        Technology, on_delete=models.CASCADE, related_name="technologies_investment"
+    )
     def __str__(self):
         return self.title
     class Meta:
@@ -37,16 +63,26 @@ class Investment(models.Model):
         
         
 class Events(models.Model):
-    timing = models.DateTimeField(auto_now=True)
+    def nameFile(instance, filename):
+        return "/".join(["images", str(instance.event_id), filename])
+    event_id =models.CharField(max_length=50,unique=True)
     title= models.CharField(max_length=200)
     description = models.TextField()
+    timestamp = models.DateTimeField(auto_now=True)
+    meet_time = models.DateTimeField()
+    meet_link = models.URLField(max_length=200)
+    event_image = models.FileField(null=True, blank=True)
+    technologies = models.ForeignKey(
+        Technology, on_delete=models.CASCADE, related_name="technologies_events"
+    )
     def __str__(self):
         return self.title
     class Meta:
         verbose_name_plural="Events"
         
 class Proposal(models.Model):
-    timing = models.DateTimeField(auto_now=True)
+    event_id =models.CharField(max_length=50,unique=True)
+    timestamp = models.DateTimeField(auto_now=True)
     title= models.CharField(max_length=200)
     description = models.TextField()
     PROPOSAL_TYPE_CHOICES = (
@@ -61,7 +97,7 @@ class Proposal(models.Model):
         verbose_name_plural="Proposal"
 
 class Otp(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='otps')
     expiry_time = models.DateTimeField()
     otp_value = models.IntegerField()
 
@@ -70,3 +106,6 @@ class Otp(models.Model):
 
     class Meta:
         verbose_name_plural = "Otp"
+
+
+
