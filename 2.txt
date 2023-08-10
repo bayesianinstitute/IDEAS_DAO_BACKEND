@@ -1,0 +1,36 @@
+1) structure -done
+2) Register -done
+3) Login/access token -done 
+4) Api Token Refresh - done 
+5) forgot password -done
+6) Get news with auth-  done 
+7) Get investment with auth - done 
+8) Get Events with auth - done 
+9) otp verification - done
+11) env file- done
+12) pagination on news -done
+13) Image path -done  
+14) filter news on technologies -done
+15) get latest 5 image for news 
+fetch individual news
+
+16) pagination on events -done 
+17) filter events on technologies -done
+fetch individual events
+
+18) upcoming events list 
+19) investment pagination on technologies -done
+20) search investment on events -done
+fetch individual events
+
+21) create proposal for individual user
+22) list all users 
+23) list all proposal 
+24) list all active/closed/reject 
+
+25) About APi
+26) Test admin panel
+27) Deploy
+28) Timezone 
+29) Editor in Admin
+30) API DOCUMENTATION UPDATE 
