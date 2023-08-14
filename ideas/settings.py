@@ -14,9 +14,7 @@ from pathlib import Path
 import os
 from datetime import timedelta
 import os
-from dotenv import load_dotenv
 
-load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -33,7 +31,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
 
-
+CSRF_TRUSTED_ORIGINS = ['http://3.129.20.16:8000/','http://localhost']
 # Application definition
 
 INSTALLED_APPS = [
@@ -43,8 +41,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'ideasApi',
-    'user_app',
+    'ideasApi.apps.IdeasapiConfig',
+    'import_export',
+    'user_app.apps.UserAppConfig',
+    'ckeditor',
     'rest_framework',
     'rest_framework.authtoken',
 ]
@@ -123,7 +123,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = "Asia/Kolkata"
+TIME_ZONE = 'America/Los_Angeles'
 
 USE_I18N = True
 
@@ -134,8 +134,8 @@ EMAIL_HOST = 'smtp.gmail.com'  # Your SMTP server's host
 EMAIL_PORT = 587  # SMTP port (usually 587 for TLS)
 EMAIL_USE_TLS = True  # Use TLS for secure connection
 EMAIL_USE_SSL = False  # Set to True if using SSL instead of TLS
-EMAIL_HOST_USER = os.getenv("EMAIL") # Your email username
-EMAIL_HOST_PASSWORD = os.getenv("EMAILPASSWORD")  # Your email password
+EMAIL_HOST_USER = 'bayesdev2@gmail.com' # Your email username
+EMAIL_HOST_PASSWORD = 'kmpamzetlyzniaeo'  # Your email password
 
 
 
@@ -163,6 +163,8 @@ REST_FRAMEWORK = {
         "rest_framework_simplejwt.authentication.JWTAuthentication",
     ],
 }
+
+CKEDITOR_UPLOAD_PATH = "media/"
 
 SIMPLE_JWT = {
     "ROTATE_REFRESH_TOKENS": True,

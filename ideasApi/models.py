@@ -4,18 +4,9 @@ from django.utils import timezone
 from datetime import datetime
 from datetime import timedelta
 import random
+from ckeditor.fields import RichTextField 
 from rest_framework.exceptions import ValidationError
 
-
-class Profile(models.Model):
-    name = models.CharField(max_length=200, editable=False)  # Set editable to False
-    Django_user= models.ForeignKey(User, on_delete=models.CASCADE, editable=False)
-    is_valid = models.BooleanField(default=False) 
-
-    def __str__(self):
-        return str(self.name)
-    class Meta:
-        verbose_name_plural="Profile"
 
 class Technology(models.Model):
     technology_id =models.CharField(max_length=50,unique=True)
@@ -33,7 +24,7 @@ class News(models.Model):
     news_id =models.CharField(max_length=50,unique=True)
     title= models.CharField(max_length=200)
     brief= models.CharField(max_length=200)
-    description = models.TextField()
+    description = RichTextField()
     timestamp = models.DateTimeField(auto_now=True)
     news_image = models.FileField(null=True, blank=True)
     technologies = models.ForeignKey(
@@ -50,7 +41,7 @@ class Investment(models.Model):
         return "/".join(["images", str(instance.investment_id), filename])
     investment_id =models.CharField(max_length=50,unique=True)
     title= models.CharField(max_length=200)
-    description = models.TextField()
+    description = RichTextField()
     timestamp = models.DateTimeField(auto_now=True)
     Investment_image = models.FileField(null=True, blank=True)
     technologies = models.ForeignKey(
@@ -67,7 +58,7 @@ class Events(models.Model):
         return "/".join(["images", str(instance.event_id), filename])
     event_id =models.CharField(max_length=50,unique=True)
     title= models.CharField(max_length=200)
-    description = models.TextField()
+    description = RichTextField()
     timestamp = models.DateTimeField(auto_now=True)
     meet_time = models.DateTimeField()
     meet_link = models.URLField(max_length=200)
@@ -81,16 +72,17 @@ class Events(models.Model):
         verbose_name_plural="Events"
         
 class Proposal(models.Model):
-    event_id =models.CharField(max_length=50,unique=True)
+    proposal_id =models.CharField(max_length=50,unique=True)
     timestamp = models.DateTimeField(auto_now=True)
     title= models.CharField(max_length=200)
-    description = models.TextField()
+    description = RichTextField()
     PROPOSAL_TYPE_CHOICES = (
         ('a', 'Active'),
         ('r', 'Reject'),
         ('c', 'Closed'),
     )
     status = models.CharField(max_length=1, choices=PROPOSAL_TYPE_CHOICES, default='u')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='proposaluser')
     def __str__(self):
         return self.title
     class Meta:
@@ -108,4 +100,9 @@ class Otp(models.Model):
         verbose_name_plural = "Otp"
 
 
+class About(models.Model):
+    title = models.CharField(max_length=200)
+    content = RichTextField()
 
+    def __str__(self):
+        return self.title

@@ -16,14 +16,17 @@ import random
 from datetime import datetime, timedelta
 from django.conf import settings
 from django.utils import timezone
-from ideasApi.api.models import (
-       Otp,
+from django.views.decorators.csrf import csrf_protect
+from ideasApi.models import (
+       Otp
+)
+from user_app.models import (
        Profile
 )
 
-
     
 @api_view(['POST'])
+
 def registration_view(request):
     if request.method == 'POST':
         serializer = RegistrationSerializer(data=request.data)
