@@ -1,0 +1,738 @@
+{
+	"info": {
+		"_postman_id": "f601ecc2-3dac-4e8e-b62f-181d8f724c52",
+		"name": "Ideas http://3.129.20.16:8000/",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "8123731",
+		"_collection_link": "https://martian-astronaut-694342.postman.co/workspace/New-Team-Workspace~f6226fae-6fa5-4054-b778-197730b9419e/collection/8123731-f601ecc2-3dac-4e8e-b62f-181d8f724c52?action=share&source=collection_link&creator=8123731"
+	},
+	"item": [
+		{
+			"name": "Authentication",
+			"item": [
+				{
+					"name": "Registration",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"afaanshaikh\",\r\n    \"email\": \"afaan@bayes.global\",\r\n    \"password\": \"123456789\",\r\n    \"password2\": \"123456789\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://3.129.20.16:8000/account/api/register/",
+							"protocol": "http",
+							"host": [
+								"3",
+								"129",
+								"20",
+								"16"
+							],
+							"port": "8000",
+							"path": [
+								"account",
+								"api",
+								"register",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Acess Token",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "username",
+									"value": "afaanshaikh",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "123456789",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://3.129.20.16:8000/account/api/token/",
+							"protocol": "http",
+							"host": [
+								"3",
+								"129",
+								"20",
+								"16"
+							],
+							"port": "8000",
+							"path": [
+								"account",
+								"api",
+								"token",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "api token refresh",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"refresh\": \"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTY5MjEyNzIxMCwiaWF0IjoxNjkyMDQwODEwLCJqdGkiOiJiZDYyNmRhNDliZjE0ZDc3OTVhNjlkYjI5MGZmOGI2NyIsInVzZXJfaWQiOjJ9.eQY4BPrGxZZ1p83SuNgUHdsmb0a5rEhw9l3ofQLKnEc\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://3.129.20.16:8000/account/api/token/refresh/",
+							"protocol": "http",
+							"host": [
+								"3",
+								"129",
+								"20",
+								"16"
+							],
+							"port": "8000",
+							"path": [
+								"account",
+								"api",
+								"token",
+								"refresh",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "forgotpassword",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"afaan@bayes.global\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://3.129.20.16:8000/account/api/forgotpassword/",
+							"protocol": "http",
+							"host": [
+								"3",
+								"129",
+								"20",
+								"16"
+							],
+							"port": "8000",
+							"path": [
+								"account",
+								"api",
+								"forgotpassword",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "OTP Verification",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjkyMDQ0NDYyLCJpYXQiOjE2OTIwNDA4MTAsImp0aSI6Ijg0ZmJmMWEwNThkNDQwMGE5NWZjODI1NGVkNGM4NWEyIiwidXNlcl9pZCI6Mn0.ShnETjvNlYvk_jD9mPEaYAb2YPAp1RqL5eyjDgZw0_Q",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"afaan@bayes.global\",\r\n    \"otp_value\": 8467\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://3.129.20.16:8000/account/api/otp/verify",
+							"protocol": "http",
+							"host": [
+								"3",
+								"129",
+								"20",
+								"16"
+							],
+							"port": "8000",
+							"path": [
+								"account",
+								"api",
+								"otp",
+								"verify"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "News",
+			"item": [
+				{
+					"name": "Get News",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjkyMDQ0NDYyLCJpYXQiOjE2OTIwNDA4MTAsImp0aSI6Ijg0ZmJmMWEwNThkNDQwMGE5NWZjODI1NGVkNGM4NWEyIiwidXNlcl9pZCI6Mn0.ShnETjvNlYvk_jD9mPEaYAb2YPAp1RqL5eyjDgZw0_Q",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://3.129.20.16:8000/api/v1/news",
+							"protocol": "http",
+							"host": [
+								"3",
+								"129",
+								"20",
+								"16"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"v1",
+								"news"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get News by technology",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjkyMDQ0NDYyLCJpYXQiOjE2OTIwNDA4MTAsImp0aSI6Ijg0ZmJmMWEwNThkNDQwMGE5NWZjODI1NGVkNGM4NWEyIiwidXNlcl9pZCI6Mn0.ShnETjvNlYvk_jD9mPEaYAb2YPAp1RqL5eyjDgZw0_Q",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://3.129.20.16:8000/api/v1/news/AI",
+							"protocol": "http",
+							"host": [
+								"3",
+								"129",
+								"20",
+								"16"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"v1",
+								"news",
+								"AI"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get latest-news-images",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjkyMDQ0NDYyLCJpYXQiOjE2OTIwNDA4MTAsImp0aSI6Ijg0ZmJmMWEwNThkNDQwMGE5NWZjODI1NGVkNGM4NWEyIiwidXNlcl9pZCI6Mn0.ShnETjvNlYvk_jD9mPEaYAb2YPAp1RqL5eyjDgZw0_Q",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://3.129.20.16:8000/api/v1/latest-news-images/",
+							"protocol": "http",
+							"host": [
+								"3",
+								"129",
+								"20",
+								"16"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"v1",
+								"latest-news-images",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get single news",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjkyMDQ0NDYyLCJpYXQiOjE2OTIwNDA4MTAsImp0aSI6Ijg0ZmJmMWEwNThkNDQwMGE5NWZjODI1NGVkNGM4NWEyIiwidXNlcl9pZCI6Mn0.ShnETjvNlYvk_jD9mPEaYAb2YPAp1RqL5eyjDgZw0_Q",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://3.129.20.16:8000/api/v1/getnews/News_001",
+							"protocol": "http",
+							"host": [
+								"3",
+								"129",
+								"20",
+								"16"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"v1",
+								"getnews",
+								"News_001"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Events",
+			"item": [
+				{
+					"name": "Get events",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjkyMDQ0NDYyLCJpYXQiOjE2OTIwNDA4MTAsImp0aSI6Ijg0ZmJmMWEwNThkNDQwMGE5NWZjODI1NGVkNGM4NWEyIiwidXNlcl9pZCI6Mn0.ShnETjvNlYvk_jD9mPEaYAb2YPAp1RqL5eyjDgZw0_Q",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://3.129.20.16:8000/api/v1/events",
+							"protocol": "http",
+							"host": [
+								"3",
+								"129",
+								"20",
+								"16"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"v1",
+								"events"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get events by technology",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjkyMDQ0NDYyLCJpYXQiOjE2OTIwNDA4MTAsImp0aSI6Ijg0ZmJmMWEwNThkNDQwMGE5NWZjODI1NGVkNGM4NWEyIiwidXNlcl9pZCI6Mn0.ShnETjvNlYvk_jD9mPEaYAb2YPAp1RqL5eyjDgZw0_Q",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://3.129.20.16:8000/api/v1/events/AI",
+							"protocol": "http",
+							"host": [
+								"3",
+								"129",
+								"20",
+								"16"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"v1",
+								"events",
+								"AI"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": "",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get single events",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjkyMDQ0NDYyLCJpYXQiOjE2OTIwNDA4MTAsImp0aSI6Ijg0ZmJmMWEwNThkNDQwMGE5NWZjODI1NGVkNGM4NWEyIiwidXNlcl9pZCI6Mn0.ShnETjvNlYvk_jD9mPEaYAb2YPAp1RqL5eyjDgZw0_Q",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://3.129.20.16:8000/api/v1/getevents/event_001/",
+							"protocol": "http",
+							"host": [
+								"3",
+								"129",
+								"20",
+								"16"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"v1",
+								"getevents",
+								"event_001",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get upcoming events",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjkyMDQ0NDYyLCJpYXQiOjE2OTIwNDA4MTAsImp0aSI6Ijg0ZmJmMWEwNThkNDQwMGE5NWZjODI1NGVkNGM4NWEyIiwidXNlcl9pZCI6Mn0.ShnETjvNlYvk_jD9mPEaYAb2YPAp1RqL5eyjDgZw0_Q",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://3.129.20.16:8000/api/v1/upcoming-events/",
+							"protocol": "http",
+							"host": [
+								"3",
+								"129",
+								"20",
+								"16"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"v1",
+								"upcoming-events",
+								""
+							],
+							"query": [
+								{
+									"key": "Authorization ",
+									"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjkyMDQzMTMyLCJpYXQiOjE2OTIwMzk1MzIsImp0aSI6Ijg5MDY0ZTAzMTM2MDRmMzg5OWVmNjI5N2M1YmEyNTY0IiwidXNlcl9pZCI6MX0.gO-2TSgP6hykvNhFgx9B3eMhWKt8lPu5Z0p-EvAA_ws",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Investment",
+			"item": [
+				{
+					"name": "Get Investment",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjkyMDQ0NDYyLCJpYXQiOjE2OTIwNDA4MTAsImp0aSI6Ijg0ZmJmMWEwNThkNDQwMGE5NWZjODI1NGVkNGM4NWEyIiwidXNlcl9pZCI6Mn0.ShnETjvNlYvk_jD9mPEaYAb2YPAp1RqL5eyjDgZw0_Q",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://3.129.20.16:8000/api/v1/investments",
+							"protocol": "http",
+							"host": [
+								"3",
+								"129",
+								"20",
+								"16"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"v1",
+								"investments"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Investment by technology",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjkyMDQ0NDYyLCJpYXQiOjE2OTIwNDA4MTAsImp0aSI6Ijg0ZmJmMWEwNThkNDQwMGE5NWZjODI1NGVkNGM4NWEyIiwidXNlcl9pZCI6Mn0.ShnETjvNlYvk_jD9mPEaYAb2YPAp1RqL5eyjDgZw0_Q",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://3.129.20.16:8000/api/v1/investments/AI",
+							"protocol": "http",
+							"host": [
+								"3",
+								"129",
+								"20",
+								"16"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"v1",
+								"investments",
+								"AI"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get single investment",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjkyMDQ0NDYyLCJpYXQiOjE2OTIwNDA4MTAsImp0aSI6Ijg0ZmJmMWEwNThkNDQwMGE5NWZjODI1NGVkNGM4NWEyIiwidXNlcl9pZCI6Mn0.ShnETjvNlYvk_jD9mPEaYAb2YPAp1RqL5eyjDgZw0_Q",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://3.129.20.16:8000/api/v1/getinvestments/investment_001/",
+							"protocol": "http",
+							"host": [
+								"3",
+								"129",
+								"20",
+								"16"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"v1",
+								"getinvestments",
+								"investment_001",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Proposal",
+			"item": [
+				{
+					"name": "Create Proposal",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjkyMDQ0NDYyLCJpYXQiOjE2OTIwNDA4MTAsImp0aSI6Ijg0ZmJmMWEwNThkNDQwMGE5NWZjODI1NGVkNGM4NWEyIiwidXNlcl9pZCI6Mn0.ShnETjvNlYvk_jD9mPEaYAb2YPAp1RqL5eyjDgZw0_Q",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"proposal_id\": \"event124\",\r\n  \"title\": \"Sample Proposal\",\r\n  \"description\": \"This is a sample proposal description.\",\r\n  \"status\": \"a\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://3.129.20.16:8000/api/v1/create-proposal/",
+							"protocol": "http",
+							"host": [
+								"3",
+								"129",
+								"20",
+								"16"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"v1",
+								"create-proposal",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Proposals",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjkyMDQ0NDYyLCJpYXQiOjE2OTIwNDA4MTAsImp0aSI6Ijg0ZmJmMWEwNThkNDQwMGE5NWZjODI1NGVkNGM4NWEyIiwidXNlcl9pZCI6Mn0.ShnETjvNlYvk_jD9mPEaYAb2YPAp1RqL5eyjDgZw0_Q",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://3.129.20.16:8000/api/v1/proposals/",
+							"protocol": "http",
+							"host": [
+								"3",
+								"129",
+								"20",
+								"16"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"v1",
+								"proposals",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get proposal by status",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjkyMDQ0NDYyLCJpYXQiOjE2OTIwNDA4MTAsImp0aSI6Ijg0ZmJmMWEwNThkNDQwMGE5NWZjODI1NGVkNGM4NWEyIiwidXNlcl9pZCI6Mn0.ShnETjvNlYvk_jD9mPEaYAb2YPAp1RqL5eyjDgZw0_Q",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://3.129.20.16:8000/api/v1/proposal_by_status/a/",
+							"protocol": "http",
+							"host": [
+								"3",
+								"129",
+								"20",
+								"16"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"v1",
+								"proposal_by_status",
+								"a",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "User Email",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjkyMDQ0NDYyLCJpYXQiOjE2OTIwNDA4MTAsImp0aSI6Ijg0ZmJmMWEwNThkNDQwMGE5NWZjODI1NGVkNGM4NWEyIiwidXNlcl9pZCI6Mn0.ShnETjvNlYvk_jD9mPEaYAb2YPAp1RqL5eyjDgZw0_Q",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://3.129.20.16:8000/api/v1/users/emails/",
+							"protocol": "http",
+							"host": [
+								"3",
+								"129",
+								"20",
+								"16"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"v1",
+								"users",
+								"emails",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "About",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjkyMDQzMTMyLCJpYXQiOjE2OTIwMzk1MzIsImp0aSI6Ijg5MDY0ZTAzMTM2MDRmMzg5OWVmNjI5N2M1YmEyNTY0IiwidXNlcl9pZCI6MX0.gO-2TSgP6hykvNhFgx9B3eMhWKt8lPu5Z0p-EvAA_ws",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://3.129.20.16:8000/api/v1/about",
+					"protocol": "http",
+					"host": [
+						"3",
+						"129",
+						"20",
+						"16"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"v1",
+						"about"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

@@ -14,6 +14,8 @@ from pathlib import Path
 import os
 from datetime import timedelta
 import os
+import logging
+from logging.handlers import TimedRotatingFileHandler
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -57,6 +59,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'ideasApi.middleware.APILoggingMiddleware', 
+    'user_app.middleware.APILoggingMiddleware', 
 ]
 
 ROOT_URLCONF = 'ideas.urls'
@@ -138,6 +142,17 @@ EMAIL_HOST_USER = 'bayesdev2@gmail.com' # Your email username
 EMAIL_HOST_PASSWORD = 'kmpamzetlyzniaeo'  # Your email password
 
 
+# Default "from" address for outgoing emails
+DEFAULT_FROM_EMAIL = 'bayesdev2@gmail.com'
+
+# List of email addresses that will receive error messages from Django's logging framework
+ADMINS = [
+    ('Afaan', 'afaan.shaikh.21@gmail.com'),
+    ('Afaan2', 'afaan@bayes.global'),
+    # Add more tuples as needed
+]
+# Email subject prefix for error messages sent to admins
+EMAIL_SUBJECT_PREFIX = 'IDEAS DAO BACKEND'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
@@ -171,3 +186,73 @@ SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(minutes=60),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
 }
+
+
+#Logging configuration
+# Define the base directory for logs
+LOGGING_DIR = os.path.join(BASE_DIR, 'logs')
+
+# Ensure the logs directory exists
+os.makedirs(LOGGING_DIR, exist_ok=True)
+
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format': '{levelname} {asctime} {module} {message}',
+            'style': '{',
+        },
+    },
+    'handlers': {
+        'error_file': {
+            'level': 'ERROR',  # Capture ERROR level and higher
+            'class': 'logging.handlers.TimedRotatingFileHandler',
+            'filename': os.path.join(LOGGING_DIR, 'error.log'),
+            'when': 'midnight',
+            'backupCount': 7,
+            'formatter': 'verbose',
+        },
+        'email_admin': {
+            'level': 'ERROR',  # Capture ERROR level and higher
+            'class': 'django.utils.log.AdminEmailHandler',
+            'formatter': 'verbose',
+        },
+        'warning_file': {
+            'level': 'WARNING',
+            'class': 'logging.handlers.TimedRotatingFileHandler',
+            'filename': os.path.join(LOGGING_DIR, 'warning.log'),
+            'when': 'midnight',
+            'backupCount': 7,
+            'formatter': 'verbose',
+        },
+        'regular_file': {
+            'level': 'INFO',
+            'class': 'logging.handlers.TimedRotatingFileHandler',
+            'filename': os.path.join(LOGGING_DIR, 'regular.log'),
+            'when': 'midnight',
+            'backupCount': 7,
+            'formatter': 'verbose',
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['error_file', 'email_admin', 'warning_file', 'regular_file'],
+            'level': 'DEBUG',  # Capture DEBUG level and higher
+            'propagate': True,
+        },
+        'ideasApi.views': {
+            'handlers': ['error_file', 'email_admin', 'warning_file', 'regular_file'],
+            'level': 'DEBUG',  # Adjust the level as needed
+            'propagate': False,
+        },
+        'user_app.views': {
+            'handlers': ['error_file', 'email_admin', 'warning_file', 'regular_file'],
+            'level': 'DEBUG',  # Adjust the level as needed
+            'propagate': False,
+        },
+    },
+}
+
+

@@ -28,6 +28,7 @@ from ideasApi.api.serializers import (
     UserEmailSerializer
 )
 
+
 class CustomPagination(PageNumberPagination):
     page_size = 10  # Number of items per page
     page_size_query_param = 'page_size'
@@ -36,7 +37,7 @@ class CustomPagination(PageNumberPagination):
     
 class NewsListView(generics.ListAPIView):
     serializer_class = NewsSerializer
-    permission_classes = [IsAuthenticated]
+    #permission_classes = [IsAuthenticated]
     pagination_class = CustomPagination
 
     def get_queryset(self):

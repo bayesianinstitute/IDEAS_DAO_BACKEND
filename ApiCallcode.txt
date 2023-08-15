@@ -1,0 +1,26 @@
+import requests
+
+# Replace these with actual values
+api_url = "http://3.129.20.16:8000/api/v1/news"
+#JWT token changes every time so please generate token and use it
+jwt_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjkyMTE1ODI3LCJpYXQiOjE2OTIxMTIyMjcsImp0aSI6ImRlYmRjZTQ4MWFhYjRhZmFiZjJjZmI2ODdhMzliNTcyIiwidXNlcl9pZCI6Mn0.CY1lG7RMfuw217H2NBPBNKwxYHuISvs_6GZkjTLIyIU"
+
+headers = {
+    "Authorization": f"Bearer {jwt_token}"
+}
+
+# Replace this with the actual technology_name you want to filter by
+# technology_name = "AI"
+
+url = f"{api_url}"
+
+response = requests.get(api_url, headers=headers)
+
+if response.status_code == 200:
+    news_data = response.json()
+    # Process the news_data as needed
+    results = news_data.get("results", [])
+    for news_item in results:
+        print(news_item)
+else:
+    print(f"Failed to retrieve data. Status code: {response.status_code}")
