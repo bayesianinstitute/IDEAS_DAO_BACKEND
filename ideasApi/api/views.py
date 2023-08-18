@@ -11,6 +11,8 @@ from django.shortcuts import get_object_or_404
 from rest_framework import status
 from rest_framework.views import APIView
 from django.contrib.auth.models import User
+import ipaddress
+from ipware import get_client_ip
 from ideasApi.models import (
     News,
     Events,
@@ -27,13 +29,12 @@ from ideasApi.api.serializers import (
     ProposalSerializer,
     UserEmailSerializer
 )
-
+import logging
 
 class CustomPagination(PageNumberPagination):
     page_size = 10  # Number of items per page
     page_size_query_param = 'page_size'
     max_page_size = 100  # Maximum number of items per page
-    
     
 class NewsListView(generics.ListAPIView):
     serializer_class = NewsSerializer
@@ -51,7 +52,70 @@ class NewsListView(generics.ListAPIView):
             except Technology.DoesNotExist:
                 queryset = News.objects.none()
 
-        return queryset 
+        return queryset
+
+    def get(self, request, *args, **kwargs):
+        self.is_request_from_proxy = getattr(request, 'is_request_from_proxy', False)
+        self.client_ip, self.is_routable = get_client_ip(request)  # Add this line
+        return super().get(request, *args, **kwargs)
+
+    def list(self, request, *args, **kwargs):
+        response = super().list(request, *args, **kwargs)
+        if hasattr(self, 'is_request_from_proxy'):
+            response.data['is_request_from_proxy'] = self.is_request_from_proxy
+            response.data['is_routable'] = self.is_routable  
+            response.data['client_ip'] = self.client_ip  
+        return response
+    
+# class NewsListView(generics.ListAPIView):
+#     serializer_class = NewsSerializer
+#     permission_classes = [IsAuthenticated]
+#     pagination_class = CustomPagination
+
+#     def get_queryset(self):
+#         queryset = News.objects.all().order_by('-timestamp')
+
+#         technology_name = self.kwargs.get('technology_name')
+#         if technology_name:
+#             try:
+#                 technology = Technology.objects.get(technology_name__iexact=technology_name)
+#                 queryset = queryset.filter(technologies=technology)
+#             except Technology.DoesNotExist:
+#                 queryset = News.objects.none()
+
+#         return queryset 
+
+    # def list(self, request, *args, **kwargs):
+    #     is_proxy_request = False
+
+    #     if 'HTTP_X_FORWARDED_FOR' in request.META:
+    #         ip_address = request.META['HTTP_X_FORWARDED_FOR'].split(',')[0].strip()
+    #         if ipaddress.ip_address(ip_address):
+    #             if self.is_private_ip(ip_address):
+    #                 is_proxy_request = True
+    #     elif 'REMOTE_ADDR' in request.META:
+    #         ip_address = request.META['REMOTE_ADDR']
+    #         if ipaddress.ip_address(ip_address) and self.is_private_ip(ip_address):
+    #             is_proxy_request = True
+
+    #     if is_proxy_request:
+    #         logger = logging.getLogger('proxy_logger')
+    #         log_message = f"API request made from a proxy. IP Address: {ip_address}"
+    #         logger.error(log_message)
+    #         return Response({"message": "API request made from a proxy."})
+    #     else:
+    #         return super().list(request, *args, **kwargs)
+
+    # def is_private_ip(self, ip):
+    #     private_ranges = [
+    #         ipaddress.ip_network('10.0.0.0/8'),
+    #         ipaddress.ip_network('172.16.0.0/12'),
+    #         ipaddress.ip_network('192.168.0.0/16'),
+    #     ]
+    #     for private_range in private_ranges:
+    #         if ipaddress.ip_address(ip) in private_range:
+    #             return True
+    #     return False
 
 class InvestmentListView(generics.ListAPIView):
     serializer_class = InvestmentSerializer
@@ -70,6 +134,7 @@ class InvestmentListView(generics.ListAPIView):
                 queryset = Investment.objects.none()
 
         return queryset
+
 
 class EventsListView(generics.ListAPIView):
     serializer_class = EventsSerializer

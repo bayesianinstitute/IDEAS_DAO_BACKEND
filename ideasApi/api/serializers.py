@@ -6,12 +6,12 @@ from ideasApi.models import (
         Investment,
         Proposal
 )
-
 class NewsSerializer(serializers.ModelSerializer):
+    # Your existing serializer fields go here
     class Meta:
         model = News
         fields = '__all__'
-
+        
 class NewsImageSerializer(serializers.ModelSerializer):
     class Meta:
         model = News

@@ -61,6 +61,8 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'ideasApi.middleware.APILoggingMiddleware', 
     'user_app.middleware.APILoggingMiddleware', 
+    'ideasApi.middleware.ProxyDetectionMiddleware',
+    'user_app.middleware.ProxyDetectionMiddleware',
 ]
 
 ROOT_URLCONF = 'ideas.urls'
@@ -147,10 +149,10 @@ DEFAULT_FROM_EMAIL = 'bayesdev2@gmail.com'
 
 # List of email addresses that will receive error messages from Django's logging framework
 ADMINS = [
-    ('Afaan', 'afaan.shaikh.21@gmail.com'),
-    ('Afaan2', 'afaan@bayes.global'),
+    ('Afaan', 'afaan@bayes.global'),
     # Add more tuples as needed
-]
+    # 
+ ]
 # Email subject prefix for error messages sent to admins
 EMAIL_SUBJECT_PREFIX = 'IDEAS DAO BACKEND'
 
@@ -201,11 +203,19 @@ LOGGING = {
     'disable_existing_loggers': False,
     'formatters': {
         'verbose': {
-            'format': '{levelname} {asctime} {module} {message}',
+            'format': '{levelname} {asctime} {module} {message} ',
             'style': '{',
         },
     },
     'handlers': {
+        'proxy_file': {
+            'level': 'ERROR',
+            'class': 'logging.handlers.TimedRotatingFileHandler',
+            'filename': os.path.join(LOGGING_DIR, 'proxy.log'),
+            'when': 'midnight',
+            'backupCount': 7,
+            'formatter': 'verbose',
+        },
         'error_file': {
             'level': 'ERROR',  # Capture ERROR level and higher
             'class': 'logging.handlers.TimedRotatingFileHandler',
@@ -237,6 +247,11 @@ LOGGING = {
         },
     },
     'loggers': {
+        'proxy_logger': {
+            'handlers': ['proxy_file'],
+            'level': 'ERROR',
+            'propagate': False,
+        },
         'django': {
             'handlers': ['error_file', 'email_admin', 'warning_file', 'regular_file'],
             'level': 'DEBUG',  # Capture DEBUG level and higher

@@ -1,0 +1,25 @@
+INFO 2023-08-19 00:06:50,753 autoreload Watching for file changes with StatReloader 
+INFO 2023-08-19 00:06:57,079 basehttp "GET /api/v1/news/ HTTP/1.1" 200 309 
+INFO 2023-08-19 00:07:15,876 autoreload C:\Users\afaan\Desktop\IDEAS\Ideas App\ideasApi\middleware.py changed, reloading. 
+INFO 2023-08-19 00:07:18,130 autoreload Watching for file changes with StatReloader 
+INFO 2023-08-19 00:15:52,765 autoreload C:\Users\afaan\Desktop\IDEAS\Ideas App\ideasApi\api\serializers.py changed, reloading. 
+INFO 2023-08-19 00:15:55,200 autoreload Watching for file changes with StatReloader 
+INFO 2023-08-19 00:17:06,610 autoreload C:\Users\afaan\Desktop\IDEAS\Ideas App\ideasApi\api\views.py changed, reloading. 
+INFO 2023-08-19 00:17:08,460 autoreload Watching for file changes with StatReloader 
+INFO 2023-08-19 00:19:05,614 autoreload C:\Users\afaan\Desktop\IDEAS\Ideas App\ideasApi\api\views.py changed, reloading. 
+INFO 2023-08-19 00:19:07,917 autoreload Watching for file changes with StatReloader 
+INFO 2023-08-19 00:19:22,665 autoreload C:\Users\afaan\Desktop\IDEAS\Ideas App\ideasApi\api\serializers.py changed, reloading. 
+INFO 2023-08-19 00:19:24,921 autoreload Watching for file changes with StatReloader 
+INFO 2023-08-19 00:19:33,213 basehttp "GET /api/v1/news/ HTTP/1.1" 200 397 
+INFO 2023-08-19 00:20:01,248 autoreload C:\Users\afaan\Desktop\IDEAS\Ideas App\ideasApi\api\serializers.py changed, reloading. 
+INFO 2023-08-19 00:20:03,527 autoreload Watching for file changes with StatReloader 
+INFO 2023-08-19 00:20:04,498 basehttp "GET /api/v1/news/ HTTP/1.1" 200 324 
+INFO 2023-08-19 00:20:22,312 autoreload C:\Users\afaan\Desktop\IDEAS\Ideas App\ideasApi\api\serializers.py changed, reloading. 
+INFO 2023-08-19 00:20:24,326 autoreload Watching for file changes with StatReloader 
+INFO 2023-08-19 00:20:32,337 autoreload C:\Users\afaan\Desktop\IDEAS\Ideas App\ideasApi\api\views.py changed, reloading. 
+INFO 2023-08-19 00:20:34,401 autoreload Watching for file changes with StatReloader 
+INFO 2023-08-19 00:20:35,521 basehttp "GET /api/v1/news/ HTTP/1.1" 200 280 
+INFO 2023-08-19 00:20:46,537 autoreload C:\Users\afaan\Desktop\IDEAS\Ideas App\ideasApi\api\views.py changed, reloading. 
+INFO 2023-08-19 00:20:48,783 autoreload Watching for file changes with StatReloader 
+INFO 2023-08-19 00:33:29,306 autoreload C:\Users\afaan\Desktop\IDEAS\Ideas App\ideasApi\api\views.py changed, reloading. 
+INFO 2023-08-19 00:33:30,381 autoreload Watching for file changes with StatReloader 

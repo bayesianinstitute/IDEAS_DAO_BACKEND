@@ -3,6 +3,8 @@ from user_app.models import Profile
 from django.contrib.auth.admin import UserAdmin
 from import_export.admin import ImportExportModelAdmin
 from django.utils.html import format_html
+from django.contrib.auth.models import User
+
 
 class BrandAdmin(ImportExportModelAdmin):
     pass
@@ -16,8 +18,6 @@ class ProfileAdmin(admin.ModelAdmin):
 
 class Profiles(ProfileAdmin,BrandAdmin):
     pass
-
-
 
 admin.site.register(Profile,Profiles)
 
