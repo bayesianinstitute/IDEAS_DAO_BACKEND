@@ -19,6 +19,7 @@ class APILoggingMiddleware:
 class ProxyDetectionMiddleware:
     def __init__(self, get_response):
         self.get_response = get_response
+        self.proxy_logger = logging.getLogger('proxy_logger')  # Get the proxy_logger logger
 
     def __call__(self, request):
         client_ip, is_routable = get_client_ip(request)
@@ -26,14 +27,11 @@ class ProxyDetectionMiddleware:
 
         if is_routable is False and client_ip:
             request.is_request_from_proxy = True
-
-        print("Request from proxy:", request.is_request_from_proxy)  # Add this line
-        print("Client IP:", client_ip)
-        print("Is Routable:", is_routable)
+            self.proxy_logger.error("Request from proxy: Client IP %s", client_ip)
 
         response = self.get_response(request)
         return response
-
+    
 # class ProxyDetectionMiddleware(MiddlewareMixin):
 #     def process_request(self, request):
 #         is_proxy_request = False
