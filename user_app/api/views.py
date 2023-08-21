@@ -16,6 +16,7 @@ import random
 from datetime import datetime, timedelta
 from django.conf import settings
 from django.utils import timezone
+from django.contrib.auth.hashers import make_password
 from django.views.decorators.csrf import csrf_protect
 from ideasApi.models import (
        Otp
@@ -26,7 +27,6 @@ from user_app.models import (
 
     
 @api_view(['POST'])
-
 def registration_view(request):
     if request.method == 'POST':
         serializer = RegistrationSerializer(data=request.data)
@@ -53,7 +53,9 @@ def registration_view(request):
                     'email': user.email,
                     'is_valid': profile.is_valid
                 },
-                
+                'is_request_from_proxy': getattr(request, 'is_request_from_proxy', False),
+                'is_routable': getattr(request, 'is_routable', True),
+                'client_ip': getattr(request, 'client_ip', ''),
             }
             return Response(data, status=status.HTTP_201_CREATED)
         else:
@@ -75,7 +77,7 @@ class CustomTokenObtainPairView(TokenObtainPairView):
 #             }, status=status.HTTP_400_BAD_REQUEST)
 #         return 
 
-class Forgotpassword(APIView):
+class sent_otp(APIView):
     def post(self, request, format=None):
         serializer = OtpSerializer(data=request.data)
         if serializer.is_valid():
@@ -107,15 +109,22 @@ class Forgotpassword(APIView):
                 fail_silently=False,
             )
             
-            return Response({'message': 'OTP sent successfully'}, status=status.HTTP_200_OK)
+            response_data = {
+                'message': 'OTP sent successfully',
+                'is_request_from_proxy': getattr(request, 'is_request_from_proxy', False),
+                'is_routable': getattr(request, 'is_routable', True),
+                'client_ip': getattr(request, 'client_ip', ''),
+            }
+            
+            return Response(response_data, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
     
-@api_view(["POST"])
-@permission_classes([IsAuthenticated])
-def verify_otp_view(request):
-    if request.method == "POST":
+class ResetPassword(APIView):
+    
+    def post(self, request, format=None):
         email = request.data.get("email")
+        new_password = request.data.get("new_password")
         otp_value = request.data.get("otp_value")
         data = {}
         
@@ -138,24 +147,17 @@ def verify_otp_view(request):
 
         if otp_obj.otp_value == otp_value:
             # OTP is valid
-            # otp_obj.delete()
-            try:
-                profile = Profile.objects.get(Django_user=user)
-                if profile.is_valid:
-                    data["response"] = "OTP verification was done previously"
-                    return Response(data, status=status.HTTP_200_OK)
-                profile.is_valid = True  # Set is_valid flag to True
-                profile.save()  # Save the changes
-                data["response"] = "OTP verification successful"
-                return Response(data, status=status.HTTP_200_OK)
-            except Profile.DoesNotExist:
-                data["error"] = "Profile not found"
-                return Response(data, status=status.HTTP_400_BAD_REQUEST)
+            user.password = make_password(new_password)  # Change the user's password
+            user.save()  # Save the changes
+            
+            data["response"] = "Password reset successful"
+            data['is_request_from_proxy'] = getattr(request, 'is_request_from_proxy', False)
+            data['is_routable'] = getattr(request, 'is_routable', True)
+            data['client_ip'] = getattr(request, 'client_ip', '')
+            
+            return Response(data, status=status.HTTP_200_OK)
         else:
             # OTP is invalid
             data["error"] = "Invalid OTP"
             return Response(data, status=status.HTTP_400_BAD_REQUEST)
-    
-
-    
     

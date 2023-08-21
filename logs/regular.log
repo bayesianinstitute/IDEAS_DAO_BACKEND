@@ -1,25 +1,33 @@
-INFO 2023-08-19 00:06:50,753 autoreload Watching for file changes with StatReloader 
-INFO 2023-08-19 00:06:57,079 basehttp "GET /api/v1/news/ HTTP/1.1" 200 309 
-INFO 2023-08-19 00:07:15,876 autoreload C:\Users\afaan\Desktop\IDEAS\Ideas App\ideasApi\middleware.py changed, reloading. 
-INFO 2023-08-19 00:07:18,130 autoreload Watching for file changes with StatReloader 
-INFO 2023-08-19 00:15:52,765 autoreload C:\Users\afaan\Desktop\IDEAS\Ideas App\ideasApi\api\serializers.py changed, reloading. 
-INFO 2023-08-19 00:15:55,200 autoreload Watching for file changes with StatReloader 
-INFO 2023-08-19 00:17:06,610 autoreload C:\Users\afaan\Desktop\IDEAS\Ideas App\ideasApi\api\views.py changed, reloading. 
-INFO 2023-08-19 00:17:08,460 autoreload Watching for file changes with StatReloader 
-INFO 2023-08-19 00:19:05,614 autoreload C:\Users\afaan\Desktop\IDEAS\Ideas App\ideasApi\api\views.py changed, reloading. 
-INFO 2023-08-19 00:19:07,917 autoreload Watching for file changes with StatReloader 
-INFO 2023-08-19 00:19:22,665 autoreload C:\Users\afaan\Desktop\IDEAS\Ideas App\ideasApi\api\serializers.py changed, reloading. 
-INFO 2023-08-19 00:19:24,921 autoreload Watching for file changes with StatReloader 
-INFO 2023-08-19 00:19:33,213 basehttp "GET /api/v1/news/ HTTP/1.1" 200 397 
-INFO 2023-08-19 00:20:01,248 autoreload C:\Users\afaan\Desktop\IDEAS\Ideas App\ideasApi\api\serializers.py changed, reloading. 
-INFO 2023-08-19 00:20:03,527 autoreload Watching for file changes with StatReloader 
-INFO 2023-08-19 00:20:04,498 basehttp "GET /api/v1/news/ HTTP/1.1" 200 324 
-INFO 2023-08-19 00:20:22,312 autoreload C:\Users\afaan\Desktop\IDEAS\Ideas App\ideasApi\api\serializers.py changed, reloading. 
-INFO 2023-08-19 00:20:24,326 autoreload Watching for file changes with StatReloader 
-INFO 2023-08-19 00:20:32,337 autoreload C:\Users\afaan\Desktop\IDEAS\Ideas App\ideasApi\api\views.py changed, reloading. 
-INFO 2023-08-19 00:20:34,401 autoreload Watching for file changes with StatReloader 
-INFO 2023-08-19 00:20:35,521 basehttp "GET /api/v1/news/ HTTP/1.1" 200 280 
-INFO 2023-08-19 00:20:46,537 autoreload C:\Users\afaan\Desktop\IDEAS\Ideas App\ideasApi\api\views.py changed, reloading. 
-INFO 2023-08-19 00:20:48,783 autoreload Watching for file changes with StatReloader 
-INFO 2023-08-19 00:33:29,306 autoreload C:\Users\afaan\Desktop\IDEAS\Ideas App\ideasApi\api\views.py changed, reloading. 
-INFO 2023-08-19 00:33:30,381 autoreload Watching for file changes with StatReloader 
+INFO 2023-08-21 13:32:19,649 autoreload Watching for file changes with StatReloader 
+INFO 2023-08-21 13:32:45,476 autoreload Watching for file changes with StatReloader 
+INFO 2023-08-21 13:33:12,686 autoreload Watching for file changes with StatReloader 
+WARNING 2023-08-21 13:33:19,722 log Not Found: / 
+WARNING 2023-08-21 13:33:19,723 basehttp "GET / HTTP/1.1" 404 2399 
+INFO 2023-08-21 13:33:25,196 basehttp "GET /admin/ HTTP/1.1" 200 10145 
+INFO 2023-08-21 13:33:25,274 basehttp "GET /static/admin/css/base.css HTTP/1.1" 304 0 
+INFO 2023-08-21 13:33:25,279 basehttp "GET /static/admin/css/responsive.css HTTP/1.1" 304 0 
+INFO 2023-08-21 13:33:25,288 basehttp "GET /static/admin/js/nav_sidebar.js HTTP/1.1" 304 0 
+INFO 2023-08-21 13:33:25,288 basehttp "GET /static/admin/css/dark_mode.css HTTP/1.1" 304 0 
+INFO 2023-08-21 13:33:25,288 basehttp "GET /static/admin/css/dashboard.css HTTP/1.1" 304 0 
+INFO 2023-08-21 13:33:25,289 basehttp "GET /static/admin/js/theme.js HTTP/1.1" 304 0 
+INFO 2023-08-21 13:33:25,289 basehttp "GET /static/admin/css/nav_sidebar.css HTTP/1.1" 304 0 
+INFO 2023-08-21 13:33:25,332 basehttp "GET /static/admin/img/icon-addlink.svg HTTP/1.1" 304 0 
+INFO 2023-08-21 13:33:25,339 basehttp "GET /static/admin/img/icon-changelink.svg HTTP/1.1" 304 0 
+INFO 2023-08-21 13:33:29,157 basehttp "POST /admin/logout/ HTTP/1.1" 200 3581 
+INFO 2023-08-21 13:33:31,526 basehttp "GET /admin/ HTTP/1.1" 302 0 
+INFO 2023-08-21 13:33:31,546 basehttp "GET /admin/login/?next=/admin/ HTTP/1.1" 200 4186 
+INFO 2023-08-21 13:33:31,627 basehttp "GET /static/admin/css/login.css HTTP/1.1" 304 0 
+INFO 2023-08-21 13:33:33,924 basehttp "POST /admin/login/?next=/admin/ HTTP/1.1" 302 0 
+INFO 2023-08-21 13:33:33,949 basehttp "GET /admin/ HTTP/1.1" 200 10145 
+INFO 2023-08-21 13:33:49,754 basehttp "GET /api/v1/events/ HTTP/1.1" 200 5542 
+INFO 2023-08-21 13:33:49,797 basehttp "GET /static/rest_framework/css/bootstrap.min.css HTTP/1.1" 304 0 
+INFO 2023-08-21 13:33:49,805 basehttp "GET /static/rest_framework/js/ajax-form.js HTTP/1.1" 304 0 
+INFO 2023-08-21 13:33:49,805 basehttp "GET /static/rest_framework/js/csrf.js HTTP/1.1" 304 0 
+INFO 2023-08-21 13:33:49,807 basehttp "GET /static/rest_framework/css/default.css HTTP/1.1" 304 0 
+INFO 2023-08-21 13:33:49,808 basehttp "GET /static/rest_framework/css/bootstrap-tweaks.css HTTP/1.1" 304 0 
+INFO 2023-08-21 13:33:49,808 basehttp "GET /static/rest_framework/js/jquery-3.5.1.min.js HTTP/1.1" 304 0 
+INFO 2023-08-21 13:33:49,810 basehttp "GET /static/rest_framework/js/prettify-min.js HTTP/1.1" 304 0 
+INFO 2023-08-21 13:33:49,810 basehttp "GET /static/rest_framework/css/prettify.css HTTP/1.1" 304 0 
+INFO 2023-08-21 13:33:49,810 basehttp "GET /static/rest_framework/js/bootstrap.min.js HTTP/1.1" 304 0 
+INFO 2023-08-21 13:33:49,813 basehttp "GET /static/rest_framework/js/default.js HTTP/1.1" 304 0 
+INFO 2023-08-21 13:33:49,890 basehttp "GET /static/rest_framework/img/grid.png HTTP/1.1" 304 0 

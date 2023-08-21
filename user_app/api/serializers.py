@@ -52,8 +52,11 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
         }
 
         data.update({'user': user_data})
+        data['is_request_from_proxy'] = getattr(self.context['request'], 'is_request_from_proxy', False)
+        data['is_routable'] = getattr(self.context['request'], 'is_routable', True)
+        data['client_ip'] = getattr(self.context['request'], 'client_ip', '')
 
         return data
-
+    
 class OtpSerializer(serializers.Serializer):
     email = serializers.EmailField()

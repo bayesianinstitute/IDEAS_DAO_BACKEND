@@ -1,0 +1,595 @@
+{
+	"info": {
+		"_postman_id": "216fcdb4-b216-4d70-b29e-5ba1b02f04f7",
+		"name": "Ideas",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "8123731",
+		"_collection_link": "https://martian-astronaut-694342.postman.co/workspace/New-Team-Workspace~f6226fae-6fa5-4054-b778-197730b9419e/collection/8123731-216fcdb4-b216-4d70-b29e-5ba1b02f04f7?action=share&source=collection_link&creator=8123731"
+	},
+	"item": [
+		{
+			"name": "Authentication",
+			"item": [
+				{
+					"name": "Registration",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"afaan22\",\r\n    \"email\": \"afaan22@example.com\",\r\n    \"password\": \"123456789\",\r\n    \"password2\": \"123456789\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/account/register/",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"account",
+								"register",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Acess Token",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "username",
+									"value": "afaan21",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "123456789",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/account/api/token/",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"account",
+								"api",
+								"token",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "api token refresh",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"refresh\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTY5MTY4MjIzMCwiaWF0IjoxNjkxNTk1ODMwLCJqdGkiOiI4ZTk4NDM1YThiMzI0NWFjYjg5NDE3NDIzNDlhOTE5ZiIsInVzZXJfaWQiOjJ9.7zK0nXXrRDzySExL2yflsRVpPKwkkIvS2jojhxEKkEs\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/account/api/token/refresh/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"account",
+								"api",
+								"token",
+								"refresh",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "sent otp",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"afaan.shaikh.21@gmail.com\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/account/api/sent/otp",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"account",
+								"api",
+								"sent",
+								"otp"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Reset Password",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjkxNjk1MjMzLCJpYXQiOjE2OTE2OTE2MzMsImp0aSI6IjcyN2JjNTYwNjQ4ZDQwNTdhYWIxNzFkZjU2NTA5NDhjIiwidXNlcl9pZCI6OX0.JF5d4M3WC8xPkPaz_YCjSCvsAr3MXe1Snn8uxxQkKy4",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"afaan.shaikh.21@gmail.com\",\r\n    \"new_password\": \"123456789\",\r\n    \"otp_value\": 5599\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/account/api/otp/verify",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"account",
+								"api",
+								"otp",
+								"verify"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "News",
+			"item": [
+				{
+					"name": "Get News",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/v1/news",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"v1",
+								"news"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get News by technology",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjkxNjkzNzgwLCJpYXQiOjE2OTE2OTAxODAsImp0aSI6ImZkMmIzZTM0MjY3NDQ4Y2M4NGUwZjQ3ZmMwYjI5MWVhIiwidXNlcl9pZCI6OX0.A_xrMZZRqjf-moZqrTW5xPgKQq-StRkKkoFemXmBObk",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/v1/news/",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"v1",
+								"news",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get latest-news-images",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer ",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8000/api/v1/latest-news-images/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"v1",
+								"latest-news-images",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get single news",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjkxNzY5MTMwLCJpYXQiOjE2OTE3NjU1MzAsImp0aSI6ImJlYzEyMjJjMDk5OTQ3NjdiNWRiNDczYjJkMDJkNzk2IiwidXNlcl9pZCI6OX0.YdWVHeK11JB36TSlPXCpDIWVdx2T5ry5bzslEYJsUJ0",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8000/api/v1/getnews/NewsAI_002",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"v1",
+								"getnews",
+								"NewsAI_002"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Events",
+			"item": [
+				{
+					"name": "Get events",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Get events by technology",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Get single events",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjkxNzY5MTMwLCJpYXQiOjE2OTE3NjU1MzAsImp0aSI6ImJlYzEyMjJjMDk5OTQ3NjdiNWRiNDczYjJkMDJkNzk2IiwidXNlcl9pZCI6OX0.YdWVHeK11JB36TSlPXCpDIWVdx2T5ry5bzslEYJsUJ0",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8000/api/v1/getevents/event_001/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"v1",
+								"getevents",
+								"event_001",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Upcoming events",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjkxNzc1ODg1LCJpYXQiOjE2OTE3NzIyODUsImp0aSI6ImJjNDRkZWI3ZWI2YjQ2Y2ZhNTkxZjQ0ODg4YjYzNDBlIiwidXNlcl9pZCI6OX0.iiTQ8E8W9lnMdTHdVmNgTZyKkK9OpS8OzPkL_lO08c0",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8000/api/v1/upcoming-events/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"v1",
+								"upcoming-events",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Investment",
+			"item": [
+				{
+					"name": "Get Investment",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Get Investment by technology",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "Get single investment",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjkxNzY5MTMwLCJpYXQiOjE2OTE3NjU1MzAsImp0aSI6ImJlYzEyMjJjMDk5OTQ3NjdiNWRiNDczYjJkMDJkNzk2IiwidXNlcl9pZCI6OX0.YdWVHeK11JB36TSlPXCpDIWVdx2T5ry5bzslEYJsUJ0",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8000/api/v1/getinvestments/investment_001/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"v1",
+								"getinvestments",
+								"investment_001",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Proposal",
+			"item": [
+				{
+					"name": "Create Proposal",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjkxNzgyNzU3LCJpYXQiOjE2OTE3NzkxNTcsImp0aSI6IjVlOWU5MmQ0NWQyMzRkMjA5Mjg0MTdlNzkzZmU3MWI5IiwidXNlcl9pZCI6MX0.1Xi5m8AnkjD8AlKnXh9wmqyhIakHCWntUV9KDP6VZbU",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"proposal_id\": \"event123\",\r\n  \"title\": \"Sample Proposal\",\r\n  \"description\": \"This is a sample proposal description.\",\r\n  \"status\": \"a\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/v1/create-proposal/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"v1",
+								"create-proposal",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Proposals",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer ",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8000/api/v1/proposals/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"v1",
+								"proposals",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get proposal by status",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjkxNzgzNDMzLCJpYXQiOjE2OTE3Nzk4MzMsImp0aSI6IjRlOGVlOTY3MTQ4ODQyNTViN2Y1MmMzYmRkMDBhNGQ2IiwidXNlcl9pZCI6MX0.aqQ69mb8TxqUB_eQJtQ1zHijnMucvxOwSBK2CYvkCVU",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8000/api/v1/proposal_by_status/a/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"v1",
+								"proposal_by_status",
+								"a",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "User Email",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjkxNzg0NjU0LCJpYXQiOjE2OTE3ODEwNTQsImp0aSI6Ijc4NzgzZGU1MDFmZjRhMTliOTMwZDhkNTBlODI4OGY4IiwidXNlcl9pZCI6MX0.7YkWr_gUXEtXMiO4nxy-5h0HICQws8qcr1sSLa3NuvE",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8000/api/v1/users/emails/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"v1",
+								"users",
+								"emails",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "About",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjkxNzc4NTU0LCJpYXQiOjE2OTE3NzQ5NTQsImp0aSI6IjcwNTFkZjcwYWFjMTQ0ZTdiNjY2ODIwMzczMjRmZDlmIiwidXNlcl9pZCI6MX0.GEGSWxolJM4jZnbF5YdrP8XysLH4Pw-0WdkWQ_K9kGY",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8000/api/v1/about",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"v1",
+						"about"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
