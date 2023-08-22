@@ -1,0 +1,3 @@
+ERROR 2023-08-22 13:17:30,184 middleware Request from proxy: Client IP 127.0.0.1 for URL /api/v1/events/ 
+ERROR 2023-08-22 13:17:30,426 middleware Request from proxy: Client IP 127.0.0.1 for URL /favicon.ico 
+ERROR 2023-08-22 13:17:33,920 middleware Request from proxy: Client IP 127.0.0.1 for URL /api/v1/events/ 

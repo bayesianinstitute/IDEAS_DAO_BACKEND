@@ -207,11 +207,24 @@ LOGGING = {
             'style': '{',
         },
     },
+    'filters': {
+        'exclude_autoreload': {
+            '()': 'ideasApi.log_filters.ExcludeAutoreloadFilter',  # Adjust the module path
+        },
+    },
     'handlers': {
         'proxy_file': {
             'level': 'ERROR',
             'class': 'logging.handlers.TimedRotatingFileHandler',
             'filename': os.path.join(LOGGING_DIR, 'proxy.log'),
+            'when': 'midnight',
+            'backupCount': 7,
+            'formatter': 'verbose',
+        },
+        'user_register_file': {
+            'level': 'INFO',
+            'class': 'logging.handlers.TimedRotatingFileHandler',
+            'filename': os.path.join(LOGGING_DIR, 'userRegister.log'),
             'when': 'midnight',
             'backupCount': 7,
             'formatter': 'verbose',
@@ -244,6 +257,7 @@ LOGGING = {
             'when': 'midnight',
             'backupCount': 7,
             'formatter': 'verbose',
+            'filters': ['exclude_autoreload'], 
         },
     },
     'loggers': {
@@ -263,7 +277,7 @@ LOGGING = {
             'propagate': False,
         },
         'user_app.views': {
-            'handlers': ['error_file', 'email_admin', 'warning_file', 'regular_file'],
+            'handlers': ['error_file', 'email_admin', 'warning_file', 'regular_file','user_register_file'],
             'level': 'DEBUG',  # Adjust the level as needed
             'propagate': False,
         },

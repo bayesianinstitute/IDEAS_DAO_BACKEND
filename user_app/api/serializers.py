@@ -45,6 +45,14 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
         data = super().validate(attrs)
         
         user = self.user
+
+        try:
+            profile = Profile.objects.get(Django_user=user)
+            if not profile.is_valid:
+                raise serializers.ValidationError("Profile is not valid for token generation .Confirm it with mail")
+        except Profile.DoesNotExist:
+            raise serializers.ValidationError("Profile not found.")
+
         user_data = {
             'id': user.id,
             'username': user.username,
@@ -57,6 +65,6 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
         data['client_ip'] = getattr(self.context['request'], 'client_ip', '')
 
         return data
-    
+
 class OtpSerializer(serializers.Serializer):
     email = serializers.EmailField()
