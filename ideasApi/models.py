@@ -72,16 +72,16 @@ class Events(models.Model):
         verbose_name_plural="Events"
         
 class Proposal(models.Model):
-    proposal_id =models.CharField(max_length=50,unique=True)
+    proposal_id = models.AutoField(primary_key=True)
     timestamp = models.DateTimeField(auto_now=True)
     title= models.CharField(max_length=200)
     description = RichTextField()
     PROPOSAL_TYPE_CHOICES = (
-        ('a', 'Active'),
-        ('r', 'Reject'),
-        ('c', 'Closed'),
+        ('active', 'Active'),
+        ('reject', 'Reject'),
+        ('closed', 'Closed'),
     )
-    status = models.CharField(max_length=1, choices=PROPOSAL_TYPE_CHOICES, default='u')
+    status = models.CharField(max_length=10, choices=PROPOSAL_TYPE_CHOICES, default='active')
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='proposaluser')
     def __str__(self):
         return self.title
@@ -106,3 +106,13 @@ class About(models.Model):
 
     def __str__(self):
         return self.title
+
+class Device(models.Model):
+    device_id = models.CharField(max_length=50, unique=True)
+    device_model = models.CharField(max_length=100)
+    os_version = models.CharField(max_length=50)
+    ip_address = models.GenericIPAddressField()
+    proxy_type = models.CharField(max_length=50, null=True, blank=True)
+
+    def __str__(self):
+        return self.device_id

@@ -1,4 +1,4 @@
-from user_app.api.serializers import CustomTokenObtainPairSerializer, RegistrationSerializer, OtpSerializer,ProfileSerializer
+from user_app.api.serializers import CustomTokenObtainPairSerializer, RegistrationSerializer, OtpSerializer
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from rest_framework.authtoken.models import Token
@@ -22,9 +22,6 @@ from django.views.decorators.csrf import csrf_protect
 from ideasApi.models import (
        Otp
 )
-from user_app.models import (
-       Profile
-)
 import logging
 logger = logging.getLogger(__name__)
 
@@ -41,25 +38,15 @@ def registration_view(request):
                 email=user_data['email']
             )
 
-            # Create a corresponding Profile instance with is_valid set to False
-            profile = Profile.objects.create(
-                name=user.username,
-                Django_user=user,
-                is_valid=False
-            )
-
-            # Send confirmation email to the user
             confirmation_subject = 'Welcome to IdeasApp! Please confirm your registration.'
-            confirmation_message = f'Hi {user.username},\n\nThank you for registering at IdeasApp. Please click the following link to confirm your registration:\n\nhttp://127.0.0.1:8000/account/confirm/{user.id}/\n\nIf you did not request this registration, please ignore this email.\n\nBest regards,\nThe IdeasApp Team'
+            confirmation_message = f'Hi {user.username},\n\nThank you for registering at IdeasApp. \nIf you did not request this registration, please ignore this email.\n\nBest regards,\nThe IdeasApp Team'
             send_mail(confirmation_subject, confirmation_message, 'noreply@yourapp.com', [user.email])
 
-            profile_serializer = ProfileSerializer(profile)  # Assuming you have a serializer for the Profile model
             data = {
                 'response': 'Registration Successful! A confirmation email has been sent.',
                 'user': {
                     'username': user.username,
                     'email': user.email,
-                    'is_valid': profile.is_valid
                 },
                 'is_request_from_proxy': getattr(request, 'is_request_from_proxy', False),
                 'is_routable': getattr(request, 'is_routable', True),
@@ -74,19 +61,7 @@ def registration_view(request):
         else:
             data = serializer.errors
             return Response(data, status=status.HTTP_400_BAD_REQUEST)
-
-@api_view(['GET'])
-def confirm_registration(request, user_id):
-    user = get_object_or_404(User, id=user_id)
-    profile = get_object_or_404(Profile, Django_user=user)
-
-    if not profile.is_valid:
-        profile.is_valid = True
-        profile.save()
-
-        return Response({'message': 'Your registration has been confirmed!'}, status=status.HTTP_200_OK)
-    else:
-        return Response({'message': 'Your registration has already been confirmed.'}, status=status.HTTP_400_BAD_REQUEST)
+        
 
 class CustomTokenObtainPairView(TokenObtainPairView):
     serializer_class = CustomTokenObtainPairSerializer

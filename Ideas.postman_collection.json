@@ -17,7 +17,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"username\": \"afaan22\",\r\n    \"email\": \"afaan22@example.com\",\r\n    \"password\": \"123456789\",\r\n    \"password2\": \"123456789\"\r\n}\r\n",
+							"raw": "{\r\n    \"username\": \"afaanshaikh\",\r\n    \"email\": \"afaan.shaikh.21@gmail.com\",\r\n    \"password\": \"123456789\",\r\n    \"password2\": \"123456789\"\r\n}\r\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -25,7 +25,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://127.0.0.1:8000/account/register/",
+							"raw": "http://127.0.0.1:8000/account/api/register/",
 							"protocol": "http",
 							"host": [
 								"127",
@@ -36,6 +36,7 @@
 							"port": "8000",
 							"path": [
 								"account",
+								"api",
 								"register",
 								""
 							]
@@ -49,19 +50,13 @@
 						"method": "POST",
 						"header": [],
 						"body": {
-							"mode": "formdata",
-							"formdata": [
-								{
-									"key": "username",
-									"value": "afaan21",
-									"type": "text"
-								},
-								{
-									"key": "password",
-									"value": "123456789",
-									"type": "text"
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"afaanshaikh\",\r\n    \"password\": \"123456789\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
 								}
-							]
+							}
 						},
 						"url": {
 							"raw": "http://127.0.0.1:8000/account/api/token/",
@@ -90,7 +85,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"refresh\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTY5MTY4MjIzMCwiaWF0IjoxNjkxNTk1ODMwLCJqdGkiOiI4ZTk4NDM1YThiMzI0NWFjYjg5NDE3NDIzNDlhOTE5ZiIsInVzZXJfaWQiOjJ9.7zK0nXXrRDzySExL2yflsRVpPKwkkIvS2jojhxEKkEs\"\r\n}",
+							"raw": "{\r\n    \"refresh\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTY5MjkwMzAxNiwiaWF0IjoxNjkyODE2NjE2LCJqdGkiOiI2MGY1YjNjYmU2N2M0YTI0YjUwN2U4NDhiZTUyOGI3OCIsInVzZXJfaWQiOjI1fQ.Ao7_QcGe6YMKzbhj25V570OKPs4CcCvKdPdpMKt20Og\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -155,15 +150,15 @@
 						"method": "POST",
 						"header": [
 							{
-								"key": "Authorization",
-								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjkxNjk1MjMzLCJpYXQiOjE2OTE2OTE2MzMsImp0aSI6IjcyN2JjNTYwNjQ4ZDQwNTdhYWIxNzFkZjU2NTA5NDhjIiwidXNlcl9pZCI6OX0.JF5d4M3WC8xPkPaz_YCjSCvsAr3MXe1Snn8uxxQkKy4",
+								"key": "",
+								"value": "",
 								"type": "text",
 								"disabled": true
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"email\": \"afaan.shaikh.21@gmail.com\",\r\n    \"new_password\": \"123456789\",\r\n    \"otp_value\": 5599\r\n}\r\n",
+							"raw": "{\r\n    \"email\": \"afaan.shaikh.21@gmail.com\",\r\n    \"new_password\": \"12345678\",\r\n    \"otp_value\": 2984\r\n}\r\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -171,7 +166,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://127.0.0.1:8000/account/api/otp/verify",
+							"raw": "http://127.0.0.1:8000/account/api/reset_password/",
 							"protocol": "http",
 							"host": [
 								"127",
@@ -183,8 +178,8 @@
 							"path": [
 								"account",
 								"api",
-								"otp",
-								"verify"
+								"reset_password",
+								""
 							]
 						}
 					},
@@ -199,35 +194,18 @@
 					"name": "Get News",
 					"request": {
 						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://127.0.0.1:8000/api/v1/news",
-							"protocol": "http",
-							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
-							],
-							"port": "8000",
-							"path": [
-								"api",
-								"v1",
-								"news"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Get News by technology",
-					"request": {
-						"method": "GET",
 						"header": [
 							{
-								"key": "Authorization",
-								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjkxNjkzNzgwLCJpYXQiOjE2OTE2OTAxODAsImp0aSI6ImZkMmIzZTM0MjY3NDQ4Y2M4NGUwZjQ3ZmMwYjI5MWVhIiwidXNlcl9pZCI6OX0.A_xrMZZRqjf-moZqrTW5xPgKQq-StRkKkoFemXmBObk",
-								"type": "text"
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							},
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
 							}
 						],
 						"url": {
@@ -251,21 +229,57 @@
 					"response": []
 				},
 				{
+					"name": "Get News by technology",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/v1/news/AI",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"v1",
+								"news",
+								"AI"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "Get latest-news-images",
 					"request": {
 						"method": "GET",
 						"header": [
 							{
-								"key": "Authorization",
-								"value": "Bearer ",
-								"type": "text"
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
 							}
 						],
 						"url": {
-							"raw": "http://localhost:8000/api/v1/latest-news-images/",
+							"raw": "http://127.0.0.1:8000/api/v1/latest-news-images/",
 							"protocol": "http",
 							"host": [
-								"localhost"
+								"127",
+								"0",
+								"0",
+								"1"
 							],
 							"port": "8000",
 							"path": [
@@ -284,23 +298,28 @@
 						"method": "GET",
 						"header": [
 							{
-								"key": "Authorization",
-								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjkxNzY5MTMwLCJpYXQiOjE2OTE3NjU1MzAsImp0aSI6ImJlYzEyMjJjMDk5OTQ3NjdiNWRiNDczYjJkMDJkNzk2IiwidXNlcl9pZCI6OX0.YdWVHeK11JB36TSlPXCpDIWVdx2T5ry5bzslEYJsUJ0",
-								"type": "text"
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
 							}
 						],
 						"url": {
-							"raw": "http://localhost:8000/api/v1/getnews/NewsAI_002",
+							"raw": "http://127.0.0.1:8000/api/v1/getnews/1/",
 							"protocol": "http",
 							"host": [
-								"localhost"
+								"127",
+								"0",
+								"0",
+								"1"
 							],
 							"port": "8000",
 							"path": [
 								"api",
 								"v1",
 								"getnews",
-								"NewsAI_002"
+								"1",
+								""
 							]
 						}
 					},
@@ -315,7 +334,38 @@
 					"name": "Get events",
 					"request": {
 						"method": "GET",
-						"header": []
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/v1/events/",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"v1",
+								"events",
+								""
+							],
+							"query": [
+								{
+									"key": "Authorization",
+									"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjkxNjkzNzgwLCJpYXQiOjE2OTE2OTAxODAsImp0aSI6ImZkMmIzZTM0MjY3NDQ4Y2M4NGUwZjQ3ZmMwYjI5MWVhIiwidXNlcl9pZCI6OX0.A_xrMZZRqjf-moZqrTW5xPgKQq-StRkKkoFemXmBObk",
+									"disabled": true
+								}
+							]
+						}
 					},
 					"response": []
 				},
@@ -333,13 +383,14 @@
 						"method": "GET",
 						"header": [
 							{
-								"key": "Authorization",
-								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjkxNzY5MTMwLCJpYXQiOjE2OTE3NjU1MzAsImp0aSI6ImJlYzEyMjJjMDk5OTQ3NjdiNWRiNDczYjJkMDJkNzk2IiwidXNlcl9pZCI6OX0.YdWVHeK11JB36TSlPXCpDIWVdx2T5ry5bzslEYJsUJ0",
-								"type": "text"
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
 							}
 						],
 						"url": {
-							"raw": "http://localhost:8000/api/v1/getevents/event_001/",
+							"raw": "http://localhost:8000/api/v1/getevents/1/",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -349,7 +400,7 @@
 								"api",
 								"v1",
 								"getevents",
-								"event_001",
+								"1",
 								""
 							]
 						}
@@ -362,9 +413,10 @@
 						"method": "GET",
 						"header": [
 							{
-								"key": "Authorization",
-								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjkxNzc1ODg1LCJpYXQiOjE2OTE3NzIyODUsImp0aSI6ImJjNDRkZWI3ZWI2YjQ2Y2ZhNTkxZjQ0ODg4YjYzNDBlIiwidXNlcl9pZCI6OX0.iiTQ8E8W9lnMdTHdVmNgTZyKkK9OpS8OzPkL_lO08c0",
-								"type": "text"
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
 							}
 						],
 						"url": {
@@ -391,9 +443,43 @@
 			"item": [
 				{
 					"name": "Get Investment",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
 					"request": {
 						"method": "GET",
-						"header": []
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "investment_id",
+									"value": "002",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/v1/investments/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"v1",
+								"investments",
+								""
+							]
+						}
 					},
 					"response": []
 				},
@@ -401,7 +487,28 @@
 					"name": "Get Investment by technology",
 					"request": {
 						"method": "GET",
-						"header": []
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8000/api/v1/investments/A",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"v1",
+								"investments",
+								"A"
+							]
+						}
 					},
 					"response": []
 				},
@@ -411,13 +518,14 @@
 						"method": "GET",
 						"header": [
 							{
-								"key": "Authorization",
-								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjkxNzY5MTMwLCJpYXQiOjE2OTE3NjU1MzAsImp0aSI6ImJlYzEyMjJjMDk5OTQ3NjdiNWRiNDczYjJkMDJkNzk2IiwidXNlcl9pZCI6OX0.YdWVHeK11JB36TSlPXCpDIWVdx2T5ry5bzslEYJsUJ0",
-								"type": "text"
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
 							}
 						],
 						"url": {
-							"raw": "http://localhost:8000/api/v1/getinvestments/investment_001/",
+							"raw": "http://localhost:8000/api/v1/getinvestments/1/",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -427,7 +535,7 @@
 								"api",
 								"v1",
 								"getinvestments",
-								"investment_001",
+								"1",
 								""
 							]
 						}
@@ -446,13 +554,13 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjkxNzgyNzU3LCJpYXQiOjE2OTE3NzkxNTcsImp0aSI6IjVlOWU5MmQ0NWQyMzRkMjA5Mjg0MTdlNzkzZmU3MWI5IiwidXNlcl9pZCI6MX0.1Xi5m8AnkjD8AlKnXh9wmqyhIakHCWntUV9KDP6VZbU",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjkyODIxNDA3LCJpYXQiOjE2OTI4MTc4MDcsImp0aSI6ImY4YmQyNWMwYjVhMDRlYTY5YzlkNTJmYWQ1YjRiMmQ3IiwidXNlcl9pZCI6Mn0.MOPoXJ-CRu_qiQWASjnJA_X-TT_yo5mKWDFsh_hx1_4",
 								"type": "text"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"proposal_id\": \"event123\",\r\n  \"title\": \"Sample Proposal\",\r\n  \"description\": \"This is a sample proposal description.\",\r\n  \"status\": \"a\"\r\n}\r\n",
+							"raw": "{\r\n  \"title\": \"Sample Proposal\",\r\n  \"description\": \"This is a sample proposal description.\"\r\n}\r\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -586,6 +694,40 @@
 						"api",
 						"v1",
 						"about"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Device List",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"device_id\": \"12345\",\r\n    \"device_model\": \"Smartphone\",\r\n    \"os_version\": \"Android 11\",\r\n    \"ip_address\": \"192.168.1.10\",\r\n    \"proxy_type\": \"HTTP\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/api/v1/devices/",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"v1",
+						"devices",
+						""
 					]
 				}
 			},

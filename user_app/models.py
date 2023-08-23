@@ -12,12 +12,4 @@ def create_auth_token(sender, instance=None, created=False, **kwargs):
         Token.objects.create(user=instance)
 
 
-class Profile(models.Model):
-    name = models.CharField(max_length=200, editable=False)  # Set editable to False
-    Django_user= models.ForeignKey(User, on_delete=models.CASCADE, editable=False)
-    is_valid = models.BooleanField(default=False) 
 
-    def __str__(self):
-        return str(self.name)
-    class Meta:
-        verbose_name_plural="Profile"

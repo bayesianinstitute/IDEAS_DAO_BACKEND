@@ -12,6 +12,7 @@ from rest_framework import status
 from rest_framework.views import APIView
 from django.contrib.auth.models import User
 import ipaddress
+from rest_framework import viewsets
 from ipware import get_client_ip
 from ideasApi.models import (
     News,
@@ -19,7 +20,8 @@ from ideasApi.models import (
     Investment,
     Technology,
     About,
-    Proposal
+    Proposal,
+    Device
 )
 from ideasApi.api.serializers import (
     NewsSerializer,
@@ -27,7 +29,8 @@ from ideasApi.api.serializers import (
     InvestmentSerializer,
     NewsImageSerializer,
     ProposalSerializer,
-    UserEmailSerializer
+    UserEmailSerializer,
+    DeviceSerializer
 )
 import logging
 from ideasApi.middleware import ProxyDetectionMiddleware
@@ -236,7 +239,6 @@ def create_proposal(request):
             'proposal_id': request.data.get('proposal_id'),
             'title': request.data.get('title'),
             'description': request.data.get('description'),
-            'status': request.data.get('status', 'u'),  # Default 'u' if not provided
             'user': user.id,
         }
         
@@ -316,3 +318,12 @@ class UserEmailList(generics.ListAPIView):
         }
         
         return Response(response_data)
+    
+@api_view(['GET', 'POST'])
+def device_list(request):
+    if request.method == 'POST':
+        serializer = DeviceSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=201)
+        return Response(serializer.errors, status=400)

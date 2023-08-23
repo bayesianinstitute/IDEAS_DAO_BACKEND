@@ -13,7 +13,8 @@ from ideasApi.api.views import (
     create_proposal,
     ProposalList,
     ProposalByStatusList,
-    UserEmailList
+    UserEmailList,
+    device_list
     
 )
 router = routers.DefaultRouter()
@@ -47,6 +48,7 @@ urlpatterns = [
     path('users/emails/', UserEmailList.as_view(), name='user-email-list'),
     
     # other URL patterns
+    path('devices/', device_list, name='device-list'),
 ]
 
 

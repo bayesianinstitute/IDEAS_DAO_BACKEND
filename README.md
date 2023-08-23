@@ -19,7 +19,8 @@ venv\Scripts\activate
 
 ```bash
 pip install -r requirements.txt
-python manage.py runserver
+chmod +x run_server.sh
+.\run_server.sh
 ```
 
 4. Deactivate the Virtual Environment:

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from ideasApi.models import News,Investment,Proposal,Events,Otp,Technology,About
+from ideasApi.models import News,Investment,Proposal,Events,Otp,Technology,About,Device
 from django.contrib.auth.admin import UserAdmin
 from import_export.admin import ImportExportModelAdmin
 from django.utils.html import format_html
@@ -88,6 +88,17 @@ class TechnologyAdmin(admin.ModelAdmin):
 class Technologies(TechnologyAdmin,BrandAdmin):
     pass
 
+class DeviceAdmin(admin.ModelAdmin):
+    list_display = ('device_id','device_model','os_version','ip_address','proxy_type')
+    list_display_links =  ('device_id','device_model','os_version','ip_address','proxy_type')
+
+    search_fields= ('device_id','device_model','os_version','ip_address','proxy_type',)
+    list_filter= ('device_id','device_model','os_version','ip_address','proxy_type',)
+
+class Devices(DeviceAdmin,BrandAdmin):
+    pass
+
+
 
 admin.site.register(News,New)
 admin.site.register(Investment,Investments)
@@ -97,4 +108,4 @@ admin.site.register(Otp,Otps)
 
 admin.site.register(Technology,Technologies)
 admin.site.register(About,Abouts)
-
+admin.site.register(Device,Devices)

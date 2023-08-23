@@ -4,7 +4,8 @@ from ideasApi.models import (
         News,
         Events,
         Investment,
-        Proposal
+        Proposal,
+        Device
 )
 class NewsSerializer(serializers.ModelSerializer):
     # Your existing serializer fields go here
@@ -15,7 +16,7 @@ class NewsSerializer(serializers.ModelSerializer):
 class NewsImageSerializer(serializers.ModelSerializer):
     class Meta:
         model = News
-        fields = ['news_image']
+        fields = ['news_image', 'news_id']
 
         
 class EventsSerializer(serializers.ModelSerializer):
@@ -37,3 +38,8 @@ class UserEmailSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ['email']
+        
+class DeviceSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Device
+        fields = '__all__'

@@ -97,12 +97,25 @@ CHANNEL_LAYERS = {
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'IDEAS_DAO_DB',    # Your MySQL database name
+        'USER': 'ideas_user',      # Your MySQL user
+        'PASSWORD': 'IDEAS@DOA$LA23',  # Your MySQL user's password
+        'HOST': '127.0.0.1',       # MySQL host (use IP or hostname if not local)
+        'PORT': '3306',            # MySQL port
     }
 }
+
+
 
 
 # Password validation
