@@ -38,11 +38,11 @@ class Event(EventAdmin,BrandAdmin):
     pass
 
 class ProposalAdmin(admin.ModelAdmin):
-    list_display = ('proposal_id','title','description','timestamp','status')
-    list_display_links =  ('proposal_id','title','description','timestamp','status')
+    list_display = ('title','description','timestamp','status')
+    list_display_links =  ('title','description','timestamp','status')
 
-    search_fields= ('proposal_id','title','description','timestamp','status',)
-    list_filter= ('proposal_id','title','description','timestamp','status',)
+    search_fields= ('title','description','timestamp','status',)
+    list_filter= ('title','description','timestamp','status',)
 
 class Proposals(ProposalAdmin,BrandAdmin):
     pass

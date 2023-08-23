@@ -72,7 +72,7 @@ class Events(models.Model):
         verbose_name_plural="Events"
         
 class Proposal(models.Model):
-    proposal_id = models.AutoField(primary_key=True)
+    id = models.AutoField(primary_key=True, default=None)
     timestamp = models.DateTimeField(auto_now=True)
     title= models.CharField(max_length=200)
     description = RichTextField()

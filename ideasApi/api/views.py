@@ -236,7 +236,7 @@ def create_proposal(request):
         
         # Create a proposal instance with the user information
         proposal_data = {
-            'proposal_id': request.data.get('proposal_id'),
+            'proposal_id': request.data.get('id'),
             'title': request.data.get('title'),
             'description': request.data.get('description'),
             'user': user.id,
