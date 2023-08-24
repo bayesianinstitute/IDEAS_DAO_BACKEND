@@ -42,27 +42,49 @@ class RegistrationSerializer(serializers.ModelSerializer):
 
 class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
     def validate(self, attrs):
-        data = super().validate(attrs)
-        
-        user = self.user
-
         try:
+            data = super().validate(attrs)
+            user = self.user
+
             user_data = User.objects.get(id=user.id)
+
+            user_info = {
+                'id': user_data.id,
+                'username': user_data.username,
+                'email': user_data.email
+            }
+
+            response_data = {
+                'status': 'success',
+                'data': user_info,
+                'is_request_from_proxy': getattr(self.context['request'], 'is_request_from_proxy', False),
+                'is_routable': getattr(self.context['request'], 'is_routable', True),
+                'client_ip': getattr(self.context['request'], 'client_ip', ''),
+            }
+            response_data.update(data)  # Add the token data to the response_data
+
+            return response_data
+
         except User.DoesNotExist:
-            raise serializers.ValidationError("User not found.")
+            response_data = {
+                'status': 'failure',
+                'message': 'No active account found with the given credentials',
+                'is_request_from_proxy': getattr(self.context['request'], 'is_request_from_proxy', False),
+                'is_routable': getattr(self.context['request'], 'is_routable', True),
+                'client_ip': getattr(self.context['request'], 'client_ip', ''),
+            }
+            return response_data
+        except Exception as e:
+            response_data = {
+                'status': 'failure',
+                'message': str(e) if str(e) else 'An error occurred.',
+                'is_request_from_proxy': getattr(self.context['request'], 'is_request_from_proxy', False),
+                'is_routable': getattr(self.context['request'], 'is_routable', True),
+                'client_ip': getattr(self.context['request'], 'client_ip', ''),
+            }
+            return response_data
 
-        user_info = {
-            'id': user_data.id,
-            'username': user_data.username,
-            'email': user_data.email
-        }
 
-        data.update({'user': user_info})
-        data['is_request_from_proxy'] = getattr(self.context['request'], 'is_request_from_proxy', False)
-        data['is_routable'] = getattr(self.context['request'], 'is_routable', True)
-        data['client_ip'] = getattr(self.context['request'], 'client_ip', '')
-
-        return data
     
 class OtpSerializer(serializers.Serializer):
     email = serializers.EmailField()

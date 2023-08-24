@@ -22,101 +22,186 @@ from django.views.decorators.csrf import csrf_protect
 from ideasApi.models import (
        Otp
 )
+from django.core.exceptions import ValidationError
 import logging
+
 logger = logging.getLogger(__name__)
 
     
 @api_view(['POST'])
 def registration_view(request):
-    if request.method == 'POST':
-        serializer = RegistrationSerializer(data=request.data)
-        if serializer.is_valid():
-            user_data = serializer.validated_data
-            user = User.objects.create_user(
-                username=user_data['username'],
-                password=user_data['password'],
-                email=user_data['email']
-            )
+    try:
+        if request.method == 'POST':
+            serializer = RegistrationSerializer(data=request.data)
+            if serializer.is_valid():
+                user_data = serializer.validated_data
+                user = User.objects.create_user(
+                    username=user_data['username'],
+                    password=user_data['password'],
+                    email=user_data['email']
+                )
 
-            confirmation_subject = 'Welcome to IdeasApp! Please confirm your registration.'
-            confirmation_message = f'Hi {user.username},\n\nThank you for registering at IdeasApp. \nIf you did not request this registration, please ignore this email.\n\nBest regards,\nThe IdeasApp Team'
-            send_mail(confirmation_subject, confirmation_message, 'noreply@yourapp.com', [user.email])
+                confirmation_subject = 'Welcome to IdeasApp! Please confirm your registration.'
+                confirmation_message = f'Hi {user.username},\n\nThank you for registering at IdeasApp. \nIf you did not request this registration, please ignore this email.\n\nBest regards,\nThe IdeasApp Team'
+                
+                try:
+                    send_mail(confirmation_subject, confirmation_message, 'noreply@yourapp.com', [user.email])
+                    response_data = {
+                        'status': 'success',
+                        'message': 'Registration Successful! A confirmation email has been sent.',
+                        'data': {
+                            'username': user.username,
+                            'email': user.email,
+                        },
+                        'is_request_from_proxy': getattr(request, 'is_request_from_proxy', False),
+                        'is_routable': getattr(request, 'is_routable', True),
+                        'client_ip': getattr(request, 'client_ip', ''),
+                    }
+                    response_status = status.HTTP_201_CREATED
 
-            data = {
-                'response': 'Registration Successful! A confirmation email has been sent.',
-                'user': {
-                    'username': user.username,
-                    'email': user.email,
-                },
+                    user_logger = logging.getLogger('user_app.views')
+                    client_ip = getattr(request, 'client_ip', '')
+                    is_request_from_proxy = getattr(request, 'is_request_from_proxy', False)
+                    user_logger.info(f"User registered: username={user.username}, useremail={user.email}, client_ip={client_ip}, proxy={is_request_from_proxy}")
+                except Exception as email_error:
+                    response_data = {
+                        'status': 'failure',
+                        'message': 'Registration Successful, but confirmation email could not be sent.',
+                        'data': {
+                            'username': user.username,
+                            'email': user.email,
+                        },
+                        'email_error': str(email_error),
+                        'is_request_from_proxy': getattr(request, 'is_request_from_proxy', False),
+                        'is_routable': getattr(request, 'is_routable', True),
+                        'client_ip': getattr(request, 'client_ip', ''),
+                    }
+                    response_status = status.HTTP_201_CREATED  # You can choose to use 200 or 201 here
+                    
+                return Response(response_data, status=response_status)
+                
+            else:
+                response_data = {
+                    'status': 'failure',
+                    'errors': serializer.errors,
+                    'message': 'Invalid data.',
+                    'is_request_from_proxy': getattr(request, 'is_request_from_proxy', False),
+                    'is_routable': getattr(request, 'is_routable', True),
+                    'client_ip': getattr(request, 'client_ip', ''),
+                    
+                }
+                response_status = status.HTTP_400_BAD_REQUEST
+                
+                return Response(response_data, status=response_status)
+        else:
+            response_data = {
+                'status': 'failure',
+                'message': 'Invalid request method.',
                 'is_request_from_proxy': getattr(request, 'is_request_from_proxy', False),
                 'is_routable': getattr(request, 'is_routable', True),
                 'client_ip': getattr(request, 'client_ip', ''),
             }
-            user_logger = logging.getLogger('user_app.views')
-            client_ip = getattr(request, 'client_ip', '')
-            is_request_from_proxy = getattr(request, 'is_request_from_proxy', False)
-            user_logger.info(f"User registered: username={user.username},useremail={user.email}, client_ip={client_ip}, proxy={is_request_from_proxy}")
-
-            return Response(data, status=status.HTTP_201_CREATED)
-        else:
-            data = serializer.errors
-            return Response(data, status=status.HTTP_400_BAD_REQUEST)
+            response_status = status.HTTP_400_BAD_REQUEST
+            
+            return Response(response_data, status=response_status)
+            
+    except ValidationError as validation_error:
+        response_data = {
+            'status': 'failure',
+            'message': 'Invalid input data.',
+            'validation_error': str(validation_error),
+            'is_request_from_proxy': getattr(request, 'is_request_from_proxy', False),
+            'is_routable': getattr(request, 'is_routable', True),
+            'client_ip': getattr(request, 'client_ip', ''),
+        }
+        response_status = status.HTTP_400_BAD_REQUEST
         
+        return Response(response_data, status=response_status)
+        
+    except Exception as e:
+        response_data = {
+            'status': 'failure',
+            'message': str(e) if str(e) else 'An error occurred.',
+            'is_request_from_proxy': getattr(request, 'is_request_from_proxy', False),
+            'is_routable': getattr(request, 'is_routable', True),
+            'client_ip': getattr(request, 'client_ip', ''),
+        }
+        response_status = status.HTTP_500_INTERNAL_SERVER_ERROR
+        
+        return Response(response_data, status=response_status)
+       
 
 class CustomTokenObtainPairView(TokenObtainPairView):
     serializer_class = CustomTokenObtainPairSerializer
 
 
-# class CustomObtainAuthToken(ObtainAuthToken):
-#     def post(self, request, *args, **kwargs):
-#         response = super().post(request, *args, **kwargs)
-#         if response.status_code == status.HTTP_400_BAD_REQUEST:
-#             return Response({
-#                 "error": "Unable to log in with provided credential."
-#             }, status=status.HTTP_400_BAD_REQUEST)
-#         return 
 
 class sent_otp(APIView):
     def post(self, request, format=None):
-        serializer = OtpSerializer(data=request.data)
-        if serializer.is_valid():
-            email = serializer.validated_data['email']
-            
-            # Check if the user exists in the database
-            user = User.objects.filter(email=email).first()
-            if not user:
-                return Response({'message': 'User not registered with this email'}, status=status.HTTP_400_BAD_REQUEST)
-            
-            otp_instance = Otp.objects.filter(user=user).first()
-            if otp_instance:
-                # Update the existing OTP instance
-                otp_instance.otp_value = random.randint(1000, 9999)
-                otp_instance.expiry_time = datetime.now() + timedelta(minutes=15)
-                otp_instance.save()
-            else:
-                # Create a new OTP instance
-                otp = random.randint(1000, 9999)
-                expiry_time = datetime.now() + timedelta(minutes=15)
-                otp_instance = Otp.objects.create(user=user, expiry_time=expiry_time, otp_value=otp)
-            
-            # Send OTP to the provided email
-            send_mail(
-                'Your OTP',
-                f'Your OTP is: {otp_instance.otp_value}',
-                'bayesdev2@gmail.com',  # Replace with your sender email
-                [email],
-                fail_silently=False,
-            )
+        try:
+            serializer = OtpSerializer(data=request.data)
+            if serializer.is_valid():
+                email = serializer.validated_data['email']
+                
+                user = User.objects.filter(email=email).first()
+                if not user:
+                    response_data = {
+                        'status': 'failure',
+                        'message': 'User not registered with this email',
+                        'is_request_from_proxy': getattr(request, 'is_request_from_proxy', False),
+                        'is_routable': getattr(request, 'is_routable', True),
+                        'client_ip': getattr(request, 'client_ip', ''),
+                    }
+                    return Response(response_data, status=status.HTTP_400_BAD_REQUEST)
+                
+                otp_instance = Otp.objects.filter(user=user).first()
+                if otp_instance:
+                    otp_instance.otp_value = random.randint(1000, 9999)
+                    otp_instance.expiry_time = datetime.now() + timedelta(minutes=15)
+                    otp_instance.save()
+                else:
+                    otp = random.randint(1000, 9999)
+                    expiry_time = datetime.now() + timedelta(minutes=15)
+                    otp_instance = Otp.objects.create(user=user, expiry_time=expiry_time, otp_value=otp)
+                
+                send_mail(
+                    'Your OTP',
+                    f'Your OTP is: {otp_instance.otp_value}',
+                    'bayesdev2@gmail.com',  # Replace with your sender email
+                    [email],
+                    fail_silently=False,
+                )
+                
+                response_data = {
+                    'status': 'success',
+                    'message': 'OTP sent successfully',
+                    'is_request_from_proxy': getattr(request, 'is_request_from_proxy', False),
+                    'is_routable': getattr(request, 'is_routable', True),
+                    'client_ip': getattr(request, 'client_ip', ''),
+                }
+                
+                return Response(response_data, status=status.HTTP_200_OK)
             
             response_data = {
-                'message': 'OTP sent successfully',
+                'status': 'failure',
+                'errors': serializer.errors,
+                'message': 'Invalid data.',
                 'is_request_from_proxy': getattr(request, 'is_request_from_proxy', False),
                 'is_routable': getattr(request, 'is_routable', True),
                 'client_ip': getattr(request, 'client_ip', ''),
             }
+            return Response(response_data, status=status.HTTP_400_BAD_REQUEST)
             
-            return Response(response_data, status=status.HTTP_200_OK)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        except Exception as e:
+            response_data = {
+                'status': 'failure',
+                'message': str(e) if str(e) else 'An error occurred.',
+                'is_request_from_proxy': getattr(request, 'is_request_from_proxy', False),
+                'is_routable': getattr(request, 'is_routable', True),
+                'client_ip': getattr(request, 'client_ip', ''),
+            }
+            return Response(response_data, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
 
 
     
@@ -130,33 +215,58 @@ class ResetPassword(APIView):
         try:
             user = User.objects.get(email=email)
         except User.DoesNotExist:
-            data["error"] = "User not found"
-            return Response(data, status=status.HTTP_404_NOT_FOUND)
+            response_data = {
+                'status': 'failure',
+                'message': 'User not found',
+                'is_request_from_proxy': getattr(request, 'is_request_from_proxy', False),
+                'is_routable': getattr(request, 'is_routable', True),
+                'client_ip': getattr(request, 'client_ip', ''),
+            }
+            return Response(response_data, status=status.HTTP_404_NOT_FOUND)
         
         try:
             otp_obj = Otp.objects.get(user=user)
         except Otp.DoesNotExist:
-            data["error"] = "OTP not generated for this user"
-            return Response(data, status=status.HTTP_400_BAD_REQUEST)
+            response_data = {
+                'status': 'failure',
+                'message': 'OTP not generated for this user',
+                'is_request_from_proxy': getattr(request, 'is_request_from_proxy', False),
+                'is_routable': getattr(request, 'is_routable', True),
+                'client_ip': getattr(request, 'client_ip', ''),
+            }
+            return Response(response_data, status=status.HTTP_400_BAD_REQUEST)
         
         if otp_obj.expiry_time <= timezone.now():
             # OTP has expired
-            data["error"] = "OTP has expired"
-            return Response(data, status=status.HTTP_400_BAD_REQUEST)
+            response_data = {
+                'status': 'failure',
+                'message': 'OTP has expired',
+                'is_request_from_proxy': getattr(request, 'is_request_from_proxy', False),
+                'is_routable': getattr(request, 'is_routable', True),
+                'client_ip': getattr(request, 'client_ip', ''),
+            }
+            return Response(response_data, status=status.HTTP_400_BAD_REQUEST)
 
         if otp_obj.otp_value == otp_value:
             # OTP is valid
             user.password = make_password(new_password)  # Change the user's password
             user.save()  # Save the changes
             
-            data["response"] = "Password reset successful"
-            data['is_request_from_proxy'] = getattr(request, 'is_request_from_proxy', False)
-            data['is_routable'] = getattr(request, 'is_routable', True)
-            data['client_ip'] = getattr(request, 'client_ip', '')
-            
-            return Response(data, status=status.HTTP_200_OK)
+            response_data = {
+                'status': 'success',
+                'message': 'Password reset successful',
+                'is_request_from_proxy': getattr(request, 'is_request_from_proxy', False),
+                'is_routable': getattr(request, 'is_routable', True),
+                'client_ip': getattr(request, 'client_ip', ''),
+            }
+            return Response(response_data, status=status.HTTP_200_OK)
         else:
-            # OTP is invalid
-            data["error"] = "Invalid OTP"
-            return Response(data, status=status.HTTP_400_BAD_REQUEST)
-    
+            # Invalid OTP
+            response_data = {
+                'status': 'failure',
+                'message': 'Invalid OTP',
+                'is_request_from_proxy': getattr(request, 'is_request_from_proxy', False),
+                'is_routable': getattr(request, 'is_routable', True),
+                'client_ip': getattr(request, 'client_ip', ''),
+            }
+            return Response(response_data, status=status.HTTP_400_BAD_REQUEST)

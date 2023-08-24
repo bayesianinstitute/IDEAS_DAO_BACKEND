@@ -1,5 +1,7 @@
 env/
 logs/
-
-
-
+media/
+user_app/__pycache__
+ideasApi/__pycache__
+ideasApi/migrations
+ideas/__pycache__

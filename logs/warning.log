@@ -1,0 +1,224 @@
+WARNING 2023-08-24 02:03:01,649 log Unauthorized: /api/v1/create-proposal/ 
+WARNING 2023-08-24 02:03:01,651 basehttp "POST /api/v1/create-proposal/ HTTP/1.1" 401 183 
+WARNING 2023-08-24 19:54:02,189 log Not Found: /account/api/sent/otp/ 
+WARNING 2023-08-24 19:54:02,191 basehttp "POST /account/api/sent/otp/ HTTP/1.1" 404 3331 
+WARNING 2023-08-24 21:43:06,608 log Unauthorized: /api/v1/create-proposal/ 
+WARNING 2023-08-24 21:43:06,611 basehttp "POST /api/v1/create-proposal/ HTTP/1.1" 401 183 
+WARNING 2023-08-24 22:06:40,396 log Not Found: /api/v1/news/AI/1 
+WARNING 2023-08-24 22:06:40,398 basehttp "GET /api/v1/news/AI/1 HTTP/1.1" 404 6227 
+WARNING 2023-08-24 22:08:58,370 log Bad Request: /api/v1/news/ 
+WARNING 2023-08-24 22:08:58,370 basehttp "GET /api/v1/news/ HTTP/1.1" 400 124 
+WARNING 2023-08-24 22:09:09,865 log Not Found: /favicon.ico 
+WARNING 2023-08-24 22:09:09,867 basehttp "GET /favicon.ico HTTP/1.1" 404 2450 
+WARNING 2023-08-24 22:09:26,776 log Not Found: /favicon.ico 
+WARNING 2023-08-24 22:09:26,779 basehttp "GET /favicon.ico HTTP/1.1" 404 2450 
+WARNING 2023-08-24 22:09:29,028 log Not Found: /favicon.ico 
+WARNING 2023-08-24 22:09:29,029 basehttp "GET /favicon.ico HTTP/1.1" 404 2450 
+WARNING 2023-08-24 22:09:49,676 log Not Found: /favicon.ico 
+WARNING 2023-08-24 22:09:49,677 basehttp "GET /favicon.ico HTTP/1.1" 404 2450 
+WARNING 2023-08-24 22:09:50,650 log Not Found: /favicon.ico 
+WARNING 2023-08-24 22:09:50,651 basehttp "GET /favicon.ico HTTP/1.1" 404 2450 
+WARNING 2023-08-24 22:10:36,113 log Bad Request: /api/v1/news/A/ 
+WARNING 2023-08-24 22:10:36,114 basehttp "GET /api/v1/news/A/ HTTP/1.1" 400 124 
+WARNING 2023-08-24 22:10:46,292 log Bad Request: /api/v1/news/1/ 
+WARNING 2023-08-24 22:10:46,293 basehttp "GET /api/v1/news/1/ HTTP/1.1" 400 124 
+WARNING 2023-08-24 22:15:29,941 log Bad Request: /api/v1/news/ 
+WARNING 2023-08-24 22:15:29,942 basehttp "GET /api/v1/news/ HTTP/1.1" 400 141 
+WARNING 2023-08-24 22:16:13,150 log Bad Request: /api/v1/news/ 
+WARNING 2023-08-24 22:16:13,151 basehttp "GET /api/v1/news/ HTTP/1.1" 400 141 
+WARNING 2023-08-24 22:16:14,949 log Bad Request: /api/v1/news/ 
+WARNING 2023-08-24 22:16:14,950 basehttp "GET /api/v1/news/ HTTP/1.1" 400 141 
+WARNING 2023-08-24 22:20:48,331 log Bad Request: /api/v1/news/ 
+WARNING 2023-08-24 22:20:48,332 basehttp "GET /api/v1/news/ HTTP/1.1" 400 141 
+WARNING 2023-08-24 22:24:16,973 log Bad Request: /api/v1/news/ 
+WARNING 2023-08-24 22:24:16,974 basehttp "GET /api/v1/news/ HTTP/1.1" 400 148 
+WARNING 2023-08-24 22:24:48,657 log Bad Request: /api/v1/news/ 
+WARNING 2023-08-24 22:24:48,658 basehttp "GET /api/v1/news/ HTTP/1.1" 400 148 
+WARNING 2023-08-24 22:28:37,931 log Bad Request: /api/v1/news/AII/ 
+WARNING 2023-08-24 22:28:37,933 basehttp "GET /api/v1/news/AII/ HTTP/1.1" 400 124 
+WARNING 2023-08-24 22:34:07,708 log Bad Request: /api/v1/investments/ 
+WARNING 2023-08-24 22:34:07,711 basehttp "GET /api/v1/investments/ HTTP/1.1" 400 124 
+WARNING 2023-08-24 22:35:17,857 log Bad Request: /api/v1/investments/ 
+WARNING 2023-08-24 22:35:17,858 basehttp "GET /api/v1/investments/ HTTP/1.1" 400 124 
+WARNING 2023-08-24 22:35:19,916 log Bad Request: /api/v1/investments/ 
+WARNING 2023-08-24 22:35:19,917 basehttp "GET /api/v1/investments/ HTTP/1.1" 400 124 
+WARNING 2023-08-24 22:35:42,254 log Not Found: /favicon.ico 
+WARNING 2023-08-24 22:35:42,254 basehttp "GET /favicon.ico HTTP/1.1" 404 2450 
+WARNING 2023-08-24 22:35:43,454 log Not Found: /favicon.ico 
+WARNING 2023-08-24 22:35:43,456 basehttp "GET /favicon.ico HTTP/1.1" 404 2450 
+WARNING 2023-08-24 22:36:20,977 log Bad Request: /api/v1/investments/Op/ 
+WARNING 2023-08-24 22:36:20,978 basehttp "GET /api/v1/investments/Op/ HTTP/1.1" 400 124 
+WARNING 2023-08-24 22:40:17,653 log Bad Request: /api/v1/events/ 
+WARNING 2023-08-24 22:40:17,654 basehttp "GET /api/v1/events/ HTTP/1.1" 400 124 
+WARNING 2023-08-24 22:40:18,644 log Bad Request: /api/v1/events/ 
+WARNING 2023-08-24 22:40:18,645 basehttp "GET /api/v1/events/ HTTP/1.1" 400 124 
+WARNING 2023-08-24 22:40:34,782 log Not Found: /favicon.ico 
+WARNING 2023-08-24 22:40:34,784 basehttp "GET /favicon.ico HTTP/1.1" 404 2450 
+WARNING 2023-08-24 22:40:35,846 log Not Found: /favicon.ico 
+WARNING 2023-08-24 22:40:35,847 basehttp "GET /favicon.ico HTTP/1.1" 404 2450 
+WARNING 2023-08-24 22:41:12,645 log Bad Request: /api/v1/events/1/ 
+WARNING 2023-08-24 22:41:12,646 basehttp "GET /api/v1/events/1/ HTTP/1.1" 400 124 
+WARNING 2023-08-24 22:41:21,508 log Bad Request: /api/v1/events/2/ 
+WARNING 2023-08-24 22:41:21,510 basehttp "GET /api/v1/events/2/ HTTP/1.1" 400 124 
+WARNING 2023-08-24 22:50:59,709 log Bad Request: /api/v1/latest-news-images/ 
+WARNING 2023-08-24 22:50:59,709 basehttp "GET /api/v1/latest-news-images/ HTTP/1.1" 400 124 
+WARNING 2023-08-24 22:51:09,003 log Not Found: /favicon.ico 
+WARNING 2023-08-24 22:51:09,004 basehttp "GET /favicon.ico HTTP/1.1" 404 2450 
+WARNING 2023-08-24 22:51:09,503 log Not Found: /favicon.ico 
+WARNING 2023-08-24 22:51:09,504 basehttp "GET /favicon.ico HTTP/1.1" 404 2450 
+WARNING 2023-08-24 22:51:34,891 log Not Found: /favicon.ico 
+WARNING 2023-08-24 22:51:34,892 basehttp "GET /favicon.ico HTTP/1.1" 404 2450 
+WARNING 2023-08-24 22:51:35,401 log Not Found: /favicon.ico 
+WARNING 2023-08-24 22:51:35,402 basehttp "GET /favicon.ico HTTP/1.1" 404 2450 
+ERROR 2023-08-24 22:54:22,408 log Internal Server Error: /api/v1/getnews/3/ 
+Traceback (most recent call last):
+  File "C:\Users\afaan\Desktop\IDEAS\Ideas App\ideasApi\api\views.py", line 233, in get_single_news
+    news_item = News.objects.get(news_id=news_id)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\afaan\Desktop\IDEAS\Ideas App\env\Lib\site-packages\django\db\models\manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\afaan\Desktop\IDEAS\Ideas App\env\Lib\site-packages\django\db\models\query.py", line 637, in get
+    raise self.model.DoesNotExist(
+ideasApi.models.News.DoesNotExist: News matching query does not exist.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\afaan\Desktop\IDEAS\Ideas App\env\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\afaan\Desktop\IDEAS\Ideas App\env\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\afaan\Desktop\IDEAS\Ideas App\env\Lib\site-packages\django\views\decorators\csrf.py", line 56, in wrapper_view
+    return view_func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\afaan\Desktop\IDEAS\Ideas App\env\Lib\site-packages\django\views\generic\base.py", line 104, in view
+    return self.dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\afaan\Desktop\IDEAS\Ideas App\env\Lib\site-packages\rest_framework\views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\afaan\Desktop\IDEAS\Ideas App\env\Lib\site-packages\rest_framework\views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "C:\Users\afaan\Desktop\IDEAS\Ideas App\env\Lib\site-packages\rest_framework\views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "C:\Users\afaan\Desktop\IDEAS\Ideas App\env\Lib\site-packages\rest_framework\views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\afaan\Desktop\IDEAS\Ideas App\env\Lib\site-packages\rest_framework\decorators.py", line 50, in handler
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\afaan\Desktop\IDEAS\Ideas App\ideasApi\api\views.py", line 235, in get_single_news
+    return Response({"status": "failure", "message": "News item not found"}, status=HTTP_404_NOT_FOUND)
+                                                                                    ^^^^^^^^^^^^^^^^^^
+NameError: name 'HTTP_404_NOT_FOUND' is not defined
+ERROR 2023-08-24 22:54:33,948 basehttp "GET /api/v1/getnews/3/ HTTP/1.1" 500 123749 
+ERROR 2023-08-24 22:57:18,497 log Internal Server Error: /api/v1/getnews/3/ 
+Traceback (most recent call last):
+  File "C:\Users\afaan\Desktop\IDEAS\Ideas App\ideasApi\api\views.py", line 233, in get_single_news
+    news_item = News.objects.get(news_id=news_id)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\afaan\Desktop\IDEAS\Ideas App\env\Lib\site-packages\django\db\models\manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\afaan\Desktop\IDEAS\Ideas App\env\Lib\site-packages\django\db\models\query.py", line 637, in get
+    raise self.model.DoesNotExist(
+ideasApi.models.News.DoesNotExist: News matching query does not exist.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\afaan\Desktop\IDEAS\Ideas App\env\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\afaan\Desktop\IDEAS\Ideas App\env\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\afaan\Desktop\IDEAS\Ideas App\env\Lib\site-packages\django\views\decorators\csrf.py", line 56, in wrapper_view
+    return view_func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\afaan\Desktop\IDEAS\Ideas App\env\Lib\site-packages\django\views\generic\base.py", line 104, in view
+    return self.dispatch(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\afaan\Desktop\IDEAS\Ideas App\env\Lib\site-packages\rest_framework\views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\afaan\Desktop\IDEAS\Ideas App\env\Lib\site-packages\rest_framework\views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "C:\Users\afaan\Desktop\IDEAS\Ideas App\env\Lib\site-packages\rest_framework\views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "C:\Users\afaan\Desktop\IDEAS\Ideas App\env\Lib\site-packages\rest_framework\views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\afaan\Desktop\IDEAS\Ideas App\env\Lib\site-packages\rest_framework\decorators.py", line 50, in handler
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\afaan\Desktop\IDEAS\Ideas App\ideasApi\api\views.py", line 235, in get_single_news
+    return Response({"status": "failure", "message": "News item not found"}, status=HTTP_404_NOT_FOUND)
+                                                                                    ^^^^^^^^^^^^^^^^^^
+NameError: name 'HTTP_404_NOT_FOUND' is not defined
+ERROR 2023-08-24 22:57:26,508 basehttp "GET /api/v1/getnews/3/ HTTP/1.1" 500 123751 
+WARNING 2023-08-24 22:58:05,427 log Not Found: /api/v1/getnews/3/ 
+WARNING 2023-08-24 22:58:05,427 basehttp "GET /api/v1/getnews/3/ HTTP/1.1" 404 52 
+WARNING 2023-08-24 22:59:56,619 log Bad Request: /api/v1/getnews/3/ 
+WARNING 2023-08-24 22:59:56,619 basehttp "GET /api/v1/getnews/3/ HTTP/1.1" 400 186 
+WARNING 2023-08-24 23:00:06,460 log Bad Request: /api/v1/getnews/3/ 
+WARNING 2023-08-24 23:00:06,460 basehttp "GET /api/v1/getnews/3/ HTTP/1.1" 400 186 
+WARNING 2023-08-24 23:00:34,355 log Bad Request: /api/v1/getnews/33/ 
+WARNING 2023-08-24 23:00:34,356 basehttp "GET /api/v1/getnews/33/ HTTP/1.1" 400 186 
+WARNING 2023-08-24 23:00:36,723 log Bad Request: /api/v1/getnews/31/ 
+WARNING 2023-08-24 23:00:36,724 basehttp "GET /api/v1/getnews/31/ HTTP/1.1" 400 186 
+WARNING 2023-08-24 23:00:38,570 log Bad Request: /api/v1/getnews/3/ 
+WARNING 2023-08-24 23:00:38,570 basehttp "GET /api/v1/getnews/3/ HTTP/1.1" 400 186 
+WARNING 2023-08-24 23:00:42,892 log Bad Request: /api/v1/getnews/3/ 
+WARNING 2023-08-24 23:00:42,893 basehttp "GET /api/v1/getnews/3/ HTTP/1.1" 400 186 
+WARNING 2023-08-24 23:01:45,504 log Not Found: /api/v1/getnews/3/ 
+WARNING 2023-08-24 23:01:45,504 basehttp "GET /api/v1/getnews/3/ HTTP/1.1" 404 126 
+WARNING 2023-08-24 23:06:19,330 log Not Found: /api/v1/getnews/3/ 
+WARNING 2023-08-24 23:06:19,330 basehttp "GET /api/v1/getnews/3/ HTTP/1.1" 404 126 
+WARNING 2023-08-24 23:21:58,408 log Bad Request: /api/v1/news/A/ 
+WARNING 2023-08-24 23:21:58,409 basehttp "GET /api/v1/news/A/ HTTP/1.1" 400 51 
+WARNING 2023-08-24 23:23:17,175 log Bad Request: /api/v1/news/A/ 
+WARNING 2023-08-24 23:23:17,175 basehttp "GET /api/v1/news/A/ HTTP/1.1" 400 124 
+WARNING 2023-08-24 23:27:15,327 log Bad Request: /api/v1/events/2/ 
+WARNING 2023-08-24 23:27:15,328 basehttp "GET /api/v1/events/2/ HTTP/1.1" 400 124 
+WARNING 2023-08-24 23:27:17,413 log Bad Request: /api/v1/events/ 
+WARNING 2023-08-24 23:27:17,413 basehttp "GET /api/v1/events/ HTTP/1.1" 400 124 
+WARNING 2023-08-24 23:27:19,330 log Bad Request: /api/v1/events/ 
+WARNING 2023-08-24 23:27:19,330 basehttp "GET /api/v1/events/ HTTP/1.1" 400 124 
+WARNING 2023-08-24 23:27:37,783 log Bad Request: /api/v1/investments/A/ 
+WARNING 2023-08-24 23:27:37,784 basehttp "GET /api/v1/investments/A/ HTTP/1.1" 400 124 
+WARNING 2023-08-24 23:28:30,161 log Bad Request: /api/v1/news/A/ 
+WARNING 2023-08-24 23:28:30,161 basehttp "GET /api/v1/news/A/ HTTP/1.1" 400 124 
+WARNING 2023-08-24 23:28:35,018 log Bad Request: /api/v1/events/A/ 
+WARNING 2023-08-24 23:28:35,018 basehttp "GET /api/v1/events/A/ HTTP/1.1" 400 124 
+WARNING 2023-08-24 23:28:36,596 log Bad Request: /api/v1/events/ 
+WARNING 2023-08-24 23:28:36,597 basehttp "GET /api/v1/events/ HTTP/1.1" 400 124 
+WARNING 2023-08-24 23:29:27,171 log Not Found: /api/v1/getnews/22/ 
+WARNING 2023-08-24 23:29:27,171 basehttp "GET /api/v1/getnews/22/ HTTP/1.1" 404 126 
+WARNING 2023-08-24 23:31:30,516 log Not Found: /api/v1/getnews/22/ 
+WARNING 2023-08-24 23:31:30,516 basehttp "GET /api/v1/getnews/22/ HTTP/1.1" 404 126 
+WARNING 2023-08-24 23:31:39,346 log Not Found: /api/v1/getnews/22/ 
+WARNING 2023-08-24 23:31:39,346 basehttp "GET /api/v1/getnews/22/ HTTP/1.1" 404 126 
+WARNING 2023-08-24 23:32:08,194 log Not Found: /favicon.ico 
+WARNING 2023-08-24 23:32:08,195 basehttp "GET /favicon.ico HTTP/1.1" 404 2450 
+WARNING 2023-08-24 23:32:08,811 log Not Found: /favicon.ico 
+WARNING 2023-08-24 23:32:08,811 basehttp "GET /favicon.ico HTTP/1.1" 404 2450 
+WARNING 2023-08-24 23:33:09,372 log Bad Request: /api/v1/events/A/ 
+WARNING 2023-08-24 23:33:09,372 basehttp "GET /api/v1/events/A/ HTTP/1.1" 400 124 
+WARNING 2023-08-24 23:36:55,920 log Not Found: /api/v1/getinvestments/3/ 
+WARNING 2023-08-24 23:36:55,921 basehttp "GET /api/v1/getinvestments/3/ HTTP/1.1" 404 132 
+WARNING 2023-08-24 23:36:57,433 log Not Found: /api/v1/getinvestments/2/ 
+WARNING 2023-08-24 23:36:57,433 basehttp "GET /api/v1/getinvestments/2/ HTTP/1.1" 404 132 
+WARNING 2023-08-24 23:38:13,465 log Bad Request: /api/v1/events/A/ 
+WARNING 2023-08-24 23:38:13,466 basehttp "GET /api/v1/events/A/ HTTP/1.1" 400 124 
+WARNING 2023-08-24 23:38:29,819 log Not Found: /api/v1/getevents/3/ 
+WARNING 2023-08-24 23:38:29,819 basehttp "GET /api/v1/getevents/3/ HTTP/1.1" 404 127 
+WARNING 2023-08-24 23:42:18,251 log Not Found: /favicon.ico 
+WARNING 2023-08-24 23:42:18,252 basehttp "GET /favicon.ico HTTP/1.1" 404 2450 
+WARNING 2023-08-24 23:42:18,944 log Not Found: /favicon.ico 
+WARNING 2023-08-24 23:42:18,945 basehttp "GET /favicon.ico HTTP/1.1" 404 2450 
+WARNING 2023-08-24 13:14:30,264 log Not Found: / 
+WARNING 2023-08-24 13:14:30,265 basehttp "GET / HTTP/1.1" 404 2399 

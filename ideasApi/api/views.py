@@ -34,15 +34,15 @@ from ideasApi.api.serializers import (
 )
 import logging
 from ideasApi.middleware import ProxyDetectionMiddleware
+from rest_framework.status import HTTP_200_OK, HTTP_400_BAD_REQUEST,HTTP_404_NOT_FOUND
 
 class CustomPagination(PageNumberPagination):
-    page_size = 10  # Number of items per page
+    page_size = 2 # Number of items per page
     page_size_query_param = 'page_size'
     max_page_size = 100  # Maximum number of items per page
     
 class NewsListView(generics.ListAPIView):
     serializer_class = NewsSerializer
-    #permission_classes = [IsAuthenticated]
     pagination_class = CustomPagination
     
     def get_queryset(self):
@@ -58,18 +58,53 @@ class NewsListView(generics.ListAPIView):
 
         return queryset
 
-    def get(self, request, *args, **kwargs):
-        response = super().get(request, *args, **kwargs)
-        response.data['is_request_from_proxy'] = getattr(request, 'is_request_from_proxy', False)
-        response.data['is_routable'] = getattr(request, 'is_routable', True)
-        response.data['client_ip'] = getattr(request, 'client_ip', '')
+    def list(self, request, *args, **kwargs):
+        try:
+            queryset = self.filter_queryset(self.get_queryset())
+            if queryset.exists():
+                page = self.paginate_queryset(queryset)
+                serializer = self.get_serializer(page, many=True)
+                response_data = {
+                    "status": "success",
+                    "pagination": {
+                        "count": self.paginator.page.paginator.count,
+                        "next": self.paginator.get_next_link(),
+                        "previous": self.paginator.get_previous_link(),
+                        "data": serializer.data
+                    },
+                    "message": "Request successful.",
+                    "is_request_from_proxy": getattr(request, 'is_request_from_proxy', False),
+                    "is_routable": getattr(request, 'is_routable', True),
+                    "client_ip": getattr(request, 'client_ip', '')
+                }
+                response_status = HTTP_200_OK
+            else:
+                response_data = {
+                    "status": "success",
+                    "message": "No data available.",
+                    "is_request_from_proxy": getattr(request, 'is_request_from_proxy', False),
+                    "is_routable": getattr(request, 'is_routable', True),
+                    "client_ip": getattr(request, 'client_ip', '')
+                }
+                response_status = HTTP_400_BAD_REQUEST
+        except Exception as e:
+            response_data = {
+                "status": "failure",
+                "message": str(e) if str(e) else "An error occurred.",
+                "is_request_from_proxy": getattr(request, 'is_request_from_proxy', False),
+                "is_routable": getattr(request, 'is_routable', True),
+                "client_ip": getattr(request, 'client_ip', '')
+            }
+            response_status = HTTP_400_BAD_REQUEST
+        
+        response = Response(response_data, status=response_status)
+        
         return response
 
 class InvestmentListView(generics.ListAPIView):
     serializer_class = InvestmentSerializer
-    # permission_classes = [IsAuthenticated]
     pagination_class = CustomPagination
-
+    
     def get_queryset(self):
         queryset = Investment.objects.all().order_by('-timestamp')
 
@@ -82,19 +117,54 @@ class InvestmentListView(generics.ListAPIView):
                 queryset = Investment.objects.none()
 
         return queryset
-    
-    def get(self, request, *args, **kwargs):
-        response = super().get(request, *args, **kwargs)
-        response.data['is_request_from_proxy'] = getattr(request, 'is_request_from_proxy', False)
-        response.data['is_routable'] = getattr(request, 'is_routable', True)
-        response.data['client_ip'] = getattr(request, 'client_ip', '')
+
+    def list(self, request, *args, **kwargs):
+        try:
+            queryset = self.filter_queryset(self.get_queryset())
+            if queryset.exists():
+                page = self.paginate_queryset(queryset)
+                serializer = self.get_serializer(page, many=True)
+                response_data = {
+                    "status": "success",
+                    "pagination": {
+                        "count": self.paginator.page.paginator.count,
+                        "next": self.paginator.get_next_link(),
+                        "previous": self.paginator.get_previous_link(),
+                        "data": serializer.data
+                    },
+                    "message": "Request successful.",
+                    "is_request_from_proxy": getattr(request, 'is_request_from_proxy', False),
+                    "is_routable": getattr(request, 'is_routable', True),
+                    "client_ip": getattr(request, 'client_ip', '')
+                }
+                response_status = HTTP_200_OK
+            else:
+                response_data = {
+                    "status": "success",
+                    "message": "No data available.",
+                    "is_request_from_proxy": getattr(request, 'is_request_from_proxy', False),
+                    "is_routable": getattr(request, 'is_routable', True),
+                    "client_ip": getattr(request, 'client_ip', '')
+                }
+                response_status = HTTP_400_BAD_REQUEST
+        except Exception as e:
+            response_data = {
+                "status": "failure",
+                "message": str(e) if str(e) else "An error occurred.",
+                "is_request_from_proxy": getattr(request, 'is_request_from_proxy', False),
+                "is_routable": getattr(request, 'is_routable', True),
+                "client_ip": getattr(request, 'client_ip', '')
+            }
+            response_status = HTTP_400_BAD_REQUEST
+        
+        response = Response(response_data, status=response_status)
+        
         return response
 
 class EventsListView(generics.ListAPIView):
     serializer_class = EventsSerializer
-    # permission_classes = [IsAuthenticated]
     pagination_class = CustomPagination
-
+    
     def get_queryset(self):
         queryset = Events.objects.all().order_by('-timestamp')
 
@@ -108,124 +178,284 @@ class EventsListView(generics.ListAPIView):
 
         return queryset
 
-    def get(self, request, *args, **kwargs):
-        response = super().get(request, *args, **kwargs)
-        response.data['is_request_from_proxy'] = getattr(request, 'is_request_from_proxy', False)
-        response.data['is_routable'] = getattr(request, 'is_routable', True)
-        response.data['client_ip'] = getattr(request, 'client_ip', '')
+    def list(self, request, *args, **kwargs):
+        try:
+            queryset = self.filter_queryset(self.get_queryset())
+            if queryset.exists():
+                page = self.paginate_queryset(queryset)
+                serializer = self.get_serializer(page, many=True)
+                response_data = {
+                    "status": "success",
+                    "pagination": {
+                        "count": self.paginator.page.paginator.count,
+                        "next": self.paginator.get_next_link(),
+                        "previous": self.paginator.get_previous_link(),
+                        "data": serializer.data
+                    },
+                    "message": "Request successful.",
+                    "is_request_from_proxy": getattr(request, 'is_request_from_proxy', False),
+                    "is_routable": getattr(request, 'is_routable', True),
+                    "client_ip": getattr(request, 'client_ip', '')
+                }
+                response_status = HTTP_200_OK
+            else:
+                response_data = {
+                    "status": "success",
+                    "message": "No data available.",
+                    "is_request_from_proxy": getattr(request, 'is_request_from_proxy', False),
+                    "is_routable": getattr(request, 'is_routable', True),
+                    "client_ip": getattr(request, 'client_ip', '')
+                }
+                response_status = HTTP_400_BAD_REQUEST
+        except Exception as e:
+            response_data = {
+                "status": "failure",
+                "message": str(e) if str(e) else "An error occurred.",
+                "is_request_from_proxy": getattr(request, 'is_request_from_proxy', False),
+                "is_routable": getattr(request, 'is_routable', True),
+                "client_ip": getattr(request, 'client_ip', '')
+            }
+            response_status = HTTP_400_BAD_REQUEST
+        
+        response = Response(response_data, status=response_status)
+        
         return response
-    
-    
+
 
 
 @api_view(['GET'])
-# @permission_classes([IsAuthenticated])
 def latest_news_images(request):
-    if request.method == 'GET':
-        latest_news = News.objects.order_by('-timestamp')[:5]
-        serializer = NewsImageSerializer(latest_news, many=True)
-
+    try:
+        if request.method == 'GET':
+            latest_news = News.objects.order_by('-timestamp')[:5]
+            
+            if latest_news.exists():
+                serializer = NewsImageSerializer(latest_news, many=True, context={'request': request})  # Pass the request to serializer context
+                response_data = {
+                    "status": "success",
+                    "data": serializer.data,
+                    "message": "Request successful."
+                }
+                response_status = HTTP_200_OK
+            else:
+                response_data = {
+                    "status": "success",
+                    "message": "No data available."
+                }
+                response_status = HTTP_400_BAD_REQUEST
+    except Exception as e:
         response_data = {
-            'is_request_from_proxy': getattr(request, 'is_request_from_proxy', False),
-            'is_routable': getattr(request, 'is_routable', True),
-            'client_ip': getattr(request, 'client_ip', ''),
-            'latest_news_images': serializer.data
+            "status": "failure",
+            "message": str(e) if str(e) else "An error occurred."
         }
+        response_status = HTTP_400_BAD_REQUEST
 
-        return Response(response_data)
+    response = Response(response_data, status=response_status)
+
+    response.data['is_request_from_proxy'] = getattr(request, 'is_request_from_proxy', False)
+    response.data['is_routable'] = getattr(request, 'is_routable', True)
+    response.data['client_ip'] = getattr(request, 'client_ip', '')
+
+    return response
 
 
 @api_view(['GET'])
-# @permission_classes([IsAuthenticated])
 def get_single_news(request, news_id):
     try:
         news_item = News.objects.get(news_id=news_id)
-    except News.DoesNotExist:
-        return Response({"error": "News item not found"}, status=404)
-
-    if request.method == 'GET':
-        serializer = NewsSerializer(news_item)
-        
+        serializer = NewsSerializer(news_item, context={'request': request})  # Pass the request to serializer context
         response_data = {
+            'status': 'success',
+            'data': serializer.data,  # Use the serialized data directly
+            'message': 'Request successful.',
             'is_request_from_proxy': getattr(request, 'is_request_from_proxy', False),
             'is_routable': getattr(request, 'is_routable', True),
-            'client_ip': getattr(request, 'client_ip', ''),
-            'news_item': serializer.data
+            'client_ip': getattr(request, 'client_ip', '')
         }
-        
-        return Response(response_data)
-    
+        response_status = HTTP_200_OK
+    except News.DoesNotExist:
+        response_data = {
+            'status': 'success',
+            'message': 'News item not found.',
+            'is_request_from_proxy': getattr(request, 'is_request_from_proxy', False),
+            'is_routable': getattr(request, 'is_routable', True),
+            'client_ip': getattr(request, 'client_ip', '')
+        }
+        response_status = HTTP_404_NOT_FOUND
+    except Exception as e:
+        response_data = {
+            'status': 'failure',
+            'message': str(e) if str(e) else 'An error occurred.',
+            'is_request_from_proxy': getattr(request, 'is_request_from_proxy', False),
+            'is_routable': getattr(request, 'is_routable', True),
+            'client_ip': getattr(request, 'client_ip', '')
+        }
+        response_status = HTTP_400_BAD_REQUEST
+
+    response = Response(response_data, status=response_status)
+    return response
+
+
     
 @api_view(['GET'])
-# @permission_classes([IsAuthenticated])
 def get_single_investment(request, investment_id):
     try:
         investment_item = Investment.objects.get(investment_id=investment_id)
-    except Investment.DoesNotExist:
-        return Response({"error": "Investment item not found"}, status=404)
-
-    if request.method == 'GET':
-        serializer = InvestmentSerializer(investment_item)
-        
+        serializer = InvestmentSerializer(investment_item, context={'request': request})  # Pass the request to serializer context
         response_data = {
+            'status': 'success',
+            'data': serializer.data,  # Use the serialized data directly
+            'message': 'Request successful.',
             'is_request_from_proxy': getattr(request, 'is_request_from_proxy', False),
             'is_routable': getattr(request, 'is_routable', True),
-            'client_ip': getattr(request, 'client_ip', ''),
-            'investment_item': serializer.data
+            'client_ip': getattr(request, 'client_ip', '')
         }
-        
-        return Response(response_data)
+        response_status = HTTP_200_OK
+    except Investment.DoesNotExist:
+        response_data = {
+            'status': 'success',
+            'message': 'Investment item not found.',
+            'is_request_from_proxy': getattr(request, 'is_request_from_proxy', False),
+            'is_routable': getattr(request, 'is_routable', True),
+            'client_ip': getattr(request, 'client_ip', '')
+        }
+        response_status = HTTP_404_NOT_FOUND
+    except Exception as e:
+        response_data = {
+            'status': 'failure',
+            'message': str(e) if str(e) else 'An error occurred.',
+            'is_request_from_proxy': getattr(request, 'is_request_from_proxy', False),
+            'is_routable': getattr(request, 'is_routable', True),
+            'client_ip': getattr(request, 'client_ip', '')
+        }
+        response_status = HTTP_400_BAD_REQUEST
+
+    response = Response(response_data, status=response_status)
+    return response
+
     
 @api_view(['GET'])
-# @permission_classes([IsAuthenticated])
 def get_single_events(request, event_id):
     try:
         event_item = Events.objects.get(event_id=event_id)
-    except Events.DoesNotExist:
-        return Response({"error": "Event item not found"}, status=404)
-
-    if request.method == 'GET':
-        serializer = EventsSerializer(event_item)
-        
+        serializer = EventsSerializer(event_item, context={'request': request})  # Pass the request to serializer context
         response_data = {
+            'status': 'success',
+            'data': serializer.data,  # Use the serialized data directly
+            'message': 'Request successful.',
             'is_request_from_proxy': getattr(request, 'is_request_from_proxy', False),
             'is_routable': getattr(request, 'is_routable', True),
-            'client_ip': getattr(request, 'client_ip', ''),
-            'event_item': serializer.data
+            'client_ip': getattr(request, 'client_ip', '')
         }
-        
-        return Response(response_data)
+        response_status = HTTP_200_OK
+    except Events.DoesNotExist:
+        response_data = {
+            'status': 'success',
+            'message': 'Event item not found.',
+            'is_request_from_proxy': getattr(request, 'is_request_from_proxy', False),
+            'is_routable': getattr(request, 'is_routable', True),
+            'client_ip': getattr(request, 'client_ip', '')
+        }
+        response_status = HTTP_404_NOT_FOUND
+    except Exception as e:
+        response_data = {
+            'status': 'failure',
+            'message': str(e) if str(e) else 'An error occurred.',
+            'is_request_from_proxy': getattr(request, 'is_request_from_proxy', False),
+            'is_routable': getattr(request, 'is_routable', True),
+            'client_ip': getattr(request, 'client_ip', '')
+        }
+        response_status = HTTP_400_BAD_REQUEST
+
+    response = Response(response_data, status=response_status)
+    return response
+
     
     
 @api_view(['GET'])
-# @permission_classes([IsAuthenticated])
 def upcoming_events(request):
-    current_time = timezone.now()
-    upcoming_events = Events.objects.filter(meet_time__gte=current_time).order_by('meet_time')
-    serializer = EventsSerializer(upcoming_events, many=True)
-    
-    response_data = {
-        'is_request_from_proxy': getattr(request, 'is_request_from_proxy', False),
-        'is_routable': getattr(request, 'is_routable', True),
-        'client_ip': getattr(request, 'client_ip', ''),
-        'upcoming_events': serializer.data
-    }
-    
-    return Response(response_data)
+    try:
+        current_time = timezone.now()
+        upcoming_events = Events.objects.filter(meet_time__gte=current_time).order_by('meet_time')
+        
+        if upcoming_events.exists():
+            serializer = EventsSerializer(upcoming_events, many=True, context={'request': request})  # Pass the request to serializer context
+            response_data = {
+                'status': 'success',
+                'data': serializer.data,
+                'message': 'Request successful.',
+                'is_request_from_proxy': getattr(request, 'is_request_from_proxy', False),
+                'is_routable': getattr(request, 'is_routable', True),
+                'client_ip': getattr(request, 'client_ip', '')
+            }
+            response_status = HTTP_200_OK
+        else:
+            response_data = {
+                'status': 'success',
+                'message': 'No data available.',
+                'is_request_from_proxy': getattr(request, 'is_request_from_proxy', False),
+                'is_routable': getattr(request, 'is_routable', True),
+                'client_ip': getattr(request, 'client_ip', '')
+            }
+            response_status = HTTP_200_OK
 
+    except Exception as e:
+        response_data = {
+            'status': 'failure',
+            'message': str(e) if str(e) else 'An error occurred.',
+            'is_request_from_proxy': getattr(request, 'is_request_from_proxy', False),
+            'is_routable': getattr(request, 'is_routable', True),
+            'client_ip': getattr(request, 'client_ip', '')
+        }
+        response_status = HTTP_400_BAD_REQUEST
+    
+    response = Response(response_data, status=response_status)
+    return response
+
+    
+    
     
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def get_about(request):
-    about_instance = get_object_or_404(About)
-    data = {
-        'title': about_instance.title,
-        'content': about_instance.content,
-        'is_request_from_proxy': getattr(request, 'is_request_from_proxy', False),
-        'is_routable': getattr(request, 'is_routable', True),
-        'client_ip': getattr(request, 'client_ip', ''),
-    }
-    return JsonResponse(data)
+    try:
+        about_instance = get_object_or_404(About)
+        data = {
+            'title': about_instance.title,
+            'content': about_instance.content,
+        }
+        response_data = {
+            'status': 'success',
+            'data': data,
+            'message': 'Request successful.',
+            'is_request_from_proxy': getattr(request, 'is_request_from_proxy', False),
+            'is_routable': getattr(request, 'is_routable', True),
+            'client_ip': getattr(request, 'client_ip', ''),
+        }
+        response_status = HTTP_200_OK
+    except About.DoesNotExist:
+        response_data = {
+            'status': 'success',
+            'message': 'No data available.',
+            'is_request_from_proxy': getattr(request, 'is_request_from_proxy', False),
+            'is_routable': getattr(request, 'is_routable', True),
+            'client_ip': getattr(request, 'client_ip', ''),
+        }
+        response_status = HTTP_404_NOT_FOUND
+    except Exception as e:
+        response_data = {
+            'status': 'failure',
+            'message': str(e) if str(e) else 'An error occurred.',
+            'is_request_from_proxy': getattr(request, 'is_request_from_proxy', False),
+            'is_routable': getattr(request, 'is_routable', True),
+            'client_ip': getattr(request, 'client_ip', ''),
+        }
+        response_status = HTTP_400_BAD_REQUEST
+    
+    response = Response(response_data, status=response_status)
+    return response
+
+
 
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
@@ -242,88 +472,311 @@ def create_proposal(request):
             'user': user.id,
         }
         
-        # Create a serializer instance with the proposal data
-        serializer = ProposalSerializer(data=proposal_data)
-        
-        if serializer.is_valid():
-            serializer.save()
-            
+        # Check if a proposal with the same title already exists
+        existing_proposal = Proposal.objects.filter(title=proposal_data['title']).exists()
+        if existing_proposal:
             response_data = {
+                'status': 'failure',
+                'message': 'A proposal with the same title already exists.',
                 'is_request_from_proxy': getattr(request, 'is_request_from_proxy', False),
                 'is_routable': getattr(request, 'is_routable', True),
                 'client_ip': getattr(request, 'client_ip', ''),
-                'proposal_data': serializer.data,
             }
-            
-            return Response(response_data, status=status.HTTP_201_CREATED)
+            response_status = status.HTTP_400_BAD_REQUEST
+        else:
+            # Create a serializer instance with the proposal data
+            serializer = ProposalSerializer(data=proposal_data)
         
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            if serializer.is_valid():
+                serializer.save()
+                
+                # Get the username for the user
+                user_instance = User.objects.get(pk=user.id)
+                user_name = user_instance.username
+            
+                response_data = {
+                    'status': 'success',
+                    'data': {
+                        'id': serializer.data['id'],
+                        'timestamp': serializer.data['timestamp'],
+                        'title': serializer.data['title'],
+                        'description': serializer.data['description'],
+                        'status': serializer.data['status'],
+                        'user': user_name,  # Use the username
+                    },
+                    'message': 'Proposal created successfully.',
+                    'is_request_from_proxy': getattr(request, 'is_request_from_proxy', False),
+                    'is_routable': getattr(request, 'is_routable', True),
+                    'client_ip': getattr(request, 'client_ip', ''),
+                }
+                response_status = status.HTTP_201_CREATED
+            else:
+                response_data = {
+                    'status': 'failure',
+                    'message': 'Failed to create proposal.',
+                    'errors': serializer.errors,
+                    'is_request_from_proxy': getattr(request, 'is_request_from_proxy', False),
+                    'is_routable': getattr(request, 'is_routable', True),
+                    'client_ip': getattr(request, 'client_ip', ''),
+                }
+                response_status = status.HTTP_400_BAD_REQUEST
+        
+        response = Response(response_data, status=response_status)
+        return response
+
     
     
 class ProposalList(generics.ListAPIView):
     permission_classes = [IsAuthenticated]
-    queryset = Proposal.objects.all().order_by('-timestamp')
     serializer_class = ProposalSerializer
     pagination_class = CustomPagination
-    
+
+    def get_queryset(self):
+        queryset = Proposal.objects.all().order_by('-timestamp')
+        return queryset
+
     def list(self, request, *args, **kwargs):
-        response = super().list(request, *args, **kwargs)
-        
-        response_data = {
-            'is_request_from_proxy': getattr(request, 'is_request_from_proxy', False),
-            'is_routable': getattr(request, 'is_routable', True),
-            'client_ip': getattr(request, 'client_ip', ''),
-            'proposals': response.data,
-        }
-        
-        return Response(response_data)
+        try:
+            queryset = self.filter_queryset(self.get_queryset())
+
+            if not queryset.exists():
+                response_data = {
+                    'status': 'success',
+                    'message': 'No data available.',
+                    'is_request_from_proxy': getattr(request, 'is_request_from_proxy', False),
+                    'is_routable': getattr(request, 'is_routable', True),
+                    'client_ip': getattr(request, 'client_ip', ''),
+                }
+                response_status = status.HTTP_200_OK
+            else:
+                page = self.paginate_queryset(queryset)
+                if page is not None:
+                    serializer = self.get_serializer(page, many=True)
+                    pagination_response = self.paginator.get_paginated_response(serializer.data).data
+                    response_data = {
+                        'status': 'success',
+                        'pagination': {
+                            'count': pagination_response['count'],
+                            'next': pagination_response['next'],
+                            'previous': pagination_response['previous'],
+                            'data': pagination_response['results'],
+                        },
+                        'message': 'Request successful.',
+                        'is_request_from_proxy': getattr(request, 'is_request_from_proxy', False),
+                        'is_routable': getattr(request, 'is_routable', True),
+                        'client_ip': getattr(request, 'client_ip', ''),
+                    }
+                else:
+                    response_data = {
+                        'status': 'success',
+                        'message': 'No data available.',
+                        'is_request_from_proxy': getattr(request, 'is_request_from_proxy', False),
+                        'is_routable': getattr(request, 'is_routable', True),
+                        'client_ip': getattr(request, 'client_ip', ''),
+                    }
+                response_status = status.HTTP_200_OK
+        except Exception as e:
+            response_data = {
+                'status': 'failure',
+                'message': str(e) if str(e) else 'An error occurred.',
+                'is_request_from_proxy': getattr(request, 'is_request_from_proxy', False),
+                'is_routable': getattr(request, 'is_routable', True),
+                'client_ip': getattr(request, 'client_ip', ''),
+            }
+            response_status = status.HTTP_400_BAD_REQUEST
+
+        response = Response(response_data, status=response_status)
+        return response
+
+    def get(self, request, *args, **kwargs):
+        queryset = self.filter_queryset(self.get_queryset())
+        if queryset.exists():
+            return self.list(request, *args, **kwargs)
+        else:
+            response_data = {
+                'status': 'success',
+                'message': 'No data available.',
+                'is_request_from_proxy': getattr(request, 'is_request_from_proxy', False),
+                'is_routable': getattr(request, 'is_routable', True),
+                'client_ip': getattr(request, 'client_ip', ''),
+            }
+            response_status = status.HTTP_200_OK
+            response = Response(response_data, status=response_status)
+            return response
+
 
 
 
 class ProposalByStatusList(generics.ListAPIView):
     permission_classes = [IsAuthenticated]
     serializer_class = ProposalSerializer
-    pagination_class = CustomPagination 
+    pagination_class = CustomPagination
     
     def get_queryset(self):
         status = self.kwargs['status']
         queryset = Proposal.objects.filter(status=status).order_by('-timestamp')
-        
         return queryset
     
     def list(self, request, *args, **kwargs):
-        response = super().list(request, *args, **kwargs)
+        try:
+            queryset = self.filter_queryset(self.get_queryset())
+            
+            if not queryset.exists():
+                response_data = {
+                    'status': 'success',
+                    'message': 'No data available.',
+                    'is_request_from_proxy': getattr(request, 'is_request_from_proxy', False),
+                    'is_routable': getattr(request, 'is_routable', True),
+                    'client_ip': getattr(request, 'client_ip', ''),
+                }
+                response_status = status.HTTP_200_OK
+            else:
+                page = self.paginate_queryset(queryset)
+                if page is not None:
+                    serializer = self.get_serializer(page, many=True)
+                    pagination_response = self.paginator.get_paginated_response(serializer.data).data
+                    response_data = {
+                        'status': 'success',
+                        'pagination': {
+                            'count': pagination_response['count'],
+                            'next': pagination_response['next'],
+                            'previous': pagination_response['previous'],
+                            'data': pagination_response['results'],  # Extract the 'results' field from pagination_response
+                        },
+                        'message': 'Request successful.',
+                        'is_request_from_proxy': getattr(request, 'is_request_from_proxy', False),
+                        'is_routable': getattr(request, 'is_routable', True),
+                        'client_ip': getattr(request, 'client_ip', ''),
+                    }
+                else:
+                    response_data = {
+                        'status': 'success',
+                        'message': 'No data available.',
+                        'is_request_from_proxy': getattr(request, 'is_request_from_proxy', False),
+                        'is_routable': getattr(request, 'is_routable', True),
+                        'client_ip': getattr(request, 'client_ip', ''),
+                    }
+                response_status = status.HTTP_200_OK
+        except Exception as e:
+            response_data = {
+                'status': 'failure',
+                'message': str(e) if str(e) else 'An error occurred.',
+                'is_request_from_proxy': getattr(request, 'is_request_from_proxy', False),
+                'is_routable': getattr(request, 'is_routable', True),
+                'client_ip': getattr(request, 'client_ip', ''),
+            }
+            response_status = status.HTTP_400_BAD_REQUEST
         
-        response_data = {
-            'is_request_from_proxy': getattr(request, 'is_request_from_proxy', False),
-            'is_routable': getattr(request, 'is_routable', True),
-            'client_ip': getattr(request, 'client_ip', ''),
-            'proposals': response.data,
-        }
-        return Response(response_data)
+        response = Response(response_data, status=response_status)
+        return response
+
+       
     
 class UserEmailList(generics.ListAPIView):
     permission_classes = [IsAuthenticated]
     serializer_class = UserEmailSerializer
     queryset = User.objects.all().order_by('-date_joined')[:50]
-    
+    pagination_class = CustomPagination  # You might want to include pagination as well
+
     def list(self, request, *args, **kwargs):
-        response = super().list(request, *args, **kwargs)
+        try:
+            queryset = self.filter_queryset(self.get_queryset())
+
+            if not queryset.exists():
+                response_data = {
+                    'status': 'success',
+                    'message': 'No users available.',
+                    'is_request_from_proxy': getattr(request, 'is_request_from_proxy', False),
+                    'is_routable': getattr(request, 'is_routable', True),
+                    'client_ip': getattr(request, 'client_ip', ''),
+                }
+                response_status = status.HTTP_200_OK
+            else:
+                page = self.paginate_queryset(queryset)
+                if page is not None:
+                    serializer = self.get_serializer(page, many=True)
+                    pagination_response = self.paginator.get_paginated_response(serializer.data).data
+                    response_data = {
+                        'status': 'success',
+                        'pagination': {
+                            'count': pagination_response['count'],
+                            'next': pagination_response['next'],
+                            'previous': pagination_response['previous'],
+                            'data': pagination_response['results'],  # Renamed 'data' to 'users'
+                        },
+                        'is_request_from_proxy': getattr(request, 'is_request_from_proxy', False),
+                        'is_routable': getattr(request, 'is_routable', True),
+                        'client_ip': getattr(request, 'client_ip', ''),
+                    }
+                else:
+                    response_data = {
+                        'status': 'success',
+                        'message': 'No users available.',
+                        'is_request_from_proxy': getattr(request, 'is_request_from_proxy', False),
+                        'is_routable': getattr(request, 'is_routable', True),
+                        'client_ip': getattr(request, 'client_ip', ''),
+                    }
+                response_status = status.HTTP_200_OK
+        except Exception as e:
+            response_data = {
+                'status': 'failure',
+                'message': str(e) if str(e) else 'An error occurred.',
+                'is_request_from_proxy': getattr(request, 'is_request_from_proxy', False),
+                'is_routable': getattr(request, 'is_routable', True),
+                'client_ip': getattr(request, 'client_ip', ''),
+            }
+            response_status = status.HTTP_400_BAD_REQUEST
         
-        response_data = {
-            'is_request_from_proxy': getattr(request, 'is_request_from_proxy', False),
-            'is_routable': getattr(request, 'is_routable', True),
-            'client_ip': getattr(request, 'client_ip', ''),
-            'users': response.data,
-        }
-        
-        return Response(response_data)
+        response = Response(response_data, status=response_status)
+        return response
+
     
 @api_view(['GET', 'POST'])
 def device_list(request):
-    if request.method == 'POST':
-        serializer = DeviceSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=201)
-        return Response(serializer.errors, status=400)
+    try:
+        if request.method == 'POST':
+            serializer = DeviceSerializer(data=request.data)
+            if serializer.is_valid():
+                serializer.save()
+                response_data = {
+                    'status': 'success',
+                    'data': serializer.data,
+                    'message': 'Device created successfully.',
+                    'is_request_from_proxy': getattr(request, 'is_request_from_proxy', False),
+                    'is_routable': getattr(request, 'is_routable', True),
+                    'client_ip': getattr(request, 'client_ip', ''),
+                    
+                }
+                response_status = status.HTTP_201_CREATED
+            else:
+                response_data = {
+                    'status': 'failure',
+                    'errors': serializer.errors,
+                    'message': 'Invalid data.',
+                    'is_request_from_proxy': getattr(request, 'is_request_from_proxy', False),
+                    'is_routable': getattr(request, 'is_routable', True),
+                    'client_ip': getattr(request, 'client_ip', ''),
+                   
+                }
+                response_status = status.HTTP_400_BAD_REQUEST
+        else:
+            response_data = {
+                'status': 'failure',
+                'message': 'Invalid request method.',
+                'is_request_from_proxy': getattr(request, 'is_request_from_proxy', False),
+                'is_routable': getattr(request, 'is_routable', True),
+                'client_ip': getattr(request, 'client_ip', ''),
+            }
+            response_status = status.HTTP_400_BAD_REQUEST
+    except Exception as e:
+        response_data = {
+            'status': 'failure',
+            'message': str(e) if str(e) else 'An error occurred.',
+            'is_request_from_proxy': getattr(request, 'is_request_from_proxy', False),
+            'is_routable': getattr(request, 'is_routable', True),
+            'client_ip': getattr(request, 'client_ip', ''),
+        }
+        response_status = status.HTTP_500_INTERNAL_SERVER_ERROR
+    
+    response = Response(response_data, status=response_status)
+    return response

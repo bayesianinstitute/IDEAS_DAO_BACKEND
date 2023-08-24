@@ -8,10 +8,14 @@ from ideasApi.models import (
         Device
 )
 class NewsSerializer(serializers.ModelSerializer):
-    # Your existing serializer fields go here
+    technology_name = serializers.SerializerMethodField()
+
+    def get_technology_name(self, news):
+        return news.technologies.technology_name
+    
     class Meta:
         model = News
-        fields = '__all__'
+        fields = ('news_id', 'title', 'brief', 'description', 'timestamp', 'news_image', 'technology_name')
         
 class NewsImageSerializer(serializers.ModelSerializer):
     class Meta:
@@ -20,14 +24,25 @@ class NewsImageSerializer(serializers.ModelSerializer):
 
         
 class EventsSerializer(serializers.ModelSerializer):
+    technology_name = serializers.SerializerMethodField()
+
+    def get_technology_name(self, event):
+        return event.technologies.technology_name
+    
     class Meta:
         model = Events
-        fields = '__all__'
+        fields = ('event_id', 'title', 'description', 'timestamp', 'meet_time', 'meet_link', 'event_image', 'technology_name')
+        
         
 class InvestmentSerializer(serializers.ModelSerializer):
+    technology_name = serializers.SerializerMethodField()
+
+    def get_technology_name(self, investment):
+        return investment.technologies.technology_name
+    
     class Meta:
         model = Investment
-        fields = '__all__'
+        fields = ('investment_id', 'title', 'description', 'timestamp', 'Investment_image', 'technology_name')
         
 class ProposalSerializer(serializers.ModelSerializer):
     class Meta:
