@@ -780,3 +780,41 @@ def device_list(request):
     
     response = Response(response_data, status=response_status)
     return response
+
+@api_view(['GET'])
+def TechnologyList(request, format=None):
+    try:
+        # Get all technologies from the database
+        technologies = Technology.objects.all()
+
+        # Serialize the technologies
+        serialized_technologies = [
+            {
+                "tech_id": tech.technology_id,
+                "tech_name": tech.technology_name
+            }
+            for tech in technologies
+        ]
+
+        response_data = {
+            'status': 'success',
+            'data': serialized_technologies,
+            'message': 'Technologies retrieved successfully.',
+            'is_request_from_proxy': getattr(request, 'is_request_from_proxy', False),
+            'is_routable': getattr(request, 'is_routable', True),
+            'client_ip': getattr(request, 'client_ip', ''),
+        }
+        response_status = status.HTTP_200_OK
+
+    except Exception as e:
+        response_data = {
+            'status': 'failure',
+            'message': str(e) if str(e) else 'An error occurred.',
+            'is_request_from_proxy': getattr(request, 'is_request_from_proxy', False),
+            'is_routable': getattr(request, 'is_routable', True),
+            'client_ip': getattr(request, 'client_ip', ''),
+        }
+        response_status = status.HTTP_500_INTERNAL_SERVER_ERROR
+
+    response = Response(response_data, status=response_status)
+    return response
