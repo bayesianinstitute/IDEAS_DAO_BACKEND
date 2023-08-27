@@ -8,11 +8,11 @@ class BrandAdmin(ImportExportModelAdmin):
     pass
 
 class NewAdmin(admin.ModelAdmin):
-    list_display = ('news_id','title','description','brief','timestamp','news_image','technologies')
-    list_display_links =  ('news_id','title','description','brief','timestamp','news_image','technologies')
+    list_display = ('id','title','description','brief','timestamp','news_image','technologies')
+    list_display_links =  ('id','title','description','brief','timestamp','news_image','technologies')
 
-    search_fields= ('news_id','title','brief','timestamp','description','brief',)
-    list_filter= ('news_id','title','description','brief','timestamp','technologies',)
+    search_fields= ('id','title','brief','timestamp','description','brief',)
+    list_filter= ('id','title','description','brief','timestamp','technologies',)
 
 class New(NewAdmin,BrandAdmin):
     pass

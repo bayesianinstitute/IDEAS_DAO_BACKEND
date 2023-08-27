@@ -15,7 +15,7 @@ class NewsSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = News
-        fields = ('news_id', 'title', 'brief', 'description', 'timestamp', 'news_image', 'technology_name')
+        fields = ('id', 'title', 'brief', 'description', 'timestamp', 'news_image', 'technology_name')
         
 class NewsImageSerializer(serializers.ModelSerializer):
     class Meta:

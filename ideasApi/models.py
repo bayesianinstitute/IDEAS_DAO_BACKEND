@@ -21,7 +21,7 @@ class News(models.Model):
     def nameFile(instance, filename):
         return "/".join(["images", str(instance.news_id), filename])
 
-    news_id =models.CharField(max_length=50,unique=True)
+    
     title= models.CharField(max_length=200)
     brief= models.CharField(max_length=200)
     description = RichTextField()
