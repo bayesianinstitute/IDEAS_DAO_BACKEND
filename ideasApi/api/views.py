@@ -3,7 +3,7 @@ from rest_framework import generics
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.response import Response
-from rest_framework.decorators import api_view, permission_classes
+from rest_framework.decorators import api_view, permission_classes,authentication_classes
 from django.views.decorators.csrf import csrf_protect
 from django.utils import timezone
 from django.http import JsonResponse
@@ -14,6 +14,8 @@ from django.contrib.auth.models import User
 import ipaddress
 from rest_framework import viewsets
 from ipware import get_client_ip
+from ideasApi.authentication import MemberJWTAuthentication,CustomIsAuthenticated
+
 from ideasApi.models import (
     News,
     Events,
@@ -21,8 +23,10 @@ from ideasApi.models import (
     Technology,
     About,
     Proposal,
-    Device
+    Device,
+    Member
 )
+
 from ideasApi.api.serializers import (
     NewsSerializer,
     EventsSerializer,
@@ -51,7 +55,7 @@ class NewsListView(generics.ListAPIView):
         technology_name = self.kwargs.get('technology_name')
         if technology_name:
             try:
-                technology = Technology.objects.get(technology_name__iexact=technology_name)
+                technology = Technology.objects.get(name__iexact=technology_name)
                 queryset = queryset.filter(technologies=technology)
             except Technology.DoesNotExist:
                 queryset = News.objects.none()
@@ -77,7 +81,7 @@ class NewsListView(generics.ListAPIView):
                     "is_routable": getattr(request, 'is_routable', True),
                     "client_ip": getattr(request, 'client_ip', '')
                 }
-                response_status = HTTP_200_OK
+                response_status = status.HTTP_200_OK
             else:
                 response_data = {
                     "status": "success",
@@ -86,7 +90,7 @@ class NewsListView(generics.ListAPIView):
                     "is_routable": getattr(request, 'is_routable', True),
                     "client_ip": getattr(request, 'client_ip', '')
                 }
-                response_status = HTTP_400_BAD_REQUEST
+                response_status = status.HTTP_400_BAD_REQUEST
         except Exception as e:
             response_data = {
                 "status": "failure",
@@ -95,7 +99,7 @@ class NewsListView(generics.ListAPIView):
                 "is_routable": getattr(request, 'is_routable', True),
                 "client_ip": getattr(request, 'client_ip', '')
             }
-            response_status = HTTP_400_BAD_REQUEST
+            response_status = status.HTTP_400_BAD_REQUEST
         
         response = Response(response_data, status=response_status)
         
@@ -111,7 +115,7 @@ class InvestmentListView(generics.ListAPIView):
         technology_name = self.kwargs.get('technology_name')
         if technology_name:
             try:
-                technology = Technology.objects.get(technology_name__iexact=technology_name)
+                technology = Technology.objects.get(name__iexact=technology_name)
                 queryset = queryset.filter(technologies=technology)
             except Technology.DoesNotExist:
                 queryset = Investment.objects.none()
@@ -171,7 +175,7 @@ class EventsListView(generics.ListAPIView):
         technology_name = self.kwargs.get('technology_name')
         if technology_name:
             try:
-                technology = Technology.objects.get(technology_name__iexact=technology_name)
+                technology = Technology.objects.get(name__iexact=technology_name)
                 queryset = queryset.filter(technologies=technology)
             except Technology.DoesNotExist:
                 queryset = Events.objects.none()
@@ -262,7 +266,7 @@ def latest_news_images(request):
 @api_view(['GET'])
 def get_single_news(request, news_id):
     try:
-        news_item = News.objects.get(news_id=news_id)
+        news_item = News.objects.get(id=news_id)
         serializer = NewsSerializer(news_item, context={'request': request})  # Pass the request to serializer context
         response_data = {
             'status': 'success',
@@ -300,7 +304,7 @@ def get_single_news(request, news_id):
 @api_view(['GET'])
 def get_single_investment(request, investment_id):
     try:
-        investment_item = Investment.objects.get(investment_id=investment_id)
+        investment_item = Investment.objects.get(id=investment_id)
         serializer = InvestmentSerializer(investment_item, context={'request': request})  # Pass the request to serializer context
         response_data = {
             'status': 'success',
@@ -337,7 +341,7 @@ def get_single_investment(request, investment_id):
 @api_view(['GET'])
 def get_single_events(request, event_id):
     try:
-        event_item = Events.objects.get(event_id=event_id)
+        event_item = Events.objects.get(id=event_id)
         serializer = EventsSerializer(event_item, context={'request': request})  # Pass the request to serializer context
         response_data = {
             'status': 'success',
@@ -412,12 +416,14 @@ def upcoming_events(request):
     response = Response(response_data, status=response_status)
     return response
 
-    
-    
-    
+
+
 @api_view(['GET'])
-@permission_classes([IsAuthenticated])
+@authentication_classes([MemberJWTAuthentication])
+@permission_classes([CustomIsAuthenticated])
 def get_about(request):
+    username = request.user.username
+    print(f"Request user's username: {username}")
     try:
         about_instance = get_object_or_404(About)
         data = {
@@ -458,18 +464,18 @@ def get_about(request):
 
 
 @api_view(['POST'])
-@permission_classes([IsAuthenticated])
+@authentication_classes([MemberJWTAuthentication])
+@permission_classes([CustomIsAuthenticated])
 def create_proposal(request):
     if request.method == 'POST':
         # Get user information from the access token
         user = request.user
-        
+
         # Create a proposal instance with the user information
         proposal_data = {
-            'proposal_id': request.data.get('id'),
             'title': request.data.get('title'),
             'description': request.data.get('description'),
-            'user': user.id,
+            'member': user.id,
         }
         
         # Check if a proposal with the same title already exists
@@ -491,7 +497,7 @@ def create_proposal(request):
                 serializer.save()
                 
                 # Get the username for the user
-                user_instance = User.objects.get(pk=user.id)
+                user_instance = Member.objects.get(pk=user.id)
                 user_name = user_instance.username
             
                 response_data = {
@@ -527,9 +533,11 @@ def create_proposal(request):
     
     
 class ProposalList(generics.ListAPIView):
-    permission_classes = [IsAuthenticated]
+    authentication_classes  = [MemberJWTAuthentication] 
+    permission_classes= [CustomIsAuthenticated]
     serializer_class = ProposalSerializer
     pagination_class = CustomPagination
+
 
     def get_queryset(self):
         queryset = Proposal.objects.all().order_by('-timestamp')
@@ -608,7 +616,8 @@ class ProposalList(generics.ListAPIView):
 
 
 class ProposalByStatusList(generics.ListAPIView):
-    permission_classes = [IsAuthenticated]
+    authentication_classes  = [MemberJWTAuthentication] 
+    permission_classes= [CustomIsAuthenticated]
     serializer_class = ProposalSerializer
     pagination_class = CustomPagination
     
@@ -673,9 +682,10 @@ class ProposalByStatusList(generics.ListAPIView):
        
     
 class UserEmailList(generics.ListAPIView):
-    permission_classes = [IsAuthenticated]
+    authentication_classes  = [MemberJWTAuthentication] 
+    permission_classes= [CustomIsAuthenticated]
     serializer_class = UserEmailSerializer
-    queryset = User.objects.all().order_by('-date_joined')[:50]
+    queryset = Member.objects.all().order_by('-join_time')[:50]
     pagination_class = CustomPagination  # You might want to include pagination as well
 
     def list(self, request, *args, **kwargs):
@@ -731,52 +741,59 @@ class UserEmailList(generics.ListAPIView):
         return response
 
     
-@api_view(['GET', 'POST'])
+@api_view(['GET', 'PUT'])
+@authentication_classes([MemberJWTAuthentication])
+@permission_classes([CustomIsAuthenticated])
 def device_list(request):
     try:
-        if request.method == 'POST':
-            serializer = DeviceSerializer(data=request.data)
+        member = request.user  # Using the authenticated member directly
+        try:
+            device = Device.objects.get(member=member)
+        except Device.DoesNotExist:
+            device = None
+            
+        if request.method == 'PUT':
+            serializer = DeviceSerializer(device, data=request.data)
             if serializer.is_valid():
-                serializer.save()
+                serializer.save(member=member)  # Associate the member with the device
                 response_data = {
                     'status': 'success',
-                    'data': serializer.data,
-                    'message': 'Device created successfully.',
-                    'is_request_from_proxy': getattr(request, 'is_request_from_proxy', False),
-                    'is_routable': getattr(request, 'is_routable', True),
-                    'client_ip': getattr(request, 'client_ip', ''),
-                    
+                    'data': [serializer.data],  # Wrap the data in a list
+                    'message': 'Device information updated successfully.',
                 }
-                response_status = status.HTTP_201_CREATED
+                response_status = status.HTTP_200_OK
             else:
                 response_data = {
                     'status': 'failure',
-                    'errors': serializer.errors,
                     'message': 'Invalid data.',
-                    'is_request_from_proxy': getattr(request, 'is_request_from_proxy', False),
-                    'is_routable': getattr(request, 'is_routable', True),
-                    'client_ip': getattr(request, 'client_ip', ''),
-                   
                 }
                 response_status = status.HTTP_400_BAD_REQUEST
         else:
-            response_data = {
-                'status': 'failure',
-                'message': 'Invalid request method.',
-                'is_request_from_proxy': getattr(request, 'is_request_from_proxy', False),
-                'is_routable': getattr(request, 'is_routable', True),
-                'client_ip': getattr(request, 'client_ip', ''),
-            }
-            response_status = status.HTTP_400_BAD_REQUEST
+            if device:
+                response_data = {
+                    'status': 'success',
+                    'data': [DeviceSerializer(device).data],  # Wrap the data in a list
+                    'message': 'Device information retrieved successfully.',
+                }
+            else:
+                response_data = {
+                    'status': 'failure',
+                    'message': 'Device not found.',
+                }
+            response_status = status.HTTP_200_OK
+        
     except Exception as e:
         response_data = {
             'status': 'failure',
             'message': str(e) if str(e) else 'An error occurred.',
-            'is_request_from_proxy': getattr(request, 'is_request_from_proxy', False),
-            'is_routable': getattr(request, 'is_routable', True),
-            'client_ip': getattr(request, 'client_ip', ''),
         }
         response_status = status.HTTP_500_INTERNAL_SERVER_ERROR
+    
+    response_data.update({
+        'is_request_from_proxy': getattr(request, 'is_request_from_proxy', False),
+        'is_routable': getattr(request, 'is_routable', True),
+        'client_ip': getattr(request, 'client_ip', ''),
+    })
     
     response = Response(response_data, status=response_status)
     return response

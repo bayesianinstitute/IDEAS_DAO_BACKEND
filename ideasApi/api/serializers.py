@@ -5,44 +5,45 @@ from ideasApi.models import (
         Events,
         Investment,
         Proposal,
-        Device
+        Device,
+        Member
 )
 class NewsSerializer(serializers.ModelSerializer):
     technology_name = serializers.SerializerMethodField()
 
     def get_technology_name(self, news):
-        return news.technologies.technology_name
+        return news.technologies.name
     
     class Meta:
         model = News
-        fields = ('id', 'title', 'brief', 'description', 'timestamp', 'news_image', 'technology_name')
+        fields = ('id', 'title', 'brief', 'description', 'timestamp', 'image', 'technology_name')
         
 class NewsImageSerializer(serializers.ModelSerializer):
     class Meta:
         model = News
-        fields = ['news_image', 'news_id']
+        fields = ['id', 'image']
 
         
 class EventsSerializer(serializers.ModelSerializer):
     technology_name = serializers.SerializerMethodField()
 
     def get_technology_name(self, event):
-        return event.technologies.technology_name
+        return event.technologies.name
     
     class Meta:
         model = Events
-        fields = ('event_id', 'title', 'description', 'timestamp', 'meet_time', 'meet_link', 'event_image', 'technology_name')
+        fields = ('id', 'title', 'description', 'timestamp', 'meet_time', 'meet_link', 'image', 'technology_name')
         
         
 class InvestmentSerializer(serializers.ModelSerializer):
     technology_name = serializers.SerializerMethodField()
 
     def get_technology_name(self, investment):
-        return investment.technologies.technology_name
+        return investment.technologies.name
     
     class Meta:
         model = Investment
-        fields = ('investment_id', 'title', 'description', 'timestamp', 'Investment_image', 'technology_name')
+        fields = ('id', 'title', 'description', 'timestamp', 'image', 'technology_name')
         
 class ProposalSerializer(serializers.ModelSerializer):
     class Meta:
@@ -51,7 +52,7 @@ class ProposalSerializer(serializers.ModelSerializer):
 
 class UserEmailSerializer(serializers.ModelSerializer):
     class Meta:
-        model = User
+        model = Member
         fields = ['email']
         
 class DeviceSerializer(serializers.ModelSerializer):

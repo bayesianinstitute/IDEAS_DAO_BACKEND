@@ -6,14 +6,16 @@ from datetime import timedelta
 import random
 from ckeditor.fields import RichTextField 
 from rest_framework.exceptions import ValidationError
+import jwt
+from django.conf import settings
+from rest_framework.authtoken.models import Token
 
 
 class Technology(models.Model):
-    technology_id =models.CharField(max_length=50,unique=True)
-    technology_name= models.CharField(max_length=200)
+    name= models.CharField(max_length=200)
 
     def __str__(self):
-        return str(self.technology_name)
+        return str(self.name)
     class Meta:
         verbose_name_plural="Technology"        
         
@@ -26,7 +28,7 @@ class News(models.Model):
     brief= models.CharField(max_length=200)
     description = RichTextField()
     timestamp = models.DateTimeField(auto_now=True)
-    news_image = models.FileField(null=True, blank=True)
+    image = models.FileField(null=True, blank=True)
     technologies = models.ForeignKey(
         Technology, on_delete=models.CASCADE, related_name="technologies_news"
     )
@@ -39,11 +41,10 @@ class News(models.Model):
 class Investment(models.Model):
     def nameFile(instance, filename):
         return "/".join(["images", str(instance.investment_id), filename])
-    investment_id =models.CharField(max_length=50,unique=True)
     title= models.CharField(max_length=200)
     description = RichTextField()
     timestamp = models.DateTimeField(auto_now=True)
-    Investment_image = models.FileField(null=True, blank=True)
+    image = models.FileField(null=True, blank=True)
     technologies = models.ForeignKey(
         Technology, on_delete=models.CASCADE, related_name="technologies_investment"
     )
@@ -56,13 +57,12 @@ class Investment(models.Model):
 class Events(models.Model):
     def nameFile(instance, filename):
         return "/".join(["images", str(instance.event_id), filename])
-    event_id =models.CharField(max_length=50,unique=True)
     title= models.CharField(max_length=200)
     description = RichTextField()
     timestamp = models.DateTimeField(auto_now=True)
     meet_time = models.DateTimeField()
     meet_link = models.URLField(max_length=200)
-    event_image = models.FileField(null=True, blank=True)
+    image = models.FileField(null=True, blank=True)
     technologies = models.ForeignKey(
         Technology, on_delete=models.CASCADE, related_name="technologies_events"
     )
@@ -70,9 +70,16 @@ class Events(models.Model):
         return self.title
     class Meta:
         verbose_name_plural="Events"
-        
+class Member(models.Model):
+    username = models.CharField(max_length=50)
+    email = models.EmailField()
+    password = models.CharField(max_length=128)  # Encrypted password
+    join_time = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.username
+
 class Proposal(models.Model):
-    id = models.AutoField(primary_key=True, default=None)
     timestamp = models.DateTimeField(auto_now=True)
     title= models.CharField(max_length=200)
     description = RichTextField()
@@ -82,22 +89,11 @@ class Proposal(models.Model):
         ('closed', 'Closed'),
     )
     status = models.CharField(max_length=10, choices=PROPOSAL_TYPE_CHOICES, default='active')
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='proposaluser')
+    member = models.ForeignKey(Member, on_delete=models.CASCADE,null=True, blank=True)
     def __str__(self):
         return self.title
     class Meta:
         verbose_name_plural="Proposal"
-
-class Otp(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='otps')
-    expiry_time = models.DateTimeField()
-    otp_value = models.IntegerField()
-
-    def __str__(self):
-        return str(self.otp_value)
-
-    class Meta:
-        verbose_name_plural = "Otp"
 
 
 class About(models.Model):
@@ -107,12 +103,34 @@ class About(models.Model):
     def __str__(self):
         return self.title
 
+    
+
+
+    
+class Otp(models.Model):
+    member = models.ForeignKey(Member, on_delete=models.CASCADE,null=True, blank=True)
+    otp_value = models.PositiveIntegerField()
+    expiry_time = models.DateTimeField()
+
+    def __str__(self):
+        return f"OTP for {self.member.username}"
+
+    
 class Device(models.Model):
-    device_id = models.CharField(max_length=50, unique=True)
-    device_model = models.CharField(max_length=100)
-    os_version = models.CharField(max_length=50)
-    ip_address = models.GenericIPAddressField()
+    member = models.ForeignKey(Member, on_delete=models.CASCADE,null=True, blank=True)
+    device_model = models.CharField(max_length=100,null=True, blank=True)
+    os_version = models.CharField(max_length=50,null=True, blank=True)
+    ip_address = models.GenericIPAddressField(null=True, blank=True)
     proxy_type = models.CharField(max_length=50, null=True, blank=True)
 
     def __str__(self):
-        return self.device_id
+        return self.device_model
+        
+class Delegate(models.Model):
+    member = models.ForeignKey(Member, on_delete=models.CASCADE,null=True, blank=True)
+    wallet_address = models.CharField(max_length=100,null=True, blank=True)
+    coin_amount = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
+    last_update = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f"{self.member.username} - {self.wallet_address}"

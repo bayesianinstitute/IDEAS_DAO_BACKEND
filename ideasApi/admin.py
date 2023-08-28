@@ -1,5 +1,5 @@
 from django.contrib import admin
-from ideasApi.models import News,Investment,Proposal,Events,Otp,Technology,About,Device
+from ideasApi.models import News,Investment,Proposal,Events,Otp,Technology,About,Device,Member,Delegate
 from django.contrib.auth.admin import UserAdmin
 from import_export.admin import ImportExportModelAdmin
 from django.utils.html import format_html
@@ -8,50 +8,50 @@ class BrandAdmin(ImportExportModelAdmin):
     pass
 
 class NewAdmin(admin.ModelAdmin):
-    list_display = ('id','title','description','brief','timestamp','news_image','technologies')
-    list_display_links =  ('id','title','description','brief','timestamp','news_image','technologies')
+    list_display = ('id','title','brief','timestamp','image','technologies')
+    list_display_links =  ('id','title','brief','timestamp','image','technologies')
 
-    search_fields= ('id','title','brief','timestamp','description','brief',)
-    list_filter= ('id','title','description','brief','timestamp','technologies',)
+    search_fields= ('id','title','brief','timestamp',)
+    list_filter= ('title','timestamp','technologies',)
 
 class New(NewAdmin,BrandAdmin):
     pass
 
 class InvestmentAdmin(admin.ModelAdmin):
-    list_display = ('investment_id','title','description','timestamp','Investment_image','technologies')
-    list_display_links =  ('investment_id','title','description','timestamp','Investment_image','technologies')
+    list_display = ('id','title','timestamp','image','technologies')
+    list_display_links =  ('id','title','timestamp','image','technologies')
 
-    search_fields= ('investment_id','title','timestamp','description',)
-    list_filter= ('investment_id','title','description','timestamp','technologies',)
+    search_fields= ('id','title','timestamp',)
+    list_filter= ('title','timestamp','technologies',)
 
 class Investments(InvestmentAdmin,BrandAdmin):
     pass
 
 class EventAdmin(admin.ModelAdmin):
-    list_display = ('event_id','title','description','timestamp','meet_time','meet_link','event_image','technologies')
-    list_display_links =  ('event_id','title','description','timestamp','meet_time','meet_link','event_image','technologies')
+    list_display = ('id','title','timestamp','image','technologies')
+    list_display_links =  ('id','title','timestamp','image','technologies')
 
-    search_fields= ('event_id','title','timestamp','description','meet_time','meet_link',)
-    list_filter= ('event_id','title','description','timestamp','technologies','meet_time','meet_link',)
+    search_fields= ('id','title','timestamp',)
+    list_filter= ('title','timestamp','technologies',)
 
 class Event(EventAdmin,BrandAdmin):
     pass
 
 class ProposalAdmin(admin.ModelAdmin):
-    list_display = ('title','description','timestamp','status')
-    list_display_links =  ('title','description','timestamp','status')
+    list_display = ('id','title','timestamp','status')
+    list_display_links =  ('id','title','timestamp','status')
 
-    search_fields= ('title','description','timestamp','status',)
-    list_filter= ('title','description','timestamp','status',)
+    search_fields= ('id','title','timestamp','status',)
+    list_filter= ('title','timestamp','status',)
 
 class Proposals(ProposalAdmin,BrandAdmin):
     pass
 
 class OtpAdmin(admin.ModelAdmin):
-    list_display = ('expiry_time','otp_value')
-    list_display_links =  ('expiry_time','otp_value')
+    list_display = ('id','expiry_time','otp_value')
+    list_display_links =  ('id','expiry_time','otp_value')
 
-    search_fields= ('expiry_time','otp_value',)
+    search_fields= ('id','expiry_time','otp_value',)
     list_filter= ('expiry_time','otp_value',)
 
 class Otps(OtpAdmin,BrandAdmin):
@@ -79,27 +79,46 @@ class Abouts(AboutAdmin,BrandAdmin):
     pass
 
 class TechnologyAdmin(admin.ModelAdmin):
-    list_display = ('technology_id','technology_name')
-    list_display_links =  ('technology_id','technology_name')
+    list_display = ('id','name')
+    list_display_links =  ('id','name')
 
-    search_fields= ('technology_id','technology_name',)
-    list_filter= ('technology_id','technology_name',)
+    search_fields= ('id','name',)
+    list_filter= ('name',)
 
 class Technologies(TechnologyAdmin,BrandAdmin):
     pass
 
 class DeviceAdmin(admin.ModelAdmin):
-    list_display = ('device_id','device_model','os_version','ip_address','proxy_type')
-    list_display_links =  ('device_id','device_model','os_version','ip_address','proxy_type')
+    list_display = ('id','member','device_model','os_version','ip_address','proxy_type')
+    list_display_links =  ('id','member','device_model','os_version','ip_address','proxy_type')
 
-    search_fields= ('device_id','device_model','os_version','ip_address','proxy_type',)
-    list_filter= ('device_id','device_model','os_version','ip_address','proxy_type',)
+    search_fields= ('id','member','device_model','os_version','ip_address','proxy_type',)
+    list_filter= ('device_model','os_version','ip_address','proxy_type',)
 
 class Devices(DeviceAdmin,BrandAdmin):
     pass
 
+class MembersAdmin(admin.ModelAdmin):
+    list_display = ('id','username','email','join_time')
+    list_display_links =  ('id','username','email','join_time')
+
+    search_fields= ('id','username','email','device','join_time',)
+
+class Members(MembersAdmin,BrandAdmin):
+    pass
+
+class DelegatesAdmin(admin.ModelAdmin):
+    list_display = ('id','member','wallet_address','coin_amount','last_update')
+    list_display_links =  ('id','member','wallet_address','coin_amount','last_update')
+
+    search_fields= ('id','member','wallet_address','coin_amount','last_update',)
+
+class Delegates(DelegatesAdmin,BrandAdmin):
+    pass
 
 
+admin.site.register(Member,Members)
+admin.site.register(Delegate,Delegates)
 admin.site.register(News,New)
 admin.site.register(Investment,Investments)
 admin.site.register(Proposal,Proposals)

@@ -41,6 +41,7 @@ urlpatterns = [
     
     # About
     path('about/', get_about, name='get_about'),
+    
 
     #PROPOSAL
     path('create-proposal/', create_proposal, name='create-proposal'),
