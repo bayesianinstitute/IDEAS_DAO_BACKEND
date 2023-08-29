@@ -422,8 +422,6 @@ def upcoming_events(request):
 @authentication_classes([MemberJWTAuthentication])
 @permission_classes([CustomIsAuthenticated])
 def get_about(request):
-    username = request.user.username
-    print(f"Request user's username: {username}")
     try:
         about_instance = get_object_or_404(About)
         data = {
@@ -807,8 +805,8 @@ def TechnologyList(request, format=None):
         # Serialize the technologies
         serialized_technologies = [
             {
-                "tech_id": tech.technology_id,
-                "tech_name": tech.technology_name
+                "id": tech.id,
+                "name": tech.name
             }
             for tech in technologies
         ]

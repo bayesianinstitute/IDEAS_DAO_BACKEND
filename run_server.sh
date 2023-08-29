@@ -2,7 +2,7 @@
 
 # Function to run the Django server
 run_server() {
-    python3 manage.py runserver
+    python3 manage.py runserver 0.0.0.0:8000
 }
 
 # Run the Django server function
@@ -17,7 +17,7 @@ while true; do
     sleep 2
 
     # Check if the server process is running
-    ps aux | grep "python3 manage.py runserver" | grep -v "grep"
+    ps aux | grep "python3 manage.py runserver 0.0.0.0:8000" | grep -v "grep"
     
     # $? stores the exit status of the last command (grep)
     if [ $? -ne 0 ]; then
