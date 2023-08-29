@@ -1,10 +1,10 @@
 {
 	"info": {
-		"_postman_id": "216fcdb4-b216-4d70-b29e-5ba1b02f04f7",
-		"name": "Ideas",
+		"_postman_id": "293161f0-1464-442d-86f6-7873a0188bb5",
+		"name": "Ideas test-dao-api.joinideas.org",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "8123731",
-		"_collection_link": "https://martian-astronaut-694342.postman.co/workspace/New-Team-Workspace~f6226fae-6fa5-4054-b778-197730b9419e/collection/8123731-216fcdb4-b216-4d70-b29e-5ba1b02f04f7?action=share&source=collection_link&creator=8123731"
+		"_collection_link": "https://martian-astronaut-694342.postman.co/workspace/New-Team-Workspace~f6226fae-6fa5-4054-b778-197730b9419e/collection/8123731-293161f0-1464-442d-86f6-7873a0188bb5?action=share&source=collection_link&creator=8123731"
 	},
 	"item": [
 		{
@@ -17,7 +17,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"username\": \"afaanshaikh\",\r\n    \"email\": \"afaan.shaikh.21@gmail.com\",\r\n    \"password\": \"123456789\",\r\n    \"password2\": \"123456789\"\r\n}\r\n",
+							"raw": "{\r\n    \"username\": \"shuhang\",\r\n    \"email\": \"shuhang@gmail.com\",\r\n    \"password\": \"shuhang\",\r\n    \"password2\": \"shuhang\"\r\n}\r\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -25,13 +25,12 @@
 							}
 						},
 						"url": {
-							"raw": "http://127.0.0.1:8000/account/api/register/",
+							"raw": "http://test-dao-api.joinideas.org:8000/account/api/register/",
 							"protocol": "http",
 							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
+								"test-dao-api",
+								"joinideas",
+								"org"
 							],
 							"port": "8000",
 							"path": [
@@ -51,7 +50,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"username\": \"afaanshaikh\",\r\n    \"password\": \"123456789\"\r\n}\r\n",
+							"raw": "{\r\n    \"username\": \"shuhang\",\r\n    \"password\": \"shuhang\"\r\n}\r\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -59,13 +58,12 @@
 							}
 						},
 						"url": {
-							"raw": "http://127.0.0.1:8000/account/api/token/",
+							"raw": "http://test-dao-api.joinideas.org:8000/account/api/token/",
 							"protocol": "http",
 							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
+								"test-dao-api",
+								"joinideas",
+								"org"
 							],
 							"port": "8000",
 							"path": [
@@ -85,7 +83,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"refresh\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTY5MjkwMzAxNiwiaWF0IjoxNjkyODE2NjE2LCJqdGkiOiI2MGY1YjNjYmU2N2M0YTI0YjUwN2U4NDhiZTUyOGI3OCIsInVzZXJfaWQiOjI1fQ.Ao7_QcGe6YMKzbhj25V570OKPs4CcCvKdPdpMKt20Og\"\r\n}",
+							"raw": "{\r\n    \"refresh\": \"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTY5MzQyMjA5NCwiaWF0IjoxNjkzMzM1Njk0LCJqdGkiOiJmMzE5ZGJkZThlOTE0ZWVlYmE1NmQ4MzI5NTczODgzNSIsInVzZXJfaWQiOjJ9.j4ZwWhDtDL4eJvbZ2VimPA1wWNdVGbwHY8dlgWE-JTo\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -93,10 +91,12 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8000/account/api/token/refresh/",
+							"raw": "http://test-dao-api.joinideas.org:8000/account/api/token/refresh/",
 							"protocol": "http",
 							"host": [
-								"localhost"
+								"test-dao-api",
+								"joinideas",
+								"org"
 							],
 							"port": "8000",
 							"path": [
@@ -125,13 +125,12 @@
 							}
 						},
 						"url": {
-							"raw": "http://127.0.0.1:8000/account/api/sent/otp",
+							"raw": "http://test-dao-api.joinideas.org:8000/account/api/sent/otp",
 							"protocol": "http",
 							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
+								"test-dao-api",
+								"joinideas",
+								"org"
 							],
 							"port": "8000",
 							"path": [
@@ -158,7 +157,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"email\": \"afaan.shaikh.21@gmail.com\",\r\n    \"new_password\": \"12345678\",\r\n    \"otp_value\": 2984\r\n}\r\n",
+							"raw": "{\r\n    \"email\": \"afaan.shaikh.21@gmail.com\",\r\n    \"new_password\": \"12345678\",\r\n    \"otp_value\": 1333\r\n}\r\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -166,13 +165,12 @@
 							}
 						},
 						"url": {
-							"raw": "http://127.0.0.1:8000/account/api/reset_password/",
+							"raw": "http://test-dao-api.joinideas.org:8000/account/api/reset_password/",
 							"protocol": "http",
 							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
+								"test-dao-api",
+								"joinideas",
+								"org"
 							],
 							"port": "8000",
 							"path": [
@@ -209,20 +207,18 @@
 							}
 						],
 						"url": {
-							"raw": "http://127.0.0.1:8000/api/v1/news/",
+							"raw": "http://test-dao-api.joinideas.org:8000/api/v1/news",
 							"protocol": "http",
 							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
+								"test-dao-api",
+								"joinideas",
+								"org"
 							],
 							"port": "8000",
 							"path": [
 								"api",
 								"v1",
-								"news",
-								""
+								"news"
 							]
 						}
 					},
@@ -241,13 +237,12 @@
 							}
 						],
 						"url": {
-							"raw": "http://127.0.0.1:8000/api/v1/news/AI",
+							"raw": "http://test-dao-api.joinideas.org:8000/api/v1/news/AI",
 							"protocol": "http",
 							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
+								"test-dao-api",
+								"joinideas",
+								"org"
 							],
 							"port": "8000",
 							"path": [
@@ -273,13 +268,12 @@
 							}
 						],
 						"url": {
-							"raw": "http://127.0.0.1:8000/api/v1/latest-news-images/",
+							"raw": "http://test-dao-api.joinideas.org:8000/api/v1/latest-news-images/",
 							"protocol": "http",
 							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
+								"test-dao-api",
+								"joinideas",
+								"org"
 							],
 							"port": "8000",
 							"path": [
@@ -305,13 +299,12 @@
 							}
 						],
 						"url": {
-							"raw": "http://127.0.0.1:8000/api/v1/getnews/1/",
+							"raw": "http://test-dao-api.joinideas.org:8000/api/v1/getnews/1/",
 							"protocol": "http",
 							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
+								"test-dao-api",
+								"joinideas",
+								"org"
 							],
 							"port": "8000",
 							"path": [
@@ -343,13 +336,12 @@
 							}
 						],
 						"url": {
-							"raw": "http://127.0.0.1:8000/api/v1/events/",
+							"raw": "http://test-dao-api.joinideas.org:8000/api/v1/events/",
 							"protocol": "http",
 							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
+								"test-dao-api",
+								"joinideas",
+								"org"
 							],
 							"port": "8000",
 							"path": [
@@ -373,7 +365,23 @@
 					"name": "Get events by technology",
 					"request": {
 						"method": "GET",
-						"header": []
+						"header": [],
+						"url": {
+							"raw": "http://test-dao-api.joinideas.org:8000/api/v1/events/AI",
+							"protocol": "http",
+							"host": [
+								"test-dao-api",
+								"joinideas",
+								"org"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"v1",
+								"events",
+								"AI"
+							]
+						}
 					},
 					"response": []
 				},
@@ -390,10 +398,12 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:8000/api/v1/getevents/1/",
+							"raw": "http://test-dao-api.joinideas.org:8000/api/v1/getevents/1/",
 							"protocol": "http",
 							"host": [
-								"localhost"
+								"test-dao-api",
+								"joinideas",
+								"org"
 							],
 							"port": "8000",
 							"path": [
@@ -420,10 +430,12 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:8000/api/v1/upcoming-events/",
+							"raw": "http://test-dao-api.joinideas.org:8000/api/v1/upcoming-events/",
 							"protocol": "http",
 							"host": [
-								"localhost"
+								"test-dao-api",
+								"joinideas",
+								"org"
 							],
 							"port": "8000",
 							"path": [
@@ -467,10 +479,12 @@
 							]
 						},
 						"url": {
-							"raw": "http://localhost:8000/api/v1/investments/",
+							"raw": "http://test-dao-api.joinideas.org:8000/api/v1/investments/",
 							"protocol": "http",
 							"host": [
-								"localhost"
+								"test-dao-api",
+								"joinideas",
+								"org"
 							],
 							"port": "8000",
 							"path": [
@@ -496,17 +510,19 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:8000/api/v1/investments/A",
+							"raw": "http://test-dao-api.joinideas.org:8000/api/v1/investments/AI",
 							"protocol": "http",
 							"host": [
-								"localhost"
+								"test-dao-api",
+								"joinideas",
+								"org"
 							],
 							"port": "8000",
 							"path": [
 								"api",
 								"v1",
 								"investments",
-								"A"
+								"AI"
 							]
 						}
 					},
@@ -525,18 +541,19 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:8000/api/v1/getinvestments/1/",
+							"raw": "http://test-dao-api.joinideas.org:8000/api/v1/getinvestments/1",
 							"protocol": "http",
 							"host": [
-								"localhost"
+								"test-dao-api",
+								"joinideas",
+								"org"
 							],
 							"port": "8000",
 							"path": [
 								"api",
 								"v1",
 								"getinvestments",
-								"1",
-								""
+								"1"
 							]
 						}
 					},
@@ -554,13 +571,13 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjkyODIxNDA3LCJpYXQiOjE2OTI4MTc4MDcsImp0aSI6ImY4YmQyNWMwYjVhMDRlYTY5YzlkNTJmYWQ1YjRiMmQ3IiwidXNlcl9pZCI6Mn0.MOPoXJ-CRu_qiQWASjnJA_X-TT_yo5mKWDFsh_hx1_4",
+								"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjkzMzM5MzUxLCJpYXQiOjE2OTMzMzU2OTQsImp0aSI6IjcyNjRiMmViMzk3ZjQ4Njk5NDcwMWIzOGVjMTEyZTA5IiwidXNlcl9pZCI6Mn0.06zcp0KXTgF8u7gUFBmgWBRvw_aTHGNx78mkYyJRsAo",
 								"type": "text"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"title\": \"Sample Proposal\",\r\n  \"description\": \"This is a sample proposal description.\"\r\n}\r\n",
+							"raw": "{\r\n  \"title\": \"Proposal\",\r\n  \"description\": \"This is a sample proposal description.\"\r\n}\r\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -568,10 +585,12 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8000/api/v1/create-proposal/",
+							"raw": "http://test-dao-api.joinideas.org:8000/api/v1/create-proposal/",
 							"protocol": "http",
 							"host": [
-								"localhost"
+								"test-dao-api",
+								"joinideas",
+								"org"
 							],
 							"port": "8000",
 							"path": [
@@ -591,15 +610,17 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "Bearer ",
+								"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjkzMzM5MzUxLCJpYXQiOjE2OTMzMzU2OTQsImp0aSI6IjcyNjRiMmViMzk3ZjQ4Njk5NDcwMWIzOGVjMTEyZTA5IiwidXNlcl9pZCI6Mn0.06zcp0KXTgF8u7gUFBmgWBRvw_aTHGNx78mkYyJRsAo",
 								"type": "text"
 							}
 						],
 						"url": {
-							"raw": "http://localhost:8000/api/v1/proposals/",
+							"raw": "http://test-dao-api.joinideas.org:8000/api/v1/proposals/",
 							"protocol": "http",
 							"host": [
-								"localhost"
+								"test-dao-api",
+								"joinideas",
+								"org"
 							],
 							"port": "8000",
 							"path": [
@@ -619,23 +640,24 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjkxNzgzNDMzLCJpYXQiOjE2OTE3Nzk4MzMsImp0aSI6IjRlOGVlOTY3MTQ4ODQyNTViN2Y1MmMzYmRkMDBhNGQ2IiwidXNlcl9pZCI6MX0.aqQ69mb8TxqUB_eQJtQ1zHijnMucvxOwSBK2CYvkCVU",
+								"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjkzMzM5MzUxLCJpYXQiOjE2OTMzMzU2OTQsImp0aSI6IjcyNjRiMmViMzk3ZjQ4Njk5NDcwMWIzOGVjMTEyZTA5IiwidXNlcl9pZCI6Mn0.06zcp0KXTgF8u7gUFBmgWBRvw_aTHGNx78mkYyJRsAo",
 								"type": "text"
 							}
 						],
 						"url": {
-							"raw": "http://localhost:8000/api/v1/proposal_by_status/a/",
+							"raw": "http://test-dao-api.joinideas.org:8000/api/v1/proposal_by_status/active",
 							"protocol": "http",
 							"host": [
-								"localhost"
+								"test-dao-api",
+								"joinideas",
+								"org"
 							],
 							"port": "8000",
 							"path": [
 								"api",
 								"v1",
 								"proposal_by_status",
-								"a",
-								""
+								"active"
 							]
 						}
 					},
@@ -648,15 +670,17 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjkxNzg0NjU0LCJpYXQiOjE2OTE3ODEwNTQsImp0aSI6Ijc4NzgzZGU1MDFmZjRhMTliOTMwZDhkNTBlODI4OGY4IiwidXNlcl9pZCI6MX0.7YkWr_gUXEtXMiO4nxy-5h0HICQws8qcr1sSLa3NuvE",
+								"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjkzMzM5MzUxLCJpYXQiOjE2OTMzMzU2OTQsImp0aSI6IjcyNjRiMmViMzk3ZjQ4Njk5NDcwMWIzOGVjMTEyZTA5IiwidXNlcl9pZCI6Mn0.06zcp0KXTgF8u7gUFBmgWBRvw_aTHGNx78mkYyJRsAo",
 								"type": "text"
 							}
 						],
 						"url": {
-							"raw": "http://localhost:8000/api/v1/users/emails/",
+							"raw": "http://test-dao-api.joinideas.org:8000/api/v1/users/emails/",
 							"protocol": "http",
 							"host": [
-								"localhost"
+								"test-dao-api",
+								"joinideas",
+								"org"
 							],
 							"port": "8000",
 							"path": [
@@ -679,34 +703,43 @@
 				"header": [
 					{
 						"key": "Authorization",
-						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjkxNzc4NTU0LCJpYXQiOjE2OTE3NzQ5NTQsImp0aSI6IjcwNTFkZjcwYWFjMTQ0ZTdiNjY2ODIwMzczMjRmZDlmIiwidXNlcl9pZCI6MX0.GEGSWxolJM4jZnbF5YdrP8XysLH4Pw-0WdkWQ_K9kGY",
+						"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjkzMzM5MzUxLCJpYXQiOjE2OTMzMzU2OTQsImp0aSI6IjcyNjRiMmViMzk3ZjQ4Njk5NDcwMWIzOGVjMTEyZTA5IiwidXNlcl9pZCI6Mn0.06zcp0KXTgF8u7gUFBmgWBRvw_aTHGNx78mkYyJRsAo",
 						"type": "text"
 					}
 				],
 				"url": {
-					"raw": "http://localhost:8000/api/v1/about",
+					"raw": "http://test-dao-api.joinideas.org:8000/api/v1/about/",
 					"protocol": "http",
 					"host": [
-						"localhost"
+						"test-dao-api",
+						"joinideas",
+						"org"
 					],
 					"port": "8000",
 					"path": [
 						"api",
 						"v1",
-						"about"
+						"about",
+						""
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "Device List",
+			"name": "Update Device List",
 			"request": {
-				"method": "POST",
-				"header": [],
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjkzMzM5MzUxLCJpYXQiOjE2OTMzMzU2OTQsImp0aSI6IjcyNjRiMmViMzk3ZjQ4Njk5NDcwMWIzOGVjMTEyZTA5IiwidXNlcl9pZCI6Mn0.06zcp0KXTgF8u7gUFBmgWBRvw_aTHGNx78mkYyJRsAo",
+						"type": "text"
+					}
+				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"device_id\": \"12345\",\r\n    \"device_model\": \"Smartphone\",\r\n    \"os_version\": \"Android 11\",\r\n    \"ip_address\": \"192.168.1.10\",\r\n    \"proxy_type\": \"HTTP\"\r\n}",
+					"raw": "{\r\n    \"device_model\": \"Smartphone\",\r\n    \"os_version\": \"Android 11\"\r\n\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -714,19 +747,66 @@
 					}
 				},
 				"url": {
-					"raw": "http://127.0.0.1:8000/api/v1/devices/",
+					"raw": "http://test-dao-api.joinideas.org:8000/api/v1/devices/",
 					"protocol": "http",
 					"host": [
-						"127",
-						"0",
-						"0",
-						"1"
+						"test-dao-api",
+						"joinideas",
+						"org"
 					],
 					"port": "8000",
 					"path": [
 						"api",
 						"v1",
 						"devices",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Technologies",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://test-dao-api.joinideas.org:8000/api/v1/technologies/",
+					"protocol": "http",
+					"host": [
+						"test-dao-api",
+						"joinideas",
+						"org"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"v1",
+						"technologies",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Delegates",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://test-dao-api.joinideas.org:8000/api/v1/delegates/",
+					"protocol": "http",
+					"host": [
+						"test-dao-api",
+						"joinideas",
+						"org"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"v1",
+						"delegates",
 						""
 					]
 				}
