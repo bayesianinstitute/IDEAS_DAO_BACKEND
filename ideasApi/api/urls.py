@@ -15,7 +15,9 @@ from ideasApi.api.views import (
     ProposalByStatusList,
     UserEmailList,
     device_list,
-    TechnologyList
+    TechnologyList,
+    DelegatesByCoinAmount,   
+
     
 )
 router = routers.DefaultRouter()
@@ -53,6 +55,7 @@ urlpatterns = [
     path('devices/', device_list, name='device-list'),
 
     path('technologies/', TechnologyList, name='technology-list'),
+    path('delegates/', DelegatesByCoinAmount, name='delegates-by-coin-amount'),
 ]
 
 

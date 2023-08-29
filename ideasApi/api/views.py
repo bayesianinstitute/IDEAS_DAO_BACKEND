@@ -24,7 +24,8 @@ from ideasApi.models import (
     About,
     Proposal,
     Device,
-    Member
+    Member,
+    Delegate
 )
 
 from ideasApi.api.serializers import (
@@ -815,6 +816,49 @@ def TechnologyList(request, format=None):
             'status': 'success',
             'data': serialized_technologies,
             'message': 'Technologies retrieved successfully.',
+            'is_request_from_proxy': getattr(request, 'is_request_from_proxy', False),
+            'is_routable': getattr(request, 'is_routable', True),
+            'client_ip': getattr(request, 'client_ip', ''),
+        }
+        response_status = status.HTTP_200_OK
+
+    except Exception as e:
+        response_data = {
+            'status': 'failure',
+            'message': str(e) if str(e) else 'An error occurred.',
+            'is_request_from_proxy': getattr(request, 'is_request_from_proxy', False),
+            'is_routable': getattr(request, 'is_routable', True),
+            'client_ip': getattr(request, 'client_ip', ''),
+        }
+        response_status = status.HTTP_500_INTERNAL_SERVER_ERROR
+
+    response = Response(response_data, status=response_status)
+    return response
+
+
+@api_view(['GET'])
+# @authentication_classes([MemberJWTAuthentication])
+# @permission_classes([CustomIsAuthenticated])
+def DelegatesByCoinAmount(request, format=None):
+    try:
+        # Get delegates ordered by coin_amount in descending order
+        delegates = Delegate.objects.order_by('-coin_amount')
+
+        # Serialize the delegates
+        serialized_delegates = [
+            {
+                "member_username": delegate.member.username,
+                "wallet_address": delegate.wallet_address,
+                "coin_amount": delegate.coin_amount,
+                "last_update": delegate.last_update
+            }
+            for delegate in delegates
+        ]
+
+        response_data = {
+            'status': 'success',
+            'data': serialized_delegates,
+            'message': 'Delegates retrieved successfully.',
             'is_request_from_proxy': getattr(request, 'is_request_from_proxy', False),
             'is_routable': getattr(request, 'is_routable', True),
             'client_ip': getattr(request, 'client_ip', ''),
