@@ -265,4 +265,3 @@ class ResetPassword(APIView):
                 'client_ip': getattr(request, 'client_ip', ''),
             }
             return Response(response_data, status=status.HTTP_400_BAD_REQUEST)
-

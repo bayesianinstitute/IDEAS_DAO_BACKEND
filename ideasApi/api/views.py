@@ -837,8 +837,8 @@ def TechnologyList(request, format=None):
 
 
 @api_view(['GET'])
-# @authentication_classes([MemberJWTAuthentication])
-# @permission_classes([CustomIsAuthenticated])
+@authentication_classes([MemberJWTAuthentication])
+@permission_classes([CustomIsAuthenticated])
 def DelegatesByCoinAmount(request, format=None):
     try:
         # Get delegates ordered by coin_amount in descending order
