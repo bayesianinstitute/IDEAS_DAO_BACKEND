@@ -134,3 +134,11 @@ class Delegate(models.Model):
 
     def __str__(self):
         return f"{self.member.username} - {self.wallet_address}"
+    
+class Test(models.Model):
+    name= models.CharField(max_length=200)
+
+    def __str__(self):
+        return str(self.name)
+    class Meta:
+        verbose_name_plural="Test"   
