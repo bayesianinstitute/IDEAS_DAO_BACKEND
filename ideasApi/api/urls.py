@@ -48,7 +48,7 @@ urlpatterns = [
     #PROPOSAL
     path('create-proposal/', create_proposal, name='create-proposal'),
     path('proposals/', ProposalList.as_view(), name='proposal-list'),
-    path('proposal_by_status/<str:status>/', ProposalByStatusList.as_view(), name='proposal-by-status-list'),
+    path('proposal/<str:status>/', ProposalByStatusList.as_view(), name='proposal-by-status-list'),
     path('users/emails/', UserEmailList.as_view(), name='user-email-list'),
     
     # other URL patterns

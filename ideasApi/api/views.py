@@ -42,7 +42,7 @@ from ideasApi.middleware import ProxyDetectionMiddleware
 from rest_framework.status import HTTP_200_OK, HTTP_400_BAD_REQUEST,HTTP_404_NOT_FOUND
 
 class CustomPagination(PageNumberPagination):
-    page_size = 2 # Number of items per page
+    page_size = 20 # Number of items per page
     page_size_query_param = 'page_size'
     max_page_size = 100  # Maximum number of items per page
     
@@ -837,14 +837,18 @@ def TechnologyList(request, format=None):
 
 
 @api_view(['GET'])
-@authentication_classes([MemberJWTAuthentication])
-@permission_classes([CustomIsAuthenticated])
+# @authentication_classes([MemberJWTAuthentication])
+# @permission_classes([CustomIsAuthenticated])
 def DelegatesByCoinAmount(request, format=None):
     try:
         # Get delegates ordered by coin_amount in descending order
         delegates = Delegate.objects.order_by('-coin_amount')
 
-        # Serialize the delegates
+        # Initialize pagination
+        paginator = CustomPagination()
+        page = paginator.paginate_queryset(delegates, request)
+
+        # Serialize the delegates for the current page
         serialized_delegates = [
             {
                 "member_username": delegate.member.username,
@@ -852,12 +856,17 @@ def DelegatesByCoinAmount(request, format=None):
                 "coin_amount": delegate.coin_amount,
                 "last_update": delegate.last_update
             }
-            for delegate in delegates
+            for delegate in page
         ]
 
         response_data = {
             'status': 'success',
-            'data': serialized_delegates,
+            'pagination': {
+                'count': paginator.page.paginator.count,
+                'next': paginator.get_next_link(),
+                'previous': paginator.get_previous_link(),
+                'data': serialized_delegates,
+            },
             'message': 'Delegates retrieved successfully.',
             'is_request_from_proxy': getattr(request, 'is_request_from_proxy', False),
             'is_routable': getattr(request, 'is_routable', True),
