@@ -7,11 +7,11 @@ from user_app.api.views import registration_view, CustomTokenObtainPairView,sent
 
 urlpatterns = [
   
-    path('api/register/', registration_view, name='register'),
-    path('api/token/', CustomTokenObtainPairView.as_view(), name='token_obtain_pair'),
-    path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    path('api/register', registration_view, name='register'),
+    path('api/token', CustomTokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('api/token/refresh', TokenRefreshView.as_view(), name='token_refresh'),
 
     path('api/sent/otp', sent_otp.as_view(), name='forgotpassword'),
-    path('api/reset_password/', ResetPassword.as_view(), name='reset-password'),
+    path('api/reset_password', ResetPassword.as_view(), name='reset-password'),
     
 ]
