@@ -16,17 +16,19 @@ from datetime import timedelta
 import os
 import logging
 from logging.handlers import TimedRotatingFileHandler
+from decouple import config
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-qlv%m7g1s*qrlu4ogm#o_oen2+ywp&q34fou*trk*i#j*)_at8'
+SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -97,23 +99,23 @@ CHANNEL_LAYERS = {
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
-
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'IDEAS_DAO_DB',    # Your MySQL database name
-        'USER': 'ideas_user',      # Your MySQL user
-        'PASSWORD': 'IDEAS@DOA$LA23',  # Your MySQL user's password
-        'HOST': '127.0.0.1',       # MySQL host (use IP or hostname if not local)
-        'PORT': '3306',            # MySQL port
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'IDEAS_DAO_DB',    # Your MySQL database name
+#         'USER': config('USER'),      # Your MySQL user
+#         'PASSWORD': config('PASSWORD'),  # Your MySQL user's password
+#         'HOST': '127.0.0.1',       # MySQL host (use IP or hostname if not local)
+#         'PORT': '3306',            # MySQL port
+#     }
+# }
 
 
 
@@ -153,16 +155,16 @@ EMAIL_HOST = 'smtp.gmail.com'  # Your SMTP server's host
 EMAIL_PORT = 587  # SMTP port (usually 587 for TLS)
 EMAIL_USE_TLS = True  # Use TLS for secure connection
 EMAIL_USE_SSL = False  # Set to True if using SSL instead of TLS
-EMAIL_HOST_USER = 'bayesdev2@gmail.com' # Your email username
-EMAIL_HOST_PASSWORD = 'kmpamzetlyzniaeo'  # Your email password
+EMAIL_HOST_USER = config('EMAIL')  # Your email username
+EMAIL_HOST_PASSWORD = config('EMAIL_PASSWORD')   # Your email password
 
 
 # Default "from" address for outgoing emails
-DEFAULT_FROM_EMAIL = 'bayesdev2@gmail.com'
+DEFAULT_FROM_EMAIL = config('EMAIL')
 
 # List of email addresses that will receive error messages from Django's logging framework
 ADMINS = [
-    ('Afaan', 'afaan@bayes.global'),
+    ('Afaan', config('EMAIL_ADMIN')),
     # Add more tuples as needed
     # 
  ]
