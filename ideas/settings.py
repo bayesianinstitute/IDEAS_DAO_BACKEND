@@ -102,16 +102,16 @@ CHANNEL_LAYERS = {
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
+#         'NAME': BASE_DIR / config('DATABASE')
 #     }
 # }
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'IDEAS_DAO_DB',    # Your MySQL database name
-        'USER': config('USER'),      # Your MySQL user
-        'PASSWORD': config('PASSWORD'),  # Your MySQL user's password
+        'NAME': config('DB_NAME'),    # Your MySQL database name
+        'USER': config('DB_USER'),      # Your MySQL user
+        'PASSWORD': config('DB_PASSWORD'),  # Your MySQL user's password
         'HOST': '127.0.0.1',       # MySQL host (use IP or hostname if not local)
         'PORT': '3306',            # MySQL port
     }
