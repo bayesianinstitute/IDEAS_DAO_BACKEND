@@ -17,6 +17,8 @@ import os
 import logging
 from logging.handlers import TimedRotatingFileHandler
 from decouple import config
+from ideasApi.log_handlers import MinimalEmailHandler
+
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -37,6 +39,8 @@ ALLOWED_HOSTS = ["*"]
 
 CSRF_TRUSTED_ORIGINS = ['http://3.129.20.16:8000/','http://localhost']
 # Application definition
+
+REQUEST_THRESHOLD = 1000
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -64,6 +68,7 @@ MIDDLEWARE = [
     'ideasApi.middleware.APILoggingMiddleware', 
     'user_app.middleware.APILoggingMiddleware', 
     'ideasApi.middleware.ProxyDetectionMiddleware',
+    'ideasApi.request_count.RequestCountMiddleware',  
 #     'user_app.middleware.ProxyDetectionMiddleware',
 ]
 
@@ -99,23 +104,23 @@ CHANNEL_LAYERS = {
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / config('DATABASE')
-#     }
-# }
-
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': config('DB_NAME'),    # Your MySQL database name
-        'USER': config('DB_USER'),      # Your MySQL user
-        'PASSWORD': config('DB_PASSWORD'),  # Your MySQL user's password
-        'HOST': '127.0.0.1',       # MySQL host (use IP or hostname if not local)
-        'PORT': '3306',            # MySQL port
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / config('DATABASE')
     }
 }
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': config('DB_NAME'),    # Your MySQL database name
+#         'USER': config('DB_USER'),      # Your MySQL user
+#         'PASSWORD': config('DB_PASSWORD'),  # Your MySQL user's password
+#         'HOST': '127.0.0.1',       # MySQL host (use IP or hostname if not local)
+#         'PORT': '3306',            # MySQL port
+#     }
+# }
 
 
 
@@ -272,9 +277,14 @@ LOGGING = {
             'backupCount': 7,
             'formatter': 'verbose',
         },
-        'email_admin': {
+        # 'email_admin': {
+        #     'level': 'ERROR',  # Capture ERROR level and higher
+        #     'class': 'django.utils.log.AdminEmailHandler',
+        #     'formatter': 'verbose',
+        # },
+        'minimal_email': {
             'level': 'ERROR',  # Capture ERROR level and higher
-            'class': 'django.utils.log.AdminEmailHandler',
+            'class': 'ideasApi.log_handlers.MinimalEmailHandler',  # Replace with the actual path to your handler
             'formatter': 'verbose',
         },
         'warning_file': {
@@ -302,17 +312,17 @@ LOGGING = {
             'propagate': False,
         },
         'django': {
-            'handlers': ['error_file', 'email_admin', 'warning_file', 'regular_file'],
+            'handlers': ['error_file', 'minimal_email', 'warning_file', 'regular_file'],
             'level': 'DEBUG',  # Capture DEBUG level and higher
             'propagate': True,
         },
         'ideasApi.views': {
-            'handlers': ['error_file', 'email_admin', 'warning_file', 'regular_file'],
+            'handlers': ['error_file', 'minimal_email', 'warning_file', 'regular_file'],
             'level': 'DEBUG',  # Adjust the level as needed
             'propagate': False,
         },
         'user_app.views': {
-            'handlers': ['error_file', 'email_admin', 'warning_file', 'regular_file','user_register_file'],
+            'handlers': ['error_file', 'minimal_email', 'warning_file', 'regular_file','user_register_file'],
             'level': 'DEBUG',  # Adjust the level as needed
             'propagate': False,
         },
