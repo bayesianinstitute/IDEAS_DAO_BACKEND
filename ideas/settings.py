@@ -68,8 +68,8 @@ MIDDLEWARE = [
     'ideasApi.middleware.APILoggingMiddleware', 
     'user_app.middleware.APILoggingMiddleware', 
     'ideasApi.middleware.ProxyDetectionMiddleware',
-    'ideasApi.request_count.RequestCountMiddleware',  
-#     'user_app.middleware.ProxyDetectionMiddleware',
+    # 'ideasApi.request_count.RequestCountMiddleware',  
+
 ]
 
 ROOT_URLCONF = 'ideas.urls'

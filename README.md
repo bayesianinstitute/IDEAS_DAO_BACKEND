@@ -15,7 +15,20 @@ python -m venv env
 source env/bin/activate
 ```
 
-3. Install Packages and Run Your Project:
+3. Create .env file
+
+```bash
+SECRET_KEY=
+USER=
+PASSWORD= 
+EMAIL=
+EMAIL_PASSWORD=
+EMAIL_ADMIN=
+
+```
+
+
+4. Install Packages and Run Your Project:
    After activating the virtual environment, you can install packages and run your project as usual:
 
 ```bash
@@ -29,7 +42,7 @@ nohup ./run_server.sh 2>&1 &
 ```
 
 
-4. Deactivate the Virtual Environment:
+5. Deactivate the Virtual Environment:
    When you're done working in the virtual environment, you can deactivate it using the following command:
 
 ```bash

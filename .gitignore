@@ -10,6 +10,8 @@ user_app/api/__pycache__
 db.sqlite3
 .env
 test.py
+ab_results.txt
+
 
 
 
