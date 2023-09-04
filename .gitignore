@@ -11,6 +11,15 @@ db.sqlite3
 .env
 test.py
 ab_results.txt
+load_test_results.csv
+results.txt
+run_load_tests.sh
+temp_ab_results.txt
+
+
+
+
+
 
 
 

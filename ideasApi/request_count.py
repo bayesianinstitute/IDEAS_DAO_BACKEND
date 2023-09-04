@@ -20,5 +20,6 @@ class RequestCountMiddleware:
             send_mail(subject, message, from_email, recipient_list, fail_silently=True)
         else:
             self.requests.append(current_time)
-            response = self.get_response(request)
-            return response
+
+        response = self.get_response(request)
+        return response

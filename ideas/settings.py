@@ -68,7 +68,7 @@ MIDDLEWARE = [
     'ideasApi.middleware.APILoggingMiddleware', 
     'user_app.middleware.APILoggingMiddleware', 
     'ideasApi.middleware.ProxyDetectionMiddleware',
-    # 'ideasApi.request_count.RequestCountMiddleware',  
+    'ideasApi.request_count.RequestCountMiddleware',  
 
 ]
 
@@ -104,23 +104,23 @@ CHANNEL_LAYERS = {
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / config('DATABASE')
-#     }
-# }
-
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': config('DB_NAME'),    # Your MySQL database name
-        'USER': config('DB_USER'),      # Your MySQL user
-        'PASSWORD': config('DB_PASSWORD'),  # Your MySQL user's password
-        'HOST': '127.0.0.1',       # MySQL host (use IP or hostname if not local)
-        'PORT': '3306',            # MySQL port
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / config('DATABASE')
     }
 }
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': config('DB_NAME'),    # Your MySQL database name
+#         'USER': config('DB_USER'),      # Your MySQL user
+#         'PASSWORD': config('DB_PASSWORD'),  # Your MySQL user's password
+#         'HOST': '127.0.0.1',       # MySQL host (use IP or hostname if not local)
+#         'PORT': '3306',            # MySQL port
+#     }
+# }
 
 
 
