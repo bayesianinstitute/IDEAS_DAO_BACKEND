@@ -476,56 +476,44 @@ def create_proposal(request):
             'description': request.data.get('description'),
             'member': user.id,
         }
-        
-        # Check if a proposal with the same title already exists
-        existing_proposal = Proposal.objects.filter(title=proposal_data['title']).exists()
-        if existing_proposal:
+
+        # Create a serializer instance with the proposal data
+        serializer = ProposalSerializer(data=proposal_data)
+
+        if serializer.is_valid():
+            serializer.save()
+
+            # Get the username for the user
+            user_instance = Member.objects.get(pk=user.id)
+            user_name = user_instance.username
+
+            response_data = {
+                'status': 'success',
+                'data': {
+                    'id': serializer.data['id'],
+                    'timestamp': serializer.data['timestamp'],
+                    'title': serializer.data['title'],
+                    'description': serializer.data['description'],
+                    'status': serializer.data['status'],
+                    'user': user_name,  # Use the username
+                },
+                'message': 'Proposal created successfully.',
+                'is_request_from_proxy': getattr(request, 'is_request_from_proxy', False),
+                'is_routable': getattr(request, 'is_routable', True),
+                'client_ip': getattr(request, 'client_ip', ''),
+            }
+            response_status = status.HTTP_201_CREATED
+        else:
             response_data = {
                 'status': 'failure',
-                'message': 'A proposal with the same title already exists.',
+                'message': 'Failed to create proposal.',
+                'errors': serializer.errors,
                 'is_request_from_proxy': getattr(request, 'is_request_from_proxy', False),
                 'is_routable': getattr(request, 'is_routable', True),
                 'client_ip': getattr(request, 'client_ip', ''),
             }
             response_status = status.HTTP_400_BAD_REQUEST
-        else:
-            # Create a serializer instance with the proposal data
-            serializer = ProposalSerializer(data=proposal_data)
-        
-            if serializer.is_valid():
-                serializer.save()
-                
-                # Get the username for the user
-                user_instance = Member.objects.get(pk=user.id)
-                user_name = user_instance.username
-            
-                response_data = {
-                    'status': 'success',
-                    'data': {
-                        'id': serializer.data['id'],
-                        'timestamp': serializer.data['timestamp'],
-                        'title': serializer.data['title'],
-                        'description': serializer.data['description'],
-                        'status': serializer.data['status'],
-                        'user': user_name,  # Use the username
-                    },
-                    'message': 'Proposal created successfully.',
-                    'is_request_from_proxy': getattr(request, 'is_request_from_proxy', False),
-                    'is_routable': getattr(request, 'is_routable', True),
-                    'client_ip': getattr(request, 'client_ip', ''),
-                }
-                response_status = status.HTTP_201_CREATED
-            else:
-                response_data = {
-                    'status': 'failure',
-                    'message': 'Failed to create proposal.',
-                    'errors': serializer.errors,
-                    'is_request_from_proxy': getattr(request, 'is_request_from_proxy', False),
-                    'is_routable': getattr(request, 'is_routable', True),
-                    'client_ip': getattr(request, 'client_ip', ''),
-                }
-                response_status = status.HTTP_400_BAD_REQUEST
-        
+
         response = Response(response_data, status=response_status)
         return response
 

@@ -81,5 +81,6 @@ After configuring the database settings, you need to apply migrations to create 
 
 ```bash
 python3 manage.py makemigrations
+python3 manage.py makemigrations ideasApi
 python3 manage.py migrate
 ```

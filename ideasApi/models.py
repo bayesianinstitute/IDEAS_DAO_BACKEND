@@ -84,11 +84,12 @@ class Proposal(models.Model):
     title= models.CharField(max_length=200)
     description = RichTextField()
     PROPOSAL_TYPE_CHOICES = (
+        ('pending', 'Pending'),
         ('active', 'Active'),
         ('reject', 'Reject'),
         ('closed', 'Closed'),
     )
-    status = models.CharField(max_length=10, choices=PROPOSAL_TYPE_CHOICES, default='active')
+    status = models.CharField(max_length=10, choices=PROPOSAL_TYPE_CHOICES, default='pending')
     member = models.ForeignKey(Member, on_delete=models.CASCADE,null=True, blank=True)
     def __str__(self):
         return self.title
@@ -135,10 +136,4 @@ class Delegate(models.Model):
     def __str__(self):
         return f"{self.member.username} - {self.wallet_address}"
     
-class Test(models.Model):
-    name= models.CharField(max_length=200)
 
-    def __str__(self):
-        return str(self.name)
-    class Meta:
-        verbose_name_plural="Test"   
