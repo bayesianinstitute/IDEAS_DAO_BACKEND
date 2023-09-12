@@ -90,6 +90,7 @@ class Proposal(models.Model):
         ('closed', 'Closed'),
     )
     status = models.CharField(max_length=10, choices=PROPOSAL_TYPE_CHOICES, default='pending')
+    comment= models.CharField(max_length=200,null=True, blank=True)
     member = models.ForeignKey(Member, on_delete=models.CASCADE,null=True, blank=True)
     def __str__(self):
         return self.title
