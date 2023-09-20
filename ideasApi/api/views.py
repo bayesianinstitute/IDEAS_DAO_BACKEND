@@ -91,7 +91,7 @@ class NewsListView(generics.ListAPIView):
                     "is_routable": getattr(request, 'is_routable', True),
                     "client_ip": getattr(request, 'client_ip', '')
                 }
-                response_status = status.HTTP_400_BAD_REQUEST
+                response_status = status.HTTP_200_OK
         except Exception as e:
             response_data = {
                 "status": "failure",
@@ -151,7 +151,7 @@ class InvestmentListView(generics.ListAPIView):
                     "is_routable": getattr(request, 'is_routable', True),
                     "client_ip": getattr(request, 'client_ip', '')
                 }
-                response_status = HTTP_400_BAD_REQUEST
+                response_status = HTTP_200_OK
         except Exception as e:
             response_data = {
                 "status": "failure",
@@ -211,7 +211,7 @@ class EventsListView(generics.ListAPIView):
                     "is_routable": getattr(request, 'is_routable', True),
                     "client_ip": getattr(request, 'client_ip', '')
                 }
-                response_status = HTTP_400_BAD_REQUEST
+                response_status = HTTP_200_OK
         except Exception as e:
             response_data = {
                 "status": "failure",
